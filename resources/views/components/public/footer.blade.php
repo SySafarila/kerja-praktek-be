@@ -13,6 +13,17 @@
                     <span class="material-icons text-accent-2">phone</span>
                     <span class="text-accent-2">+62 877-2027-11111</span>
                 </div>
+                <div class="flex items-center gap-3">
+                    <a href="#">
+                        <i class="fa-brands fa-square-facebook text-white text-2xl"></i>
+                    </a>
+                    <a href="#">
+                        <i class="fa-brands fa-square-instagram text-white text-2xl"></i>
+                    </a>
+                    <a href="#">
+                        <i class="fa-brands fa-youtube text-white text-2xl"></i>
+                    </a>
+                </div>
             </div>
         </div>
         <div>

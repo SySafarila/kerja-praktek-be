@@ -12,11 +12,35 @@
         background: white !important;
     }
 
+    #splide3 .splide__pagination__page .is-active {
+        background: black !important;
+    }
+
+    #splide3 .splide__pagination__page {
+        background: black !important;
+    }
+
+    #splide4 .splide__pagination__page .is-active {
+        background: black !important;
+    }
+
+    #splide4 .splide__pagination__page {
+        background: black !important;
+    }
+
     .splide__arrow svg {
         fill: white !important;
     }
 
     #splide2 .splide__pagination {
+        bottom: -1.5rem !important;
+    }
+
+    #splide3 .splide__pagination {
+        bottom: -1.5rem !important;
+    }
+
+    #splide4 .splide__pagination {
         bottom: -1.5rem !important;
     }
 </style>
@@ -264,6 +288,123 @@
         </div>
     </div>
 </div>
+<div class="max-w-screen-lg mx-auto p-5 py-8 lg:py-10">
+    <h1 class="text-3xl text-center text-accent-1">Testimoni Tokoh</h1>
+    <div class="splide mt-5" id="splide3" aria-label="Splide Basic HTML Example">
+        <div class="splide__track">
+            <ul class="splide__list">
+                <li class="splide__slide">
+                    <div class="flex flex-col gap-2 p-3">
+                        <p class="text-center">"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Unde deleniti
+                            sint in illum obcaecati explicabo tenetur ea fugit quisquam vitae! Quisquam nulla excepturi
+                            sed sunt at cum omnis quis asperiores."</p>
+                        <div class="flex gap-2">
+                            <img src="https://dummyimage.com/400x400/000/fff" alt=""
+                                class="w-[50px] h-[50px] rounded-full object-cover">
+                            <div class="flex flex-col">
+                                <span>Syahrul Safarila</span>
+                                <span>PhD.</span>
+                                <span class="text-accent-1 lg:w-80">Rektor Universitas Paramadina Jakarta periode
+                                    2014-2018</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="splide__slide">
+                    <div class="flex flex-col gap-2 p-3">
+                        <p class="text-center">"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Unde deleniti
+                            sint in illum obcaecati explicabo tenetur ea fugit quisquam vitae! Quisquam nulla excepturi
+                            sed sunt at cum omnis quis asperiores."</p>
+                        <div class="flex gap-2">
+                            <img src="https://dummyimage.com/400x400/000/fff" alt=""
+                                class="w-[50px] h-[50px] rounded-full object-cover">
+                            <div class="flex flex-col">
+                                <span>Syahrul Safarila</span>
+                                <span>PhD.</span>
+                                <span class="text-accent-1 lg:w-80">Rektor Universitas Paramadina Jakarta periode
+                                    2014-2018</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="splide__slide">
+                    <div class="flex flex-col gap-2 p-3">
+                        <p class="text-center">"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Unde deleniti
+                            sint in illum obcaecati explicabo tenetur ea fugit quisquam vitae! Quisquam nulla excepturi
+                            sed sunt at cum omnis quis asperiores."</p>
+                        <div class="flex gap-2">
+                            <img src="https://dummyimage.com/400x400/000/fff" alt=""
+                                class="w-[50px] h-[50px] rounded-full object-cover">
+                            <div class="flex flex-col">
+                                <span>Syahrul Safarila</span>
+                                <span>PhD.</span>
+                                <span class="text-accent-1 lg:w-80">Rektor Universitas Paramadina Jakarta periode
+                                    2014-2018</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="splide__slide">
+                    <div class="flex flex-col gap-2 p-3">
+                        <p class="text-center">"Lorem, ipsum dolor sit amet consectetur adipisicing elit. Unde deleniti
+                            sint in illum obcaecati explicabo tenetur ea fugit quisquam vitae! Quisquam nulla excepturi
+                            sed sunt at cum omnis quis asperiores."</p>
+                        <div class="flex gap-2">
+                            <img src="https://dummyimage.com/400x400/000/fff" alt=""
+                                class="w-[50px] h-[50px] rounded-full object-cover">
+                            <div class="flex flex-col">
+                                <span>Syahrul Safarila</span>
+                                <span>PhD.</span>
+                                <span class="text-accent-1 lg:w-80">Rektor Universitas Paramadina Jakarta periode
+                                    2014-2018</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="max-w-screen-lg mx-auto p-5 py-8 lg:py-10"
+    style="background-image: url({{ asset('images/wave.svg') }}); background-repeat: no-repeat; background-position: bottom;">
+    <h1 class="text-3xl text-center text-accent-1">Sebaran <span class="text-accent-3">Alumni</span></h1>
+    <div class="splide mt-5" id="splide4" aria-label="Splide Basic HTML Example">
+        <div class="splide__track">
+            <ul class="splide__list">
+                <li class="splide__slide">
+                    <img src="{{ asset('images/unpi.png') }}" alt="" class="w-full aspect-square">
+                </li>
+                <li class="splide__slide">
+                    <img src="{{ asset('images/unpi.png') }}" alt="" class="w-full aspect-square">
+                </li>
+                <li class="splide__slide">
+                    <img src="{{ asset('images/unpi.png') }}" alt="" class="w-full aspect-square">
+                </li>
+                <li class="splide__slide">
+                    <img src="{{ asset('images/unpi.png') }}" alt="" class="w-full aspect-square">
+                </li>
+                <li class="splide__slide">
+                    <img src="{{ asset('images/unpi.png') }}" alt="" class="w-full aspect-square">
+                </li>
+                <li class="splide__slide">
+                    <img src="{{ asset('images/unpi.png') }}" alt="" class="w-full aspect-square">
+                </li>
+                <li class="splide__slide">
+                    <img src="{{ asset('images/unpi.png') }}" alt="" class="w-full aspect-square">
+                </li>
+                <li class="splide__slide">
+                    <img src="{{ asset('images/unpi.png') }}" alt="" class="w-full aspect-square">
+                </li>
+                <li class="splide__slide">
+                    <img src="{{ asset('images/unpi.png') }}" alt="" class="w-full aspect-square">
+                </li>
+                <li class="splide__slide">
+                    <img src="{{ asset('images/unpi.png') }}" alt="" class="w-full aspect-square">
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('script')
@@ -274,16 +415,37 @@
         autoplay: true,
         pauseOnHover: true
     }).mount();
-</script>
-<script>
     new Splide('#splide2', {
         perPage: 3,
         gap: 10,
+        breakpoints: {
+            640: {
+                perPage: 1
+            }
+        }
+    }).mount();
+    new Splide('#splide3', {
+        arrows: false,
+        perPage: 2,
+        gap: 10,
+        breakpoints: {
+            640: {
+                perPage: 1
+            }
+        }
+    }).mount();
+    new Splide('#splide4', {
+        autoplay: true,
+        arrows: false,
+        perPage: 5,
+        gap: 20,
         breakpoints: {
             640: {
                 perPage: 2
             }
         }
     }).mount();
+</script>
+<script>
 </script>
 @endsection
