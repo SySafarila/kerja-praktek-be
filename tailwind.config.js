@@ -12,6 +12,13 @@ module.exports = {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                roboto: ['Roboto', 'sans-serif']
+            },
+            colors: {
+                'accent-1': '#5BA82B',
+                'accent-2': '#F1F1F1',
+                'accent-3': '#4D4D4D',
+                'accent-4': '#F4F4F4'
             },
         },
     },
