@@ -8,7 +8,7 @@
                     <span class="font-light -mt-1.5 text-accent-2">Pacet Cianjur</span>
                 </div>
             </a>
-            <button type="button" class="material-icons lg:hidden" id="navbar-menu">menu</button>
+            <button type="button" class="material-icons lg:hidden text-accent-4" id="navbar-menu">menu</button>
         </div>
         <div class="flex flex-col lg:flex lg:flex-row lg:items-center lg:gap-8 gap-2 py-2.5 lg:py-0 hidden"
             id="navbar-menus">
