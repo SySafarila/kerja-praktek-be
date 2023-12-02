@@ -425,6 +425,7 @@
         }
     }).mount();
     new Splide('#splide3', {
+        type: 'loop',
         arrows: false,
         perPage: 2,
         gap: 10,
@@ -435,13 +436,14 @@
         }
     }).mount();
     new Splide('#splide4', {
+        type: 'loop',
         autoplay: true,
         arrows: false,
         perPage: 5,
         gap: 20,
         breakpoints: {
             640: {
-                perPage: 2
+                perPage: 4
             }
         }
     }).mount();
