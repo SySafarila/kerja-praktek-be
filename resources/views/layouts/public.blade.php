@@ -6,13 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
 
+    @yield('head')
+
     @vite('resources/css/app.css')
 </head>
 
 <body>
     <x-public.navbar />
 
-    <main class="p-5 mt-[64px] lg:mt-[60px] max-w-screen-lg mx-auto">
+    <main class="mt-[64px] lg:mt-[60px]">
         @yield('content')
     </main>
 

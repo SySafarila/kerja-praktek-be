@@ -6,6 +6,6 @@
 
 @layer base {
     * {
-        @apply font-roboto;
+        @apply font-roboto text-accent-3;
     }
 }
