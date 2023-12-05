@@ -12,8 +12,4 @@ class Teacher extends Model
     protected $table = 'teachers';
     protected $guarded = ['id'];
 
-    public function subjects()
-    {
-        return $this->hasMany(Subject::class);
-    }
 }

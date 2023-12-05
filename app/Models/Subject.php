@@ -12,9 +12,4 @@ class Subject extends Model
     protected $table = 'subjects';
     protected $guarded = ['id'];
 
-    public function teacher()
-    {
-        return $this->belongsTo(Teacher::class);
-    }
-
 }
