@@ -86,27 +86,34 @@ class StaffController extends Controller
     return view('staffs.edit', compact('staff'));
 }
 
-    public function update(Request $request, Staff $staff)
+    public function update(Request $request, $id)
     {
     // Validate the form data
     $request->validate([
         'name' => 'required|string|max:255',
-        'image' => 'nullable|image|max:2048',
         'position' => 'nullable|string|max:255',
         'nip' => 'nullable|string|max:255',
         'nuptk' => 'nullable|string|max:255',
     ]);
 
-    // Check if a new image was provided and update it
-    if ($request->hasFile('image')) {
-        // Upload and store the new image
-        $imageName = time() . '.' . $request->file('image')->getClientOriginalExtension();
-        $imageDir = 'staffImages';
-        $request->file('image')->storeAs($imageDir, $imageName, 'public');
+    $staff = Staff::findOrFail($id);
 
-        // Update the image path in the database
-        $staff->update(['image' => $imageName]);
-    }
+        // Check if a new image was provided and update it
+        if ($request->hasFile('image')) {
+            $request->validate([
+                'image' => ['required', 'image', 'max:2048']
+            ]);
+
+            // Upload and store the new image
+            $imageName = time() . '.' . $request->file('image')->getClientOriginalExtension();
+            $imageDir = 'staffImages';
+            $request->file('image')->storeAs($imageDir, $imageName, 'public');
+            if (Storage::disk('public')->exists($imageDir . '/' . $staff->image)) {
+                Storage::disk('public')->delete($imageDir . '/' . $staff->image);
+            }
+            // Update the image path in the database
+            $staff->image = $imageName;
+        }
 
     // Update the staff instance with the validated data
     $staff->update([
@@ -120,17 +127,44 @@ class StaffController extends Controller
     return redirect()->route('admin.staffs.index')->with('success', 'Staff member updated successfully');
     }
 
-    public function massDestroy(Request $request)
+    public function destroy($id)
     {
-    $arr = explode(',', $request->ids);
+        //
+        $staffs = Staff::findOrFail($id);
+        $staffs->delete();
 
-    Staff::destroy($arr);
+        if (Storage::disk('public')->exists('staffImages/'.$staffs->image)) {
+            Storage::disk('public')->delete('staffImages/'.$staffs->image);
+        }
+
+        if (request()->ajax()) {
+            return response()->json(true);
+        }
+
+        return redirect()->route('admin.staffs.index')->with('error', 'A staff has been removed !');
+    }
+
+    public function massDestroy(Request $request)
+{
+    $staffIds = explode(',', $request->ids);
+
+    // Fetch all staffs to be deleted
+    $staffs = Staff::whereIn('id', $staffIds)->get();
+
+    foreach ($staffs as $staff) {
+        // Delete the staff and associated image if it exists
+        $staff->delete();
+
+        if (Storage::disk('public')->exists('staffImages/'.$staff->image)) {
+            Storage::disk('public')->delete('staffImages/'.$staff->image);
+        }
+    }
 
     if ($request->ajax()) {
         return response()->json(['success' => true]);
     }
 
     return redirect()->route('admin.staffs.index')->with('status', 'Bulk delete success');
-    }
+}
 }
 
