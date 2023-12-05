@@ -29,9 +29,8 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-header text-uppercase">Content Control</li>
                 @canany(['blogs-read'])
-                    <li class="nav-header text-uppercase">Content Control</li>
-
                     @if (Route::has('admin.blogs.index'))
                         @can('blogs-read')
                             <li class="nav-item">
@@ -40,6 +39,22 @@
                                     <i class="nav-icon fas fa-newspaper"></i>
                                     <p>
                                         Blogs
+                                        {{-- <span class="right badge badge-danger">New</span> --}}
+                                    </p>
+                                </a>
+                            </li>
+                        @endcan
+                    @endif
+                @endcanany
+                @canany(['staffs-read'])
+                    @if (Route::has('admin.staffs.index'))
+                        @can('staffs-read')
+                            <li class="nav-item">
+                                <a href="{{ route('admin.staffs.index') }}"
+                                    class="nav-link {{ request()->routeIs('admin.staffs.*') ? 'active' : '' }}">
+                                    <i class="nav-icon fa fa-users"></i>
+                                    <p class="text-capitalize">
+                                        staffs
                                         {{-- <span class="right badge badge-danger">New</span> --}}
                                     </p>
                                 </a>

@@ -7,7 +7,9 @@ use App\Http\Controllers\PermissionController;
 // use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\StaffController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -44,11 +46,15 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     // blogs | comment this route below to disable Blog features
     Route::resource('/blogs', BlogController::class);
 
+    // staffs
+    Route::resource('/staffs', StaffController::class)->except(['show']);
+
     // bulk delete
     Route::delete('/bulk-delete/permissions', [PermissionController::class, 'massDestroy'])->name('permissions.massDestroy');
     Route::delete('/bulk-delete/roles', [RoleController::class, 'massDestroy'])->name('roles.massDestroy');
     Route::delete('/bulk-delete/users', [UserController::class, 'massDestroy'])->name('users.massDestroy');
     Route::delete('/bulk-delete/blogs', [BlogController::class, 'massDestroy'])->name('blogs.massDestroy');
+    Route::delete('/bulk-delete/staffs', [StaffController::class, 'massDestroy'])->name('staffs.massDestroy');
 });
 
 // account re-verification
