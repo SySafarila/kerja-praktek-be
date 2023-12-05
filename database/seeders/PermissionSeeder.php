@@ -202,6 +202,124 @@ class PermissionSeeder extends Seeder
             ],
         );
 
+        // subjects
+        array_push(
+            $arr,
+            [
+                'guard_name' => 'web',
+                'name' => 'subjects-create',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'subjects-read',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'subjects-update',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'subjects-delete',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+        );
+
+        // extracurriculars
+        array_push(
+            $arr,
+            [
+                'guard_name' => 'web',
+                'name' => 'extracurriculars-create',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'extracurriculars-read',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'extracurriculars-update',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'extracurriculars-delete',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+        );
+
+        // testimonials
+        array_push(
+            $arr,
+            [
+                'guard_name' => 'web',
+                'name' => 'testimonials-create',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'testimonials-read',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'testimonials-update',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'testimonials-delete',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+
+        );
+
+        // galleries
+        array_push(
+            $arr,
+            [
+                'guard_name' => 'web',
+                'name' => 'galleries-create',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'galleries-read',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'galleries-update',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'galleries-delete',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+
+        );
+
         DB::table('permissions')->insert($arr);
     }
 }

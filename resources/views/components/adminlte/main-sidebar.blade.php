@@ -46,6 +46,22 @@
                         @endcan
                     @endif
                 @endcanany
+                @canany(['staffs-read'])
+                    @if (Route::has('admin.staffs.index'))
+                        @can('staffs-read')
+                            <li class="nav-item">
+                                <a href="{{ route('admin.staffs.index') }}"
+                                    class="nav-link {{ request()->routeIs('admin.staffs.*') ? 'active' : '' }}">
+                                    <i class="nav-icon fa fa-users"></i>
+                                    <p class="text-capitalize">
+                                        staffs
+                                        {{-- <span class="right badge badge-danger">New</span> --}}
+                                    </p>
+                                </a>
+                            </li>
+                        @endcan
+                    @endif
+                @endcanany
                 @canany(['teachers-read'])
                     @if (Route::has('admin.teachers.index'))
                         @can('teachers-read')
@@ -62,15 +78,15 @@
                         @endcan
                     @endif
                 @endcanany
-                @canany(['staffs-read'])
-                    @if (Route::has('admin.staffs.index'))
-                        @can('staffs-read')
+                @canany(['subjects-read'])
+                    @if (Route::has('admin.subjects.index'))
+                        @can('subjects-read')
                             <li class="nav-item">
-                                <a href="{{ route('admin.staffs.index') }}"
-                                    class="nav-link {{ request()->routeIs('admin.staffs.*') ? 'active' : '' }}">
+                                <a href="{{ route('admin.subjects.index') }}"
+                                    class="nav-link {{ request()->routeIs('admin.subjects.*') ? 'active' : '' }}">
                                     <i class="nav-icon fa fa-users"></i>
                                     <p class="text-capitalize">
-                                        staffs
+                                        subjects
                                         {{-- <span class="right badge badge-danger">New</span> --}}
                                     </p>
                                 </a>

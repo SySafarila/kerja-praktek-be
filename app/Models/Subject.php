@@ -5,15 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Teacher extends Model
+class Subject extends Model
 {
     use HasFactory;
 
-    protected $table = 'teachers';
+    protected $table = 'subjects';
     protected $guarded = ['id'];
 
-    public function subjects()
+    public function teacher()
     {
-        return $this->hasMany(Subject::class);
+        return $this->belongsTo(Teacher::class);
     }
+
 }
