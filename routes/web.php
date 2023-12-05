@@ -24,6 +24,8 @@ Route::get('/', function () {
     return view('welcome');
 })->name('landingpage');
 
+Route::view('/authentication', 'authentication');
+
 Route::get('/dashboard', function () {
     return redirect()->route('admin.index');
 })->middleware(['auth', 'verified'])->name('dashboard');

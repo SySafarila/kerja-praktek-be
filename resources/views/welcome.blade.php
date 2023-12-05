@@ -181,7 +181,7 @@
         <h1 class="text-3xl text-center text-white uppercase font-bold">Pendaftaran Peserta Didik Baru</h1>
         <p class="text-white text-center">Kami mengundang putra terbaik Negeri untuk bergabung bersama SMA Ma’arif
             Pacet</p>
-        <a href="#" class="bg-accent-1 mx-auto px-5 py-2 rounded-lg">Daftar Sekarang</a>
+        <a href="#" class="bg-accent-1 mx-auto btn">Daftar Sekarang</a>
     </div>
 </div>
 <div class="max-w-screen-lg mx-auto p-5 lg:py-10">

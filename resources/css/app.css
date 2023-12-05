@@ -8,4 +8,14 @@
     * {
         @apply font-roboto text-accent-3;
     }
+
+    a {
+        @apply hover:underline;
+    }
+}
+
+@layer components {
+    .btn {
+        @apply px-5 py-2 rounded-lg;
+    }
 }
