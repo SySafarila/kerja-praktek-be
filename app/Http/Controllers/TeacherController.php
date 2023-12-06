@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Teacher;
+use App\Models\Subject;
 use DOMDocument;
 use Illuminate\Http\File;
 use Illuminate\Http\Request;
@@ -43,7 +44,8 @@ class TeacherController extends Controller
 
     public function create()
     {
-        return view('teachers.create');
+        $subjects = Subject::all();
+        return view('teachers.create',compact('subjects'));
     }
 
     public function store(Request $request)
@@ -52,7 +54,7 @@ class TeacherController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'image' => 'required|image|max:2048',
-            'subject' => 'nullable|string|max:255',
+            'subject_id' => 'nullable|integer',
             'nip' => 'nullable|string|max:255',
             'nuptk' => 'nullable|string|max:255',
         ]);
@@ -68,7 +70,7 @@ class TeacherController extends Controller
         $teacher = Teacher::create([
             'name' => $request->name,
             'image' => $imageName,
-            'subject' => $request->subject,
+            'subject_id' => $request->subject_id,
             'nip' => $request->nip,
             'nuptk' => $request->nuptk,
         ]);
@@ -81,9 +83,10 @@ class TeacherController extends Controller
 {
     // Retrieve the teacher record from the database
     $teacher = Teacher::findOrFail($id);
+    $subjects = Subject::all();
 
     // Pass the $teacher variable to the view
-    return view('teachers.edit', compact('teacher'));
+    return view('teachers.edit', compact('teacher','subjects'));
 }
 
     public function update(Request $request, $id)
@@ -91,7 +94,7 @@ class TeacherController extends Controller
     // Validate the form data
     $request->validate([
         'name' => 'required|string|max:255',
-        'subject' => 'nullable|string|max:255',
+        'subject_id' => 'nullable|integer',
         'nip' => 'nullable|string|max:255',
         'nuptk' => 'nullable|string|max:255',
     ]);
@@ -118,7 +121,7 @@ class TeacherController extends Controller
     // Update the teacher instance with the validated data
     $teacher->update([
         'name' => $request->name,
-        'subject' => $request->subject,
+        'subject_id' => $request->subject_id,
         'nip' => $request->nip,
         'nuptk' => $request->nuptk,
     ]);
