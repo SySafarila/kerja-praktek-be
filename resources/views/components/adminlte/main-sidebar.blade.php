@@ -118,8 +118,24 @@
                                 <a href="{{ route('admin.blogs.index') }}"
                                     class="nav-link {{ request()->routeIs('admin.blogs.*') ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-newspaper"></i>
-                                    <p>
+                                    <p class="text-capitalize">
                                         Blogs
+                                        {{-- <span class="right badge badge-danger">New</span> --}}
+                                    </p>
+                                </a>
+                            </li>
+                        @endcan
+                    @endif
+                @endcanany
+                @canany(['testimonials-read'])
+                    @if (Route::has('admin.testimonials.index'))
+                        @can('testimonials-read')
+                            <li class="nav-item">
+                                <a href="{{ route('admin.testimonials.index') }}"
+                                    class="nav-link {{ request()->routeIs('admin.testimonials.*') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-user-edit"></i>
+                                    <p class="text-capitalize">
+                                        testimonials
                                         {{-- <span class="right badge badge-danger">New</span> --}}
                                     </p>
                                 </a>

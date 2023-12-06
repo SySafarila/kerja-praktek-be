@@ -1,5 +1,5 @@
 @extends('layouts.adminlte', [
-    'title' => 'Admin Dashboard | Staffs - Create',
+    'title' => 'Admin Dashboard | Testimonials - Create',
 ])
 
 @section('head')
@@ -12,12 +12,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6 d-flex align-items-center">
-                    <h1 class="m-0">Create Staff</h1>
+                    <h1 class="m-0">Create a Testimonial</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Home</a></li>
-                        <li class="breadcrumb-item text-capitalize"><a href="{{ route('admin.staffs.index') }}">staffs</a>
+                        <li class="breadcrumb-item text-capitalize"><a
+                                href="{{ route('admin.testimonials.index') }}">testimonials</a>
                         </li>
                         <li class="breadcrumb-item active">Create</li>
                     </ol>
@@ -39,7 +40,7 @@
     <div class="content pb-3">
         <div class="container-fluid">
             <div class="card m-0">
-                <form action="{{ route('admin.staffs.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.testimonials.store') }}" method="POST" enctype="multipart/form-data">
                     <div class="card-body">
                         @csrf
                         <div class="form-group">
@@ -47,6 +48,23 @@
                             <input type="text" class="form-control" id="name" name="name"
                                 placeholder="Enter name" required>
                             @error('name')
+                                <div class="text-sm text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="status" class="text-capitalize">Status or Occupation</label>
+                            <input type="text" class="form-control" id="status" name="status"
+                                placeholder="Enter status or occupation">
+                            @error('status')
+                                <div class="text-sm text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="feedback" class="text-capitalize">feedback</label>
+                            <textarea class="form-control" id="feedback" name="feedback" placeholder="Enter feedback" rows="4" required></textarea>
+                            @error('feedback')
                                 <div class="text-sm text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -60,32 +78,6 @@
                             @enderror
                         </div>
 
-                        <div class="form-group">
-                            <label for="position" class="text-capitalize">Position</label>
-                            <input type="text" class="form-control" id="position" name="position"
-                                placeholder="Enter position">
-                            @error('position')
-                                <div class="text-sm text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="nuptk" class="text-capitalize">NUPTK</label>
-                            <input type="text" class="form-control" id="nuptk" name="nuptk"
-                                placeholder="Enter nuptk">
-                            @error('nuptk')
-                                <div class="text-sm text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="nip" class="text-capitalize">NIP</label>
-                            <input type="text" class="form-control" id="nip" name="nip"
-                                placeholder="Enter NIP">
-                            @error('nip')
-                                <div class="text-sm text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary btn-sm">Save</button>
