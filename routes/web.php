@@ -25,6 +25,7 @@ Route::get('/', function () {
 })->name('landingpage');
 
 Route::view('/authentication', 'authentication');
+Route::view('/ppdb', 'ppdb');
 
 Route::get('/dashboard', function () {
     return redirect()->route('admin.index');
