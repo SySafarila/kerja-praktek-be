@@ -127,6 +127,22 @@
                         @endcan
                     @endif
                 @endcanany
+                @canany(['articles-read'])
+                    @if (Route::has('admin.articles.index'))
+                        @can('articles-read')
+                            <li class="nav-item">
+                                <a href="{{ route('admin.articles.index') }}"
+                                    class="nav-link {{ request()->routeIs('admin.articles.*') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-newspaper"></i>
+                                    <p class="text-capitalize">
+                                        articles
+                                        {{-- <span class="right badge badge-danger">New</span> --}}
+                                    </p>
+                                </a>
+                            </li>
+                        @endcan
+                    @endif
+                @endcanany
                 @canany(['testimonials-read'])
                     @if (Route::has('admin.testimonials.index'))
                         @can('testimonials-read')
