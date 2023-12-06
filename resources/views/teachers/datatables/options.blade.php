@@ -1,7 +1,7 @@
 <div class="d-flex flex-column flex-md-row justify-content-center" style="gap: 0.5rem">
     @can('teachers-read')
         {{-- <a href="{{ route('admin.teachers.show', $model->id) }}" class="btn btn-sm btn-secondary">Preview</a> --}}
-        <a type="button" class="btn btn-sm btn-primary shadow" data-toggle="modal" data-target="#teacherPreview{{ $model->id }}">
+        <a type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#teacherPreview{{ $model->id }}">
             Preview
         </a>
 

@@ -62,7 +62,7 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     // extracurricular
     Route::resource('/extracurriculars', ExtracurricularsController::class)->except(['show']);
 
-    // extracurricular
+    // galleries
     Route::resource('/galleries', GalleriesController::class)->except(['show']);
 
     // bulk delete
@@ -74,6 +74,7 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     Route::delete('/bulk-delete/teachers', [TeacherController::class, 'massDestroy'])->name('teachers.massDestroy');
     Route::delete('/bulk-delete/subjects', [SubjectController::class, 'massDestroy'])->name('subjects.massDestroy');
     Route::delete('/bulk-delete/extracurriculars', [ExtracurricularsController::class, 'massDestroy'])->name('extracurriculars.massDestroy');
+    Route::delete('/bulk-delete/galleries', [GalleriesController::class, 'massDestroy'])->name('galleries.massDestroy');
 });
 
 // account re-verification

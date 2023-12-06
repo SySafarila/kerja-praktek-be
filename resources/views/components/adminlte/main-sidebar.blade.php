@@ -30,22 +30,7 @@
                     </a>
                 </li>
                 <li class="nav-header text-uppercase">Content Control</li>
-                @canany(['blogs-read'])
-                    @if (Route::has('admin.blogs.index'))
-                        @can('blogs-read')
-                            <li class="nav-item">
-                                <a href="{{ route('admin.blogs.index') }}"
-                                    class="nav-link {{ request()->routeIs('admin.blogs.*') ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-newspaper"></i>
-                                    <p>
-                                        Blogs
-                                        {{-- <span class="right badge badge-danger">New</span> --}}
-                                    </p>
-                                </a>
-                            </li>
-                        @endcan
-                    @endif
-                @endcanany
+
                 @canany(['staffs-read'])
                     @if (Route::has('admin.staffs.index'))
                         @can('staffs-read')
@@ -110,6 +95,38 @@
                         @endcan
                     @endif
                 @endcanany
+                @canany(['galleries-read'])
+                    @if (Route::has('admin.galleries.index'))
+                        @can('galleries-read')
+                            <li class="nav-item">
+                                <a href="{{ route('admin.galleries.index') }}"
+                                    class="nav-link {{ request()->routeIs('admin.galleries.*') ? 'active' : '' }}">
+                                    <i class="nav-icon fa fa-images"></i>
+                                    <p class="text-capitalize">
+                                        galleries
+                                        {{-- <span class="right badge badge-danger">New</span> --}}
+                                    </p>
+                                </a>
+                            </li>
+                        @endcan
+                    @endif
+                @endcanany
+                @canany(['blogs-read'])
+                    @if (Route::has('admin.blogs.index'))
+                        @can('blogs-read')
+                            <li class="nav-item">
+                                <a href="{{ route('admin.blogs.index') }}"
+                                    class="nav-link {{ request()->routeIs('admin.blogs.*') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-newspaper"></i>
+                                    <p>
+                                        Blogs
+                                        {{-- <span class="right badge badge-danger">New</span> --}}
+                                    </p>
+                                </a>
+                            </li>
+                        @endcan
+                    @endif
+                @endcanany
                 <x-adminlte.sidebar-system />
                 <li class="nav-item mt-2 pt-2" style="border-top: 1px solid #4f5962;">
                     <a href="{{ route('logout') }}" class="nav-link"
@@ -122,7 +139,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <small class="d-block text-capitalize text-center" style="color: #c2c7d0;">{{ config('app.version') }}</small>
+                    <small class="d-block text-capitalize text-center"
+                        style="color: #c2c7d0;">{{ config('app.version') }}</small>
                 </li>
             </ul>
         </nav>
