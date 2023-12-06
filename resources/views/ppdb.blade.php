@@ -7,7 +7,7 @@
 <div class="max-w-screen-lg mx-auto lg:px-5">
     <img src="{{ asset('images/ppdb.png') }}" alt="" class="w-full">
 </div>
-<div class="max-w-screen-lg mx-auto p-5">
+<form action="#" method="POST" class="max-w-screen-lg mx-auto p-5">
     <h1 class="text-2xl font-bold mb-5">Penerimaan Peserta Didik Baru</h1>
     <div class="grid lg:grid-cols-2 gap-5">
         <div class="grid grid-cols-1 gap-2.5">
@@ -26,7 +26,7 @@
                 <label for="gender" class="font-semibold capitalize">Jenis kelamin <span
                         class="text-red-500">*</span></label>
                 <select class="w-full border-gray-500 border outline-none rounded-lg" id="gender">
-                    <option value="0" selected>Pilih</option>
+                    <option value="0" selected disabled>Pilih</option>
                     <option value="l">Laki-Laki</option>
                     <option value="p">Perempuan</option>
                 </select>
@@ -113,7 +113,7 @@
                     <label for="gender2" class="font-semibold capitalize">Jenis kelamin <span
                             class="text-red-500">*</span></label>
                     <select class="w-full border-gray-500 border outline-none rounded-lg" id="gender2">
-                        <option value="0" selected>Pilih</option>
+                        <option value="0" selected disabled>Pilih</option>
                         <option value="l">Laki-Laki</option>
                         <option value="p">Perempuan</option>
                     </select>
@@ -152,16 +152,18 @@
                     <label for="paymentmethod" class="font-semibold capitalize">Metode Pembayaran <span
                             class="text-red-500">*</span></label>
                     <select class="w-full border-gray-500 border outline-none rounded-lg" id="paymentmethod">
-                        <option value="0" selected>Pilih</option>
+                        <option value="0" selected disabled>Pilih</option>
                         <option value="">BCA Virtual Account</option>
                         <option value="">QRIS</option>
+                        <option value="">Bayar Di Sekolah</option>
                     </select>
+                    <p>*Gratis batik untuk 50 pendaftar pertama</p>
                 </div>
             </div>
         </div>
     </div>
     <button class="btn bg-accent-1 text-accent-4 mt-5 w-full lg:w-auto">Daftar</button>
-</div>
+</form>
 @endsection
 
 @section('script')
