@@ -66,13 +66,14 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="subject" class="text-capitalize">Subject</label>
-                            <select class="form-control select2" id="subject" name="subject_id">
-                                <option value="" selected disabled>Select a subject</option>
+                            <label for="subjects" class="text-capitalize">Subjects</label>
+                            <select class="form-control select2" id="subjects" name="subject_id[]" multiple>
                                 @foreach ($subjects as $subject)
-                                    <option value="{{ $subject->id }}">{{ $subject->name }}</option>
+                                    <option value="{{ $subject->id }}"
+                                        {{ optional($teacher)->subjects ? (in_array($subject->id, $teacher->subjects->pluck('id')->toArray()) ? 'selected' : '') : '' }}>
+                                        {{ $subject->name }}
+                                    </option>
                                 @endforeach
-                                {{-- <option value="null" {{ is_null($teacher->subject) ? 'selected' : '' }}>No Subject</option> --}}
                             </select>
                             @error('subject_id')
                                 <div class="text-sm text-danger">{{ $message }}</div>

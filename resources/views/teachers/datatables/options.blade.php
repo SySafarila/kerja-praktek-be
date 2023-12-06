@@ -23,8 +23,12 @@
                             <input class="form-control" value="{{ $model->name }}" readonly>
                         </div>
                         <div class="form-group">
-                            <label>subject :</label>
-                            <input class="form-control" value="{{ $model->subject }}" readonly>
+                            <label>Subjects:</label>
+                            @if ($model && $model->subjects->count() > 0)
+                            <input class="form-control" value="{{ $model->subjects->pluck('name')->implode(', ') }}" readonly>
+                            @else
+                                <input class="form-control" readonly value="No subjects assigned."></input>
+                            @endif
                         </div>
                         <div class="form-group">
                             <label>NIP :</label>
@@ -35,6 +39,7 @@
                             <input class="form-control" value="{{ $model->nuptk }}" readonly>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

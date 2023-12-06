@@ -23,29 +23,31 @@ class TeacherController extends Controller
     }
 
     public function index()
-    {
-        if (request()->ajax()) {
-            return DataTables::of(Teacher::query())
-                ->addColumn('created_at', function ($model) {
-                    return $model->created_at->diffForHumans();
-                })
-                ->addColumn('options', 'teachers.datatables.options')
-                ->setRowAttr([
-                    'data-model-id' => function ($model) {
-                        return $model->id;
-                    }
-                ])
-                ->rawColumns(['options'])
-                ->toJson();
-        }
-
-        return view('teachers.index');
+{
+    if (request()->ajax()) {
+        return DataTables::of(Teacher::query())
+            ->addColumn('created_at', function ($model) {
+                return $model->created_at->diffForHumans();
+            })
+            ->addColumn('options', 'teachers.datatables.options')
+            ->setRowAttr([
+                'data-model-id' => function ($model) {
+                    return $model->id;
+                }
+            ])
+            ->rawColumns(['options'])
+            ->toJson();
     }
+
+    $teachers = Teacher::all(); // Fetching teachers from the database
+    return view('teachers.index', compact('teachers'));
+}
 
     public function create()
     {
         $subjects = Subject::all();
-        return view('teachers.create',compact('subjects'));
+        $teacher = null; // If you are creating a new teacher, set $teacher to null
+        return view('teachers.create',compact('subjects','teacher'));
     }
 
     public function store(Request $request)
@@ -54,7 +56,8 @@ class TeacherController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'image' => 'required|image|max:2048',
-            'subject_id' => 'nullable|integer',
+            'subject_id' => 'nullable|array',
+            'subject_id.*' => 'nullable|integer|exists:subjects,id',
             'nip' => 'nullable|string|max:255',
             'nuptk' => 'nullable|string|max:255',
         ]);
@@ -70,10 +73,14 @@ class TeacherController extends Controller
         $teacher = Teacher::create([
             'name' => $request->name,
             'image' => $imageName,
-            'subject_id' => $request->subject_id,
             'nip' => $request->nip,
             'nuptk' => $request->nuptk,
         ]);
+
+    // Sync the subjects
+    if ($request->has('subject_id')) {
+        $teacher->subjects()->sync($request->input('subject_id'));
+    }
 
         // Redirect to a success page or show a success message
         return redirect()->route('admin.teachers.index')->with('success', 'A Teacher added successfully');
@@ -94,7 +101,8 @@ class TeacherController extends Controller
     // Validate the form data
     $request->validate([
         'name' => 'required|string|max:255',
-        'subject_id' => 'nullable|integer',
+        'subject_id' => 'nullable|array',
+        'subject_id.*' => 'nullable|integer|exists:subjects,id',
         'nip' => 'nullable|string|max:255',
         'nuptk' => 'nullable|string|max:255',
     ]);
@@ -121,10 +129,17 @@ class TeacherController extends Controller
     // Update the teacher instance with the validated data
     $teacher->update([
         'name' => $request->name,
-        'subject_id' => $request->subject_id,
         'nip' => $request->nip,
         'nuptk' => $request->nuptk,
     ]);
+
+    // Sync the subjects
+    if ($request->has('subject_id')) {
+        $teacher->subjects()->sync($request->input('subject_id'));
+    } else {
+        // If no subjects were selected, detach all existing subjects
+        $teacher->subjects()->detach();
+    }
 
     // Redirect to a success page or show a success message
     return redirect()->route('admin.teachers.index')->with('success', 'A Teacher updated successfully');
