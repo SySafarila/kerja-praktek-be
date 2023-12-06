@@ -11,6 +11,7 @@ use App\Http\Controllers\StaffController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\ExtracurricularsController;
+use App\Http\Controllers\GalleriesController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -60,6 +61,9 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
 
     // extracurricular
     Route::resource('/extracurriculars', ExtracurricularsController::class)->except(['show']);
+
+    // extracurricular
+    Route::resource('/galleries', GalleriesController::class)->except(['show']);
 
     // bulk delete
     Route::delete('/bulk-delete/permissions', [PermissionController::class, 'massDestroy'])->name('permissions.massDestroy');
