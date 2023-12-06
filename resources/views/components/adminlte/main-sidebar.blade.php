@@ -2,7 +2,7 @@
     <a href="{{ route('admin.index') }}" class="brand-link">
         <img src="{{ asset('adminlte-3.2.0/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
             class="brand-image img-circle" style="opacity: .8">
-        <span class="brand-text font-weight-light">SySafarila</span>
+        <span class="brand-text font-weight-light">Admin Dashboard</span>
     </a>
 
     <div class="sidebar">
@@ -52,7 +52,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('admin.staffs.index') }}"
                                     class="nav-link {{ request()->routeIs('admin.staffs.*') ? 'active' : '' }}">
-                                    <i class="nav-icon fa fa-users"></i>
+                                    <i class="nav-icon fas fa-user-tie"></i>
                                     <p class="text-capitalize">
                                         staffs
                                         {{-- <span class="right badge badge-danger">New</span> --}}
@@ -68,7 +68,7 @@
                             <li class="nav-item">
                                 <a href="{{ route('admin.teachers.index') }}"
                                     class="nav-link {{ request()->routeIs('admin.teachers.*') ? 'active' : '' }}">
-                                    <i class="nav-icon fa fa-users"></i>
+                                    <i class="nav-icon fa fa-user-graduate"></i>
                                     <p class="text-capitalize">
                                         teachers
                                         {{-- <span class="right badge badge-danger">New</span> --}}
@@ -84,9 +84,25 @@
                             <li class="nav-item">
                                 <a href="{{ route('admin.subjects.index') }}"
                                     class="nav-link {{ request()->routeIs('admin.subjects.*') ? 'active' : '' }}">
-                                    <i class="nav-icon fa fa-users"></i>
+                                    <i class="nav-icon fa fa-tags"></i>
                                     <p class="text-capitalize">
                                         subjects
+                                        {{-- <span class="right badge badge-danger">New</span> --}}
+                                    </p>
+                                </a>
+                            </li>
+                        @endcan
+                    @endif
+                @endcanany
+                @canany(['extracurriculars-read'])
+                    @if (Route::has('admin.extracurriculars.index'))
+                        @can('extracurriculars-read')
+                            <li class="nav-item">
+                                <a href="{{ route('admin.extracurriculars.index') }}"
+                                    class="nav-link {{ request()->routeIs('admin.extracurriculars.*') ? 'active' : '' }}">
+                                    <i class="nav-icon fa fa-rocket"></i>
+                                    <p class="text-capitalize">
+                                        extracurriculars
                                         {{-- <span class="right badge badge-danger">New</span> --}}
                                     </p>
                                 </a>

@@ -18,4 +18,9 @@ class Teacher extends Model
     {
         return $this->belongsToMany(Subject::class, 'teacher_subject');
     }
+
+    public function extracurriculars()
+    {
+        return $this->hasMany(Extracurricular::class, 'mentor_id');
+    }
 }

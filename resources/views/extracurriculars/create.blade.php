@@ -1,5 +1,5 @@
 @extends('layouts.adminlte', [
-    'title' => 'Admin Dashboard | Teachers - Create',
+    'title' => 'Admin Dashboard | Extracurriculars - Create',
 ])
 
 @section('head')
@@ -15,13 +15,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6 d-flex align-items-center">
-                    <h1 class="m-0">Create teacher</h1>
+                    <h1 class="m-0">Create a Extracurriculars</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Home</a></li>
                         <li class="breadcrumb-item text-capitalize"><a
-                                href="{{ route('admin.teachers.index') }}">teachers</a>
+                                href="{{ route('admin.extracurriculars.index') }}">Extracurriculars</a>
                         </li>
                         <li class="breadcrumb-item active">Create</li>
                     </ol>
@@ -40,13 +40,13 @@
             </ul>
         </div>
     @endif
-
     <div class="content pb-3">
         <div class="container-fluid">
             <div class="card m-0">
-                <form action="{{ route('admin.teachers.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.extracurriculars.store') }}" method="POST" enctype="multipart/form-data">
                     <div class="card-body">
                         @csrf
+
                         <div class="form-group">
                             <label for="name" class="text-capitalize">Name</label>
                             <input type="text" class="form-control" id="name" name="name"
@@ -65,44 +65,59 @@
                             @enderror
                         </div>
 
+
                         <div class="form-group">
-                            <label for="subjects" class="text-capitalize">Subjects</label>
-                            <select class="form-control select2" id="subjects" name="subject_id[]" multiple>
-                                @foreach ($subjects as $subject)
-                                    <option value="{{ $subject->id }}"
-                                        {{ optional($teacher)->subjects ? (in_array($subject->id, $teacher->subjects->pluck('id')->toArray()) ? 'selected' : '') : '' }}>
-                                        {{ $subject->name }}
-                                    </option>
+                            <label for="schedule" class="text-capitalize">Days of the Week</label>
+                            <select class="form-control select2" id="schedule" name="schedule[]" multiple required>
+                                <option value="Monday">Monday</option>
+                                <option value="Tuesday">Tuesday</option>
+                                <option value="Wednesday">Wednesday</option>
+                                <option value="Thursday">Thursday</option>
+                                <option value="Friday">Friday</option>
+                                <option value="Saturday">Saturday</option>
+                                <option value="Sunday">Sunday</option>
+                            </select>
+                            @error('schedule')
+                                <div class="text-sm text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="location" class="text-capitalize">Location</label>
+                            <input type="text" class="form-control" id="location" name="location"
+                                placeholder="Enter location">
+                            @error('location')
+                                <div class="text-sm text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description" class="text-capitalize">Description</label>
+                            <textarea class="form-control" id="description" name="description" placeholder="Enter description" rows="4" required></textarea>
+                            @error('description')
+                                <div class="text-sm text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mentor_id" class="text-capitalize">Mentor</label>
+                            <select class="form-control select2" id="mentor_id" name="mentor_id">
+                                <option value="" selected disabled>Select a mentor</option>
+                                @foreach ($teachers as $teacher)
+                                    <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
                                 @endforeach
                             </select>
-                            @error('subject_id')
-                                <div class="text-sm text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="nuptk" class="text-capitalize">NUPTK</label>
-                            <input type="text" class="form-control" id="nuptk" name="nuptk"
-                                placeholder="Enter NUPTK">
-                            @error('nuptk')
-                                <div class="text-sm text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="nip" class="text-capitalize">NIP</label>
-                            <input type="text" class="form-control" id="nip" name="nip"
-                                placeholder="Enter NIP">
-                            @error('nip')
+                            @error('mentor_id')
                                 <div class="text-sm text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
+
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary btn-sm">Save</button>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
