@@ -9,7 +9,7 @@
         @apply font-roboto text-accent-3;
     }
 
-    a {
+    nav a, footer a {
         @apply hover:underline;
     }
 }
