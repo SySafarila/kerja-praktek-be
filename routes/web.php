@@ -28,6 +28,7 @@ Route::view('/authentication', 'authentication');
 Route::view('/ppdb', 'ppdb');
 Route::view('/ppdb-payment', 'ppdb-payment');
 Route::view('/news', 'news');
+Route::view('/news/1', 'news-detail');
 
 Route::get('/dashboard', function () {
     return redirect()->route('admin.index');
