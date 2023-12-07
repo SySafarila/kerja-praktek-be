@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Blog;
+use App\Models\News;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -19,11 +19,11 @@ class AdminIndex extends Controller
         $users = User::all();
         $roles = Role::all();
         $permissions = Permission::all();
-        $blogs = Blog::all();
+        $news = News::all();
 
         $userResult = $this->usersCount($users);
 
-        return view('admin.index', compact('users', 'roles', 'permissions', 'blogs', 'userResult'));
+        return view('admin.index', compact('users', 'roles', 'permissions', 'news', 'userResult'));
     }
 
     private function usersCount($users)
