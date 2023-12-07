@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Blog;
+use App\Models\News;
 use DOMDocument;
 use Illuminate\Http\File;
 use Illuminate\Http\Request;
@@ -11,17 +11,17 @@ use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
 use Intervention\Image\ImageManagerStatic as Image;
 
-class BlogController extends Controller
+class NewsController extends Controller
 {
-    private $image_path = 'blogs/';
+    private $image_path = 'news/';
     private $disk = 'public';
 
     public function __construct()
     {
-        $this->middleware('can:blogs-create')->only(['create', 'store']);
-        $this->middleware('can:blogs-read')->only(['index', 'show']);
-        $this->middleware('can:blogs-update')->only(['edit', 'update']);
-        $this->middleware('can:blogs-delete')->only(['destroy', 'massDestroy']);
+        $this->middleware('can:news-create')->only(['create', 'store']);
+        $this->middleware('can:news-read')->only(['index', 'show']);
+        $this->middleware('can:news-update')->only(['edit', 'update']);
+        $this->middleware('can:news-delete')->only(['destroy', 'massDestroy']);
     }
 
     /**
@@ -32,11 +32,11 @@ class BlogController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            return DataTables::of(Blog::query())
+            return DataTables::of(News::query())
                 ->addColumn('created_at', function ($model) {
                     return $model->created_at->diffForHumans();
                 })
-                ->addColumn('options', 'blogs.datatables.options')
+                ->addColumn('options', 'news.datatables.options')
                 ->setRowAttr([
                     'data-model-id' => function ($model) {
                         return $model->id;
@@ -46,7 +46,7 @@ class BlogController extends Controller
                 ->toJson();
         }
 
-        return view('blogs.index');
+        return view('news.index');
     }
 
     /**
@@ -56,7 +56,7 @@ class BlogController extends Controller
      */
     public function create()
     {
-        return view('blogs.create');
+        return view('news.create');
     }
 
     /**
@@ -76,7 +76,7 @@ class BlogController extends Controller
 
         $body = $this->process_html_upload($body);
 
-        $blog = Blog::create([
+        $news = News::create([
             'title' => $request->title,
             'body' => $body,
             'slug' => 'slug'
@@ -84,11 +84,11 @@ class BlogController extends Controller
 
         $slug = Str::of($request->title)->slug('-');
 
-        $blog->update([
+        $news->update([
             'slug' => $slug
         ]);
 
-        return redirect()->route('admin.blogs.index')->with('success', 'Blog uploaded !');
+        return redirect()->route('admin.news.index')->with('success', 'News uploaded !');
     }
 
     /**
@@ -99,9 +99,9 @@ class BlogController extends Controller
      */
     public function show($id)
     {
-        $blog = Blog::findOrFail($id);
+        $news = News::findOrFail($id);
 
-        return view('blogs.show', compact('blog'));
+        return view('news.show', compact('news'));
     }
 
     /**
@@ -112,9 +112,9 @@ class BlogController extends Controller
      */
     public function edit($id)
     {
-        $blog = Blog::findOrFail($id);
+        $news = News::findOrFail($id);
 
-        return view('blogs.edit', compact('blog'));
+        return view('news.edit', compact('news'));
     }
 
     /**
@@ -131,13 +131,13 @@ class BlogController extends Controller
             'body' => ['required']
         ]);
 
-        $blog = Blog::findOrFail($id);
+        $news = News::findOrFail($id);
 
         $oldImages = [];
         $newImages = [];
 
         // start old images sorting
-        $body = $blog->body;
+        $body = $news->body;
         $oldImages = $this->images_sorting($body);
         // end old images sorting
 
@@ -172,13 +172,13 @@ class BlogController extends Controller
 
         $slug = Str::of($request->title)->slug('-');
 
-        $blog->update([
+        $news->update([
             'title' => $request->title,
             'body' => $body3,
             'slug' => $slug
         ]);
 
-        return redirect()->route('admin.blogs.index')->with('success', 'Blog updated !');
+        return redirect()->route('admin.news.index')->with('success', 'News updated !');
     }
 
     /**
@@ -189,9 +189,9 @@ class BlogController extends Controller
      */
     public function destroy($id)
     {
-        $blog = Blog::findOrFail($id);
+        $news = News::findOrFail($id);
 
-        $body = $blog->body;
+        $body = $news->body;
         $dom = new DOMDocument();
         @$dom->loadHTML($body, LIBXML_HTML_NODEFDTD);
         $images = $dom->getElementsByTagName('img');
@@ -208,7 +208,7 @@ class BlogController extends Controller
             }
         }
 
-        $blog->delete();
+        $news->delete();
 
         if (@$images_will_deleted && count($images_will_deleted) > 0) {
             Storage::disk($this->disk)->delete(@$images_will_deleted);
@@ -218,7 +218,7 @@ class BlogController extends Controller
             return response()->json(true);
         }
 
-        return redirect()->route('admin.blogs.index')->with('success', 'Blog deleted !');
+        return redirect()->route('admin.news.index')->with('success', 'News deleted !');
     }
 
     public function massDestroy(Request $request)
@@ -226,10 +226,10 @@ class BlogController extends Controller
         $arr = explode(',', $request->ids);
 
         foreach ($arr as $id) {
-            $blog = Blog::find($id);
+            $news = News::find($id);
 
-            if ($blog) {
-                $body = $blog->body;
+            if ($news) {
+                $body = $news->body;
                 $dom = new DOMDocument();
                 @$dom->loadHTML($body, LIBXML_HTML_NODEFDTD);
                 $images = $dom->getElementsByTagName('img');
@@ -246,11 +246,11 @@ class BlogController extends Controller
                     }
                 }
 
-                $blogs_will_deleted[] = $blog->id;
+                $news_will_deleted[] = $news->id;
             }
         }
 
-        Blog::destroy($blogs_will_deleted);
+        News::destroy($news_will_deleted);
 
         if (@$images_will_deleted && count($images_will_deleted) > 0) {
             Storage::disk($this->disk)->delete(@$images_will_deleted);
@@ -260,7 +260,7 @@ class BlogController extends Controller
             return response()->json(true);
         }
 
-        return redirect()->route('admin.blogs.index')->with('success', 'Posts deleted !');
+        return redirect()->route('admin.news.index')->with('success', 'Posts deleted !');
     }
 
     private function process_html_upload($body)

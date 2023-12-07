@@ -1,9 +1,9 @@
-<footer class="main-footer">
+<footer class="main-footer text-sm">
     <!-- To the right -->
-    <div class="d-none d-sm-inline float-right">
-        Developed by <a href="https://instagram.com/sysafarila" target="__blank">SySafarila</a>
+    <div class="d-none d-sm-inline float-right text-sm">
+        Developed in cooperation with  <a href="#" target="__blank">Universitas Putra Indonesia</a>
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
+    <strong>Copyright &copy; 2023 <a href="{{route('landingpage')}}">SMA Ma'arif Pacet</a>.</strong> All rights
     reserved.
 </footer>
