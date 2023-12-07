@@ -115,30 +115,30 @@ class PermissionSeeder extends Seeder
             ],
         );
 
-        // blogs
+        // news
         array_push(
             $arr,
             [
                 'guard_name' => 'web',
-                'name' => 'blogs-create',
+                'name' => 'news-create',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'guard_name' => 'web',
-                'name' => 'blogs-read',
+                'name' => 'news-read',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'guard_name' => 'web',
-                'name' => 'blogs-update',
+                'name' => 'news-update',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'guard_name' => 'web',
-                'name' => 'blogs-delete',
+                'name' => 'news-delete',
                 'created_at' => now(),
                 'updated_at' => now()
             ],

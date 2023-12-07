@@ -1,5 +1,5 @@
 @extends('layouts.adminlte', [
-    'title' => 'Blogs'
+    'title' => 'News'
 ])
 
 @section('head')
@@ -17,15 +17,15 @@
             <x-adminlte.session-notifications />
             <div class="row mb-2">
                 <div class="col-sm-6 d-flex align-items-center">
-                    <h1 class="m-0">Blogs</h1>
-                    @can('blogs-create')
-                        <a href="{{ route('admin.blogs.create') }}" class="btn btn-sm btn-primary ml-2">Add New</a>
+                    <h1 class="m-0">News</h1>
+                    @can('news-create')
+                        <a href="{{ route('admin.news.create') }}" class="btn btn-sm btn-primary ml-2">Add New</a>
                     @endcan
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Home</a></li>
-                        <li class="breadcrumb-item active">Blogs</li>
+                        <li class="breadcrumb-item active">News</li>
                     </ol>
                 </div>
             </div>
@@ -113,7 +113,7 @@
                 text: 'Bulk Delete',
                 className: 'btn btn-sm rounded-0 btn-danger',
                 action: function() {
-                    startBulkDelete('{{ csrf_token() }}', '{{ route('admin.blogs.massDestroy') }}')
+                    startBulkDelete('{{ csrf_token() }}', '{{ route('admin.news.massDestroy') }}')
                 }
             }, ];
 
@@ -126,7 +126,7 @@
                 language: {
                     processing: 'Loading...'
                 },
-                ajax: '{!! route('admin.blogs.index') !!}',
+                ajax: '{!! route('admin.news.index') !!}',
                 lengthMenu: [
                     [10, 50, 100, 500, 1000, -1],
                     [10, 50, 100, 500, 1000, 'All']

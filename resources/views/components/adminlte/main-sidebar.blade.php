@@ -111,15 +111,15 @@
                         @endcan
                     @endif
                 @endcanany
-                @canany(['blogs-read'])
-                    @if (Route::has('admin.blogs.index'))
-                        @can('blogs-read')
+                @canany(['news-read'])
+                    @if (Route::has('admin.news.index'))
+                        @can('news-read')
                             <li class="nav-item">
-                                <a href="{{ route('admin.blogs.index') }}"
-                                    class="nav-link {{ request()->routeIs('admin.blogs.*') ? 'active' : '' }}">
+                                <a href="{{ route('admin.news.index') }}"
+                                    class="nav-link {{ request()->routeIs('admin.news.*') ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-newspaper"></i>
                                     <p class="text-capitalize">
-                                        Blogs
+                                        news
                                         {{-- <span class="right badge badge-danger">New</span> --}}
                                     </p>
                                 </a>

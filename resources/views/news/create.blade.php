@@ -16,13 +16,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6 d-flex align-items-center">
-                    <h1 class="m-0">Edit Blog</h1>
+                    <h1 class="m-0">Create News</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('admin.blogs.index') }}">Blogs</a></li>
-                        <li class="breadcrumb-item active">Edit</li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.news.index') }}">News</a></li>
+                        <li class="breadcrumb-item active">Create</li>
                     </ol>
                 </div>
             </div>
@@ -33,20 +33,19 @@
         <div class="container-fluid">
             <div class="card m-0">
                 <div class="card-body">
-                    <form action="{{ route('admin.blogs.update', $blog) }}" method="POST">
+                    <form action="{{ route('admin.news.store') }}" method="POST">
                         @csrf
-                        @method('PATCH')
                         <div class="form-group">
                             <label for="title" class="text-capitalize">title</label>
                             <input type="text" class="form-control" id="title" name="title" placeholder="Some Title Here"
-                                value="{{ old('title') ?? $blog->title }}" required>
+                                value="{{ old('title') }}" required>
                             @error('title')
                                 <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label for="body" class="text-capitalize">body</label>
-                            <textarea name="body" id="body" rows="10" class="form-control">{{ old('body') ?? $blog->body }}</textarea>
+                            <textarea name="body" id="body" rows="10" class="form-control">{{ old('body') }}</textarea>
                             @error('body')
                                 <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
                             @enderror

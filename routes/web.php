@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AdminIndex;
-use App\Http\Controllers\BlogController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PermissionController;
 // use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
@@ -53,8 +53,8 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     // users
     Route::resource('/users', UserController::class)->except(['show']);
 
-    // blogs | comment this route below to disable Blog features
-    // Route::resource('/blogs', BlogController::class);
+    // news | comment this route below to disable News features
+    Route::resource('/news', NewsController::class);
 
     // staffs
     Route::resource('/staffs', StaffController::class)->except(['show']);
@@ -75,20 +75,20 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     Route::resource('/testimonials', TestimonialController::class)->except(['show']);
 
     // articles
-    Route::resource('/articles', ArticleController::class);
+    // Route::resource('/articles', ArticleController::class);
 
     // bulk delete
     Route::delete('/bulk-delete/permissions', [PermissionController::class, 'massDestroy'])->name('permissions.massDestroy');
     Route::delete('/bulk-delete/roles', [RoleController::class, 'massDestroy'])->name('roles.massDestroy');
     Route::delete('/bulk-delete/users', [UserController::class, 'massDestroy'])->name('users.massDestroy');
-    // Route::delete('/bulk-delete/blogs', [BlogController::class, 'massDestroy'])->name('blogs.massDestroy');
+    Route::delete('/bulk-delete/news', [NewsController::class, 'massDestroy'])->name('news.massDestroy');
     Route::delete('/bulk-delete/staffs', [StaffController::class, 'massDestroy'])->name('staffs.massDestroy');
     Route::delete('/bulk-delete/teachers', [TeacherController::class, 'massDestroy'])->name('teachers.massDestroy');
     Route::delete('/bulk-delete/subjects', [SubjectController::class, 'massDestroy'])->name('subjects.massDestroy');
     Route::delete('/bulk-delete/extracurriculars', [ExtracurricularsController::class, 'massDestroy'])->name('extracurriculars.massDestroy');
     Route::delete('/bulk-delete/galleries', [GalleriesController::class, 'massDestroy'])->name('galleries.massDestroy');
     Route::delete('/bulk-delete/testimonials', [TestimonialController::class, 'massDestroy'])->name('testimonials.massDestroy');
-    Route::delete('/bulk-delete/articles', [ArticleController::class, 'massDestroy'])->name('articles.massDestroy');
+    // Route::delete('/bulk-delete/articles', [ArticleController::class, 'massDestroy'])->name('articles.massDestroy');
 });
 
 // account re-verification
@@ -98,3 +98,4 @@ Route::middleware(['auth', 'verified'])->group(function() {
 });
 
 require __DIR__ . '/auth.php';
+//

@@ -6,7 +6,7 @@
 @endsection
 
 @section('content_header')
-    <h1>Blog Details</h1>
+    <h1>News Details</h1>
 @stop
 
 @section('content')
@@ -19,7 +19,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.index') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('admin.blogs.index') }}">Blogs</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.news.index') }}">Newss</a></li>
                         <li class="breadcrumb-item active">View</li>
                     </ol>
                 </div>
@@ -30,11 +30,11 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-body">
-                    <h2>{{ $blog->title }}</h2>
-                    <p>Published on {{ $blog->created_at->format('M d, Y') }}</p>
+                    <h2>{{ $news->title }}</h2>
+                    <p>Published on {{ $news->created_at->format('M d, Y') }}</p>
 
                     <div class="mt-4">
-                        {!! $blog->body !!}
+                        {!! $news->body !!}
                     </div>
 
                 </div>
