@@ -47,21 +47,21 @@
 @endsection
 
 @section('content')
-<div class="max-w-screen-lg mx-auto lg:px-5">
+<div class="mx-auto">
     <div class="splide" id="splide1" aria-label="Splide Basic HTML Example">
         <div class="splide__track">
             <ul class="splide__list">
                 <li class="splide__slide">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/16x9_by_Pengo.svg/800px-16x9_by_Pengo.svg.png"
-                        alt="" class="aspect-video w-full object-cover">
+                        alt="" class="aspect-video w-full object-cover lg:h-[25rem] xl:h-[30rem] 2xl:h-[45rem]">
                 </li>
                 <li class="splide__slide">
                     <img src="https://biteable.com/wp-content/uploads/2023/05/Screen-Shot-2023-05-22-at-11.36.44-am-1024x519.jpg"
-                        alt="" class="aspect-video w-full object-cover">
+                        alt="" class="aspect-video w-full object-cover lg:h-[25rem] xl:h-[30rem] 2xl:h-[45rem]">
                 </li>
                 <li class="splide__slide">
                     <img src="https://t3.ftcdn.net/jpg/05/00/93/52/360_F_500935221_tsBI0GrKhmZtaUJc9rqBohOTMplI8Uil.jpg"
-                        alt="" class="aspect-video w-full object-cover">
+                        alt="" class="aspect-video w-full object-cover lg:h-[25rem] xl:h-[30rem] 2xl:h-[45rem]">
                 </li>
             </ul>
         </div>
