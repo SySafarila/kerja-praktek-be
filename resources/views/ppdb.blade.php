@@ -8,6 +8,11 @@
     <img src="{{ asset('images/ppdb.png') }}" alt="" class="w-full">
 </div>
 <form action="{{ route('ppdb.store') }}" method="POST" class="max-w-screen-lg mx-auto p-5">
+    @if (session('error'))
+        <div class="bg-red-200 p-3 border border-red-300 mb-2">
+            {{ session('error') }}
+        </div>
+    @endif
     @csrf
     <h1 class="text-2xl font-bold mb-5">Penerimaan Peserta Didik Baru</h1>
     <div class="grid lg:grid-cols-2 gap-5">
@@ -200,8 +205,8 @@
                         penghasilan perbulan
                         <span class="text-red-500">*</span>
                     </label>
-                    <input type="text" name="parent[income_per_month]" class="w-full border-gray-500 border outline-none rounded-lg" id="penghasilanperbulan" value="{{ old('parent.income') }}" required>
-                    @error('parent.income')
+                    <input type="text" name="parent[income_per_month]" class="w-full border-gray-500 border outline-none rounded-lg" id="penghasilanperbulan" value="{{ old('parent.income_per_month') }}" required>
+                    @error('parent.income_per_month')
                         <small class="text-red-500">{{ $message }}</small>
                     @enderror
                 </div>

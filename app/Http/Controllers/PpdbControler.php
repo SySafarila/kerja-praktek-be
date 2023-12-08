@@ -69,7 +69,8 @@ class PpdbControler extends Controller
         $payment_method = $request->payment_method;
         $user = Auth::user();
 
-        DB::transaction(function () use ($user, $student, $parent, $payment_method) {
+        DB::beginTransaction();
+        try {
             // registering student
             $create_student = $user->student()->create([
                 'nisn' => $student['nisn'],
@@ -101,8 +102,25 @@ class PpdbControler extends Controller
 
             // create transaction
             $order_id = 'PPDB-' . uniqid();
+
             $this->charge_transaction($payment_method, $order_id, $create_student, $user);
-        });
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            switch ($th->getCode()) {
+                case 402:
+                    Log::debug('Payment channel is not activated, you have to activate your Core API');
+                    return redirect()->route('ppdb.index')->with('error', 'Metode pembayaran yang dipilih sedang dalam perbaikan.')->withInput();
+                    break;
+
+                default:
+                    Log::debug($th->getMessage());
+                    return redirect()->route('ppdb.index')->with('error', $th->getMessage());
+                    break;
+            }
+        }
+
 
         return redirect()->route('ppdb.payment');
     }
@@ -368,16 +386,17 @@ class PpdbControler extends Controller
                     'settlement_time' => null
                 ]);
             } catch (\Throwable $th) {
-                //throw $th;
                 switch ($th->getCode()) {
                     case 402:
                         Log::debug('Payment channel is not activated, you have to activate your Core API');
+                        // $user->student()->delete();
                         break;
 
                     default:
                         Log::debug($th->getMessage());
                         break;
                 }
+                throw $th;
             }
         }
     }
