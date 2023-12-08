@@ -101,6 +101,114 @@ class PpdbControler extends Controller
 
             // create transaction
             $order_id = 'PPDB-' . uniqid();
+            $this->charge_transaction($payment_method, $order_id, $create_student, $user);
+        });
+
+        return redirect()->route('ppdb.payment');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
+    }
+
+    public function payment()
+    {
+        $user = Auth::user();
+        if (!$user->student) {
+            return redirect()->route('ppdb.index');
+        }
+        $student = $user->student;
+        $transaction = $user->transaction;
+
+        if ($transaction->transaction_status == 'pending' && $transaction->payment_method != 'offline') {
+            $this->startMidtransConfig();
+            $response = \Midtrans\Transaction::status($transaction->transaction_id);
+
+            if ($response->transaction_status == 'settlement') {
+                $transaction->update([
+                    'transaction_status' => $response->transaction_status,
+                    'settlement_time' => $response->settlement_time
+                ]);
+            }
+            if ($response->transaction_status == 'expire') {
+                $transaction->update([
+                    'transaction_status' => $response->transaction_status,
+                    'settlement_time' => null
+                ]);
+            }
+        }
+
+        if (in_array($transaction->transaction_status, ['pending', 'expire'])) {
+            if (request()->update_payment && in_array(request()->update_payment, ['qris', 'va_bca', 'va_bni', 'va_bri', 'va_permata', 'va_cimb', 'gopay', 'shopeepay', 'offline'])) {
+                $order_id = 'PPDB-' . uniqid();
+
+                if ($transaction->payment_method == 'offline') {
+                    $transaction->delete();
+                } else {
+                    $this->startMidtransConfig();
+                    $response = \Midtrans\Transaction::cancel($transaction->transaction_id);
+                    $transaction->delete();
+                }
+
+                $this->charge_transaction(request()->update_payment, $order_id, Auth::user()->student, Auth::user());
+                return redirect()->route('ppdb.payment');
+            }
+        }
+
+        return view('ppdb-payment', compact('student', 'transaction'));
+    }
+
+    function charge_transaction($payment_method, $order_id, $create_student, $user)
+    {
+        if ($payment_method == 'offline') {
+            $user->transaction()->create([
+                'order_id' => $order_id,
+                'fraud_status' => null,
+                'transaction_id' => $order_id,
+                'transaction_status' => 'pending',
+                'payment_method' => $payment_method,
+                'virtual_account' => null,
+                'bank' => null,
+                'status_message' => null,
+                'status_code' => null,
+                'gross_amount' => 150000,
+                'link_qr_code' => null,
+                'link_deeplink' => null,
+                'link_get_status' => null,
+                'link_cancel' => null,
+                'minimarket' => null,
+                'minimarket_payment_code' => null,
+                'settlement_time' => null
+            ]);
+        } else {
             $params = [
                 'transaction_details' => [
                     'order_id' => $order_id,
@@ -271,52 +379,6 @@ class PpdbControler extends Controller
                         break;
                 }
             }
-        });
-
-        return redirect()->route('ppdb.payment');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
-
-    public function payment()
-    {
-        $user = Auth::user();
-        if (!$user->student) {
-            return redirect()->route('ppdb.index');
         }
-        $student = $user->student;
-        $transaction = $user->transaction;
-        // return $transaction;
-        return view('ppdb-payment', compact('student', 'transaction'));
     }
 }
