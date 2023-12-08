@@ -1,7 +1,7 @@
 <footer class="bg-accent-5 text-accent-2">
     <div class="max-w-screen-lg mx-auto grid lg:grid-cols-3 p-5 gap-5 lg:gap-8">
         <div>
-            <h3 class="font-semibold text-lg mb-2 text-accent-2">SMA Ma'arif Pacet Cianjur</h3>
+            <h3 class="font-semibold text-lg mb-2 text-accent-2 uppercase">SMA Ma'arif Pacet Cianjur</h3>
             <p class="text-accent-2"><b class="text-accent-2">Alamat : </b>Cipendawa, Pacet, Cianjur Regency, West Java
                 43253</p>
             <div class="flex flex-col gap-2 mt-2">
@@ -29,17 +29,19 @@
         <div>
             <h3 class="font-semibold text-lg mb-2 text-accent-2">Profile</h3>
             <div class="flex flex-col gap-2">
-                <a href="#" class="text-accent-2">Tentang Kami</a>
-                <a href="#" class="text-accent-2">Galeri</a>
-                <a href="#" class="text-accent-2">Ekstrakurikuler</a>
+                <a href="#" class="text-accent-2">About Us</a>
+                <a href="#" class="text-accent-2">Contact Us</a>
+                <a href="#" class="text-accent-2">Staffs & Teachers</a>
+                <a href="#" class="text-accent-2">Subjetcs</a>
             </div>
         </div>
         <div>
             <h3 class="font-semibold text-lg mb-2 text-accent-2">Link Terkait</h3>
             <div class="flex flex-col gap-2">
-                <a href="#" class="text-accent-2">Company Profile</a>
-                <a href="#" class="text-accent-2">PPDB</a>
                 <a href="#" class="text-accent-2">E-Library</a>
+                <a href="#" class="text-accent-2">PPDB</a>
+                <a href="#" class="text-accent-2">Extracurriculars</a>
+                <a href="#" class="text-accent-2">Galleries</a>
             </div>
         </div>
     </div>

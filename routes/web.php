@@ -14,6 +14,8 @@ use App\Http\Controllers\ExtracurricularsController;
 use App\Http\Controllers\GalleriesController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\HomepageController;
+use App\Http\Controllers\PublicController;
 use App\Http\Controllers\PpdbControler;
 use Illuminate\Support\Facades\Route;
 
@@ -29,9 +31,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('landingpage');
+Route::get('/', [HomepageController::class, 'index'])->name('homepage');
+
+Route::get('/news', [PublicController::class, 'index'])->name('news');
+Route::get('/news/{id}', [PublicController::class, 'show'])->name('news.show');
 
 Route::view('/authentication', 'authentication');
 Route::resource('/ppdb', PpdbControler::class);
