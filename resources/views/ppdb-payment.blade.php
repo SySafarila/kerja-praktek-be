@@ -8,6 +8,11 @@
     <img src="{{ asset('images/ppdb.png') }}" alt="" class="w-full">
 </div>
 <div class="max-w-screen-lg mx-auto p-5">
+    @if (session('error'))
+        <div class="bg-red-200 p-3 border border-red-300 mb-2">
+            {{ session('error') }}
+        </div>
+    @endif
     <h1 class="text-2xl font-bold mb-5">Pembayaran</h1>
     <div class="grid lg:grid-cols-3 gap-5">
         <div class="flex flex-col gap-3">

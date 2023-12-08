@@ -189,14 +189,52 @@ class PpdbControler extends Controller
                 $order_id = 'PPDB-' . uniqid();
 
                 if ($transaction->payment_method == 'offline') {
-                    $transaction->delete();
+                    DB::beginTransaction();
+                    try {
+                        $this->charge_transaction(request()->update_payment, $order_id, Auth::user()->student, Auth::user());
+                        $transaction->delete();
+                        DB::commit();
+                    } catch (\Throwable $th) {
+                        //throw $th;
+                        DB::rollBack();
+                        switch ($th->getCode()) {
+                            case 402:
+                                Log::debug('Payment channel is not activated, you have to activate your Core API');
+                                return redirect()->route('ppdb.payment')->with('error', 'Metode pembayaran yang dipilih sedang dalam perbaikan.')->withInput();
+                                break;
+
+                            default:
+                                Log::debug($th->getMessage());
+                                return redirect()->route('ppdb.payment')->with('error', $th->getMessage());
+                                break;
+                        }
+                    }
                 } else {
-                    $this->startMidtransConfig();
-                    $response = \Midtrans\Transaction::cancel($transaction->transaction_id);
-                    $transaction->delete();
+                    DB::beginTransaction();
+                    try {
+                        $this->startMidtransConfig();
+                        $this->charge_transaction(request()->update_payment, $order_id, Auth::user()->student, Auth::user());
+                        $response = \Midtrans\Transaction::cancel($transaction->transaction_id);
+                        $transaction->delete();
+                        DB::commit();
+                    } catch (\Throwable $th) {
+                        //throw $th;
+                        DB::rollBack();
+                        switch ($th->getCode()) {
+                            case 402:
+                                Log::debug('Payment channel is not activated, you have to activate your Core API');
+                                return redirect()->route('ppdb.payment')->with('error', 'Metode pembayaran yang dipilih sedang dalam perbaikan.')->withInput();
+                                break;
+
+                            default:
+                                Log::debug($th->getMessage());
+                                return redirect()->route('ppdb.payment')->with('error', $th->getMessage());
+                                break;
+                        }
+                    }
                 }
 
-                $this->charge_transaction(request()->update_payment, $order_id, Auth::user()->student, Auth::user());
+                // $this->charge_transaction(request()->update_payment, $order_id, Auth::user()->student, Auth::user());
                 return redirect()->route('ppdb.payment');
             }
         }
@@ -389,7 +427,6 @@ class PpdbControler extends Controller
                 switch ($th->getCode()) {
                     case 402:
                         Log::debug('Payment channel is not activated, you have to activate your Core API');
-                        // $user->student()->delete();
                         break;
 
                     default:
