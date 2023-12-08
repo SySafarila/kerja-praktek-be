@@ -53,7 +53,7 @@ class TestimonialController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'status' => 'required|string|max:255',
-            'feedback' => 'required|string|max:255',
+            'feedback' => 'required|string',
             'image' => 'required|image|max:2048',
         ]);
 
@@ -89,7 +89,7 @@ class TestimonialController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'status' => 'required|string|max:255',
-            'feedback' => 'required|string|max:255',
+            'feedback' => 'required|string',
             'image' => 'nullable|image|max:2048',
         ]);
 

@@ -4,35 +4,52 @@
 @endsection
 
 @section('content')
-<div class="max-w-screen-sm mx-auto p-5 my-10">
-    <div class="flex flex-col items-center gap-4">
-        <img src="{{ asset('images/logo.png') }}" alt="" class="w-[184px] aspect-square">
-        <h1 class="uppercase font-bold text-4xl text-black">SMA Ma'arif</h1>
-        <h2 class="border-b border-accent-5 px-5 text-2xl">Masuk</h2>
-        <form action="#" method="post" class="flex flex-col gap-3 w-full" id="login">
-            <input type="email" class="w-full border-gray-500 border outline-none rounded-lg" placeholder="Email">
-            <input type="password" class="w-full border-gray-500 border outline-none rounded-lg" id="password"
-                placeholder="Password">
-            <div class="flex items-center gap-2 justify-end" id="password-toggle">
-                <input type="checkbox" class="rounded" name="" id="password-toggle-status">
-                <label class="select-none" for="password-toggle">Tampilkan Password</label>
-            </div>
-            <div class="flex justify-between items-center">
-                <div class="flex items-center gap-2">
-                    <input type="checkbox" class="rounded" name="" id="remember">
-                    <label class="select-none" for="remember">Ingat Saya</label>
+    <div class="max-w-screen-sm mx-auto p-5 my-10">
+        <div class="flex flex-col items-center gap-4">
+            <img src="{{ asset('images/logos/logo1a.png') }}" alt="" class="w-[184px] aspect-square">
+            <h1 class="uppercase font-bold text-4xl text-black">SMA Ma'arif Pacet</h1>
+            <h2 class="border-b border-accent-5 px-5 text-2xl">Masuk</h2>
+
+            <form action="{{ route('login') }}" method="post" class="flex flex-col gap-3 w-full" id="login">
+                @csrf
+
+                <x-input-error :messages="$errors->get('email')" class=" text-red-600" />
+                <x-input-error :messages="$errors->get('password')" class=" text-red-600" />
+                {{-- email --}}
+                <input type="email" class="w-full border-gray-500 border outline-none rounded-lg " placeholder="Email"
+                    id="email" type="email" name="email" :value="old('email')" required autofocus
+                    autocomplete="username">
+
+                <input type="password" class="w-full border-gray-500 border outline-none rounded-lg" id="password"
+                    placeholder="Password" name="password" required autocomplete="current-password">
+                {{-- password --}}
+                <div class="flex items-center gap-2 justify-end" id="password-toggle">
+                    <input type="checkbox" class="rounded" name="" id="password-toggle-status" id="password">
+                    <label class="select-none text-sm" for="password-toggle">Tampilkan Password</label>
                 </div>
-                <a href="#">Lupa password?</a>
+
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center gap-2">
+                        <input type="checkbox" class="rounded" name="remember" id="remember_me">
+                        <label class="select-none text-sm" for="remember" id="remember_me">Ingat Saya</label>
+                    </div>
+
+                    @if (Route::has('password.request'))
+                        <a href="{{ route('password.request') }}" class="text-sm hover:underline">Lupa password?</a>
+                    @endif
+
+                </div>
+                <button class="btn bg-accent-1 uppercase text-accent-4 hover:text-accent-1 hover:bg-white border border-accent-1">Masuk</button>
+            </form>
+            <div class="flex flex-col w-full">
+
+                <p class="text-sm mb-2">Sudah mempunyai akun? <a href="{{ route('register') }}" class="text-accent-1 hover:text-yellow-600 font-semibold">klik disini</a>.</p>
+                {{-- <a href="{{ route('register') }}"
+                    class="btn bg-white border text-center border-accent-1 text-accent-1 uppercase hover:bg-accent-1  hover:text-accent-4">Daftar</a> --}}
             </div>
-            <button class="btn bg-accent-1 uppercase text-accent-4">Masuk</button>
-        </form>
-        <div class="flex flex-col w-full">
-            <p>Belum mendaftar? klik disini</p>
-            <button class="btn bg-white border border-accent-1 text-accent-1 uppercase hover:bg-accent-1 transition hover:text-accent-4">Daftar</button>
         </div>
     </div>
-</div>
-{{-- <div class="max-w-screen-sm mx-auto p-5">
+    {{-- <div class="max-w-screen-sm mx-auto p-5">
     <div class="flex flex-col items-center gap-4">
         <h2 class="border-b border-accent-5 px-5 text-2xl">Daftar</h2>
         <form action="#" method="post" class="flex flex-col gap-3 w-full" id="register">
@@ -54,21 +71,21 @@
 @endsection
 
 @section('script')
-<script>
-    const passwordToggle = document.getElementById('password-toggle');
-    const passwordToggleStatus = document.getElementById('password-toggle-status');
-    const password = document.querySelector('#login #password')
+    <script>
+        const passwordToggle = document.getElementById('password-toggle');
+        const passwordToggleStatus = document.getElementById('password-toggle-status');
+        const password = document.querySelector('#login #password')
 
-    passwordToggle.addEventListener('click', (e) => {
-        if (password.type == 'password') {
-            password.type = 'text'
-            passwordToggleStatus.checked = true
-        } else {
-            password.type = 'password'
-            passwordToggleStatus.checked = false
-        }
-    })
-</script>
+        passwordToggle.addEventListener('click', (e) => {
+            if (password.type == 'password') {
+                password.type = 'text'
+                passwordToggleStatus.checked = true
+            } else {
+                password.type = 'password'
+                passwordToggleStatus.checked = false
+            }
+        })
+    </script>
 @endsection
 
 {{-- <x-guest-layout>

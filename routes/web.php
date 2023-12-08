@@ -14,6 +14,7 @@ use App\Http\Controllers\ExtracurricularsController;
 use App\Http\Controllers\GalleriesController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\HomepageController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -28,9 +29,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('landingpage');
+Route::get('/', [HomepageController::class, 'index'])->name('homepage');
 
 Route::view('/authentication', 'authentication');
 Route::view('/ppdb', 'ppdb');

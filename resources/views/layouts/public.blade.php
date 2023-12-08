@@ -7,8 +7,9 @@
     <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    <link rel="shortcut icon" href="{{asset('images/logo.png')}}" type="image/x-icon">
-    <title>SMA Ma'arif Pacet Cianjur</title>
+    <link rel="shortcut icon" href="{{asset('images/logos/logo1a.png')}}" type="image/x-icon">
+    <title>SMA MA'ARIF PACET CIANJUR</title>
+
     @yield('head')
 
     @vite('resources/css/app.css')
