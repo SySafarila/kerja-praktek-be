@@ -38,48 +38,63 @@
                     <x-public.payment.shopeepay />
                 @endif
             </div>
-            @if (in_array($transaction->payment_method, ['va_bca', 'va_bni', 'va_bri', 'va_permata', 'va_cimb']))
-                <div class="flex flex-col" id="payment_va_detail">
-                    <span>Nomor Virtual Account</span>
-                    <div class="flex justify-between items-center">
-                        <span class="text-xl font-semibold" id="va">{{ $transaction->virtual_account }}</span>
-                        <span class="uppercase cursor-pointer text-accent-1 font-semibold" id="copy_va">Copy</span>
+            @if ($transaction->transaction_status == 'pending')
+                @if (in_array($transaction->payment_method, ['va_bca', 'va_bni', 'va_bri', 'va_permata', 'va_cimb']))
+                    <div class="flex flex-col" id="payment_va_detail">
+                        <span>Nomor Virtual Account</span>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xl font-semibold" id="va">{{ $transaction->virtual_account }}</span>
+                            <span class="uppercase cursor-pointer text-accent-1 font-semibold" id="copy_va">Copy</span>
+                        </div>
                     </div>
-                </div>
-            @endif
-            @if ($transaction->payment_method == 'offline')
-                <div class="flex flex-col" id="payment_school_detail">
-                    <span>Nomor Pendaftaran</span>
-                    <div class="flex justify-between items-center">
-                        <span class="text-xl font-semibold">{{ $transaction->order_id }}</span>
+                @endif
+                @if ($transaction->payment_method == 'offline')
+                    <div class="flex flex-col" id="payment_school_detail">
+                        <span>Nomor Pendaftaran</span>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xl font-semibold">{{ $transaction->order_id }}</span>
+                        </div>
                     </div>
+                @endif
+                @if ($transaction->payment_method == 'qris')
+                    <div class="flex flex-col" id="payment_qris_detail">
+                        <span class="block text-center">Scan QR Code</span>
+                        <img src="{{ $transaction->link_qr_code }}" alt="" class="w-60 mx-auto">
+                        <p class="text-center">Dapat digunakan dengan GoPay, OVO, dan aplikasi sejenis yang mendukung QRIS</p>
+                    </div>
+                @endif
+                @if ($transaction->payment_method == 'gopay')
+                    <div class="flex flex-col" id="payment_qris_detail">
+                        <span class="block text-center">Scan QR Code</span>
+                        <img src="{{ $transaction->link_qr_code }}" alt="" class="w-60 mx-auto">
+                        <p class="text-center">Dapat digunakan dengan GoPay, OVO, dan aplikasi sejenis yang mendukung QRIS</p>
+                        <p class="text-center py-2.5">Atau</p>
+                        <a href="{{ $transaction->link_deeplink }}" class="bg-accent-1 btn mx-auto text-center flex items-center gap-1.5">
+                            <span class="text-accent-4">Buka Aplikasi</span>
+                            <span class="material-icons-outlined text-accent-4 text-sm">open_in_new</span>
+                        </a>
+                    </div>
+                @endif
+                @if ($transaction->payment_method == 'shopeepay')
+                    <div class="flex flex-col" id="payment_qris_detail">
+                        <a href="{{ $transaction->link_deeplink }}" class="bg-accent-1 btn mx-auto text-center flex items-center gap-1.5">
+                            <span class="text-accent-4">Buka Aplikasi</span>
+                            <span class="material-icons-outlined text-accent-4 text-sm">open_in_new</span>
+                        </a>
+                    </div>
+                @endif
+            @endif
+            @if ($transaction->transaction_status == 'settlement')
+                <div class="bg-accent-1/25 p-3 border border-accent-1" id="settlement">
+                    <p>Pembayaran telah diterima, langkah selanjutnya:</p>
+                    <ul class="list-disc list-inside">
+                        <li>Upload berkas yang diperlukan</li>
+                    </ul>
                 </div>
             @endif
-            @if ($transaction->payment_method == 'qris')
-                <div class="flex flex-col" id="payment_qris_detail">
-                    <span class="block text-center">Scan QR Code</span>
-                    <img src="{{ $transaction->link_qr_code }}" alt="" class="w-60 mx-auto">
-                    <p class="text-center">Dapat digunakan dengan GoPay, OVO, dan aplikasi sejenis yang mendukung QRIS</p>
-                </div>
-            @endif
-            @if ($transaction->payment_method == 'gopay')
-                <div class="flex flex-col" id="payment_qris_detail">
-                    <span class="block text-center">Scan QR Code</span>
-                    <img src="{{ $transaction->link_qr_code }}" alt="" class="w-60 mx-auto">
-                    <p class="text-center">Dapat digunakan dengan GoPay, OVO, dan aplikasi sejenis yang mendukung QRIS</p>
-                    <p class="text-center py-2.5">Atau</p>
-                    <a href="{{ $transaction->link_deeplink }}" class="bg-accent-1 btn mx-auto text-center flex items-center gap-1.5">
-                        <span class="text-accent-4">Buka Aplikasi</span>
-                        <span class="material-icons-outlined text-accent-4 text-sm">open_in_new</span>
-                    </a>
-                </div>
-            @endif
-            @if ($transaction->payment_method == 'shopeepay')
-                <div class="flex flex-col" id="payment_qris_detail">
-                    <a href="{{ $transaction->link_deeplink }}" class="bg-accent-1 btn mx-auto text-center flex items-center gap-1.5">
-                        <span class="text-accent-4">Buka Aplikasi</span>
-                        <span class="material-icons-outlined text-accent-4 text-sm">open_in_new</span>
-                    </a>
+            @if ($transaction->transaction_status == 'expire')
+                <div class="bg-red-200 p-3 border border-red-300" id="settlement">
+                    <p>Pembayaran telah kadaluarsa, mohon perbarui metode pembayaranmu untuk melanjutkan pendaftaran.</p>
                 </div>
             @endif
             <div class="flex justify-between">
@@ -89,12 +104,22 @@
                         <span class="text-xl font-semibold">Rp {{ number_format($transaction->gross_amount, 0) }}</span>
                     </div>
                 </div>
-                <div>
-                    <span>Berlaku Sampai</span>
-                    <div class="flex justify-between items-center">
-                        <span class="text-xl font-semibold">{{ \Carbon\Carbon::parse($transaction->created_at)->addDays(31)->format('d-m-Y') }}</span>
+                @if ($transaction->transaction_status == 'pending')
+                    <div>
+                        <span>Berlaku Sampai</span>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xl font-semibold">{{ \Carbon\Carbon::parse($transaction->created_at)->addDays(31)->format('d-m-Y') }}</span>
+                        </div>
                     </div>
-                </div>
+                @endif
+                @if ($transaction->transaction_status == 'settlement')
+                    <div>
+                        <span>Terverifikasi Pada</span>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xl font-semibold">{{ \Carbon\Carbon::parse($transaction->settlement_time)->format('d-m-Y') }}</span>
+                        </div>
+                    </div>
+                @endif
             </div>
             <div class="flex justify-between gap-5 lg:flex-col lg:gap-3">
                 <a href="https://wa.me/6282117694132" target="__blank" class="btn bg-accent-1 text-accent-4 w-full text-center capitalize">Hubungi admin</a>
