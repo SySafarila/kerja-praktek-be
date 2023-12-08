@@ -233,7 +233,7 @@
             Artikel</h1>
         <div class="grid lg:grid-cols-3 lg:grid-rows-2 mt-5 gap-5">
             @foreach ($news as $item)
-                <a href="#" class="border rounded-t-xl overflow-hidden">
+                <a href="{{ route('news.show', ['id' => $item->id]) }}" class="border rounded-t-xl overflow-hidden">
                     <div class="relative">
                         @php
                             // Extract the first image from the CKEditor body

@@ -14,12 +14,12 @@
             id="navbar-menus" style="text-decoration: none">
             <a href="/" class="text-accent-2 hover:text-orange-200 transition text-sm"
                 style="text-decoration: none">Home</a>
-            <a href="#" class="text-accent-2 hover:text-orange-200 transition text-sm"
+            <a href="{{route('news')}}" class="text-accent-2 hover:text-orange-200 transition text-sm"
                 style="text-decoration: none">News</a>
             <a href="#" class="text-accent-2 hover:text-orange-200 transition text-sm"
-                style="text-decoration: none">About</a>
+                style="text-decoration: none">Galleries</a>
             <a href="#" class="text-accent-2 hover:text-orange-200 transition text-sm"
-                style="text-decoration: none">Contact</a>
+                style="text-decoration: none">Extracurriculars</a>
             <a href="#" class="text-accent-2 hover:text-orange-200 transition text-sm"
                 style="text-decoration: none">eLibrary</a>
 
@@ -60,8 +60,14 @@
                     </div>
                 </div>
             @else
-                <a href="{{ route('login') }}" class="text-accent-2 hover:text-yellow-200 transition text-sm"
-                    style="text-decoration: none">Login/Register</a>
+            <div class="flex gap-x-2">
+                <a href="{{ route('login') }}" class="px-2 border text-accent-2 hover:text-accent-1 hover:bg-white transition text-sm"
+                    style="text-decoration: none">Login</a>
+                <a href="{{ route('register') }}" class="px-2 border text-accent-2 hover:text-accent-1 hover:bg-white transition text-sm"
+                    style="text-decoration: none">Register</a>
+                {{-- <a href="{{ route('register') }}" class=" text-accent-2 hover:text-yellow-200 transition text-sm"
+                    style="text-decoration: none">Register</a> --}}
+            </div>
             @endauth
 
         </div>
