@@ -68,15 +68,15 @@
             <span class="text-xl font-semibold">Data Calon Siswa Terkait</span>
             <div class="flex flex-col">
                 <span class="block">NISN</span>
-                <span class="text-xl font-semibold block">000 000 000</span>
+                <span class="text-xl font-semibold block">{{ $student->nisn }}</span>
             </div>
             <div class="flex flex-col">
                 <span class="block">Nama Siswa</span>
-                <span class="text-xl font-semibold block">Syahrul Safarila</span>
+                <span class="text-xl font-semibold block">{{ $student->full_name }}</span>
             </div>
             <div class="flex flex-col">
                 <span class="block">Asal Sekolah</span>
-                <span class="text-xl font-semibold block">SMP Negeri 1 Warungkondang</span>
+                <span class="text-xl font-semibold block">{{ $student->last_school }}</span>
             </div>
         </div>
         <form action="#" method="POST" class="flex flex-col gap-3">

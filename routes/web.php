@@ -14,6 +14,7 @@ use App\Http\Controllers\ExtracurricularsController;
 use App\Http\Controllers\GalleriesController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\PpdbControler;
 use Illuminate\Support\Facades\Route;
 
 
@@ -33,8 +34,8 @@ Route::get('/', function () {
 })->name('landingpage');
 
 Route::view('/authentication', 'authentication');
-Route::view('/ppdb', 'ppdb');
-Route::view('/ppdb-payment', 'ppdb-payment');
+Route::resource('/ppdb', PpdbControler::class);
+Route::get('/ppdb-payment', [PpdbControler::class, 'payment'])->name('ppdb.payment');
 Route::view('/news', 'news');
 Route::view('/news/1', 'news-detail');
 
