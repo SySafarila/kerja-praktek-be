@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\News;
+use App\Models\Subject;
 use Carbon\Carbon;
 
 class PublicController extends Controller
 {
-    public function index()
+    public function news()
     {
         $latestNews = News::latest()->take(10)->get();
         $randomNews = News::inRandomOrder()->take(10)->get();
@@ -16,7 +17,7 @@ class PublicController extends Controller
         return view('public.news', compact('latestNews','randomNews'));
     }
 
-    public function show($id)
+    public function newsDetails($id)
     {
         $news = News::findOrFail($id);
 
@@ -33,5 +34,11 @@ class PublicController extends Controller
 
         // Return the URL if a match is found, otherwise, return an empty string
         return isset($matches[1]) ? $matches[1] : '';
+    }
+
+    public function subjects()
+    {
+        $subjects = Subject::all();
+        return view('public.news', compact('subjects'));
     }
 }

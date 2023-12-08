@@ -43,7 +43,7 @@
             </form>
             <div class="flex flex-col w-full">
 
-                <p class="text-sm mb-2">Sudah mempunyai akun? <a href="{{ route('register') }}" class="text-accent-1 hover:text-yellow-600 font-semibold">klik disini</a>.</p>
+                <p class="text-sm mb-2">Belum mempunyai akun? <a href="{{ route('register') }}" class="text-accent-1 hover:text-yellow-600 font-semibold">klik disini</a>.</p>
                 {{-- <a href="{{ route('register') }}"
                     class="btn bg-white border text-center border-accent-1 text-accent-1 uppercase hover:bg-accent-1  hover:text-accent-4">Daftar</a> --}}
             </div>
