@@ -172,15 +172,17 @@
 @endsection
 
 @section('script')
-<script>
-    const copy_va = document.getElementById('copy_va')
-    const va = document.getElementById('va')
+    @if (in_array($transaction->payment_method, ['va_bca', 'va_bni', 'va_bri', 'va_permata', 'va_cimb']))
+        <script>
+            const copy_va = document.getElementById('copy_va')
+            const va = document.getElementById('va')
 
-    copy_va.addEventListener('click', (e) => {
-        e.preventDefault()
-        navigator.clipboard.writeText(va.innerText)
+            copy_va.addEventListener('click', (e) => {
+                e.preventDefault()
+                navigator.clipboard.writeText(va.innerText)
 
-        alert('Virtual Account berhasil di copy!')
-    })
-</script>
+                alert('Virtual Account berhasil di copy!')
+            })
+        </script>
+    @endif
 @endsection

@@ -340,9 +340,23 @@ class PpdbControler extends Controller
         $student = $user->student;
         $transaction = $user->transaction;
 
-        $this->startMidtransConfig();
-        // $response = \Midtrans\Transaction::status($transaction->transaction_id);
-        // return $response;
+        if ($transaction->transaction_status == 'pending') {
+            $this->startMidtransConfig();
+            $response = \Midtrans\Transaction::status($transaction->transaction_id);
+
+            if ($response->transaction_status == 'settlement') {
+                $transaction->update([
+                    'transaction_status' => $response->transaction_status,
+                    'settlement_time' => $response->settlement_time
+                ]);
+            }
+            if ($response->transaction_status == 'expire') {
+                $transaction->update([
+                    'transaction_status' => $response->transaction_status,
+                    'settlement_time' => null
+                ]);
+            }
+        }
 
         return view('ppdb-payment', compact('student', 'transaction'));
     }
