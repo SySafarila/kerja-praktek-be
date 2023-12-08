@@ -26,6 +26,8 @@
     </style>
     {{-- custom style for select2 --}}
 
+    <link rel="shortcut icon" href="{{asset('images/logos/logo1a.png')}}" type="image/x-icon">
+
     @yield('head')
 </head>
 

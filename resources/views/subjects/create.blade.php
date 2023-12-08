@@ -1,5 +1,5 @@
 @extends('layouts.adminlte', [
-    'title' => 'Admin Dashboard | Subjects - Create',
+    'title' => 'Admin Dashboard | Subjects'
 ])
 
 @section('head')

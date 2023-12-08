@@ -15,11 +15,12 @@ module.exports = {
                 roboto: ['Roboto', 'sans-serif']
             },
             colors: {
-                'accent-1': '#5BA82B',
+                'accent-1': '#14980E',
                 'accent-2': '#F1F1F1',
                 'accent-3': '#4D4D4D',
                 'accent-4': '#F4F4F4',
-                'accent-5': '#356F11'
+                'accent-5': '#356F11',
+                'accent-6': '#5BA82B',
             },
         },
     },

@@ -1,6 +1,7 @@
 @extends('layouts.adminlte', [
-    'title' => 'Admin Dashboard | Galleries - Create',
+    'title' => 'Admin Dashboard | Gallery'
 ])
+
 
 @section('head')
     <link rel="stylesheet"
