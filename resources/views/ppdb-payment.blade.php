@@ -13,70 +13,107 @@
         <div class="flex flex-col gap-3">
             <div class="flex flex-col gap-3">
                 <span class="text-xl font-semibold">Ayo selesaikan pendaftaran kamu</span>
-                <div class="flex justify-between items-center border-b border-accent-3 pb-3" id="payment_va">
-                    <span class="font-semibold">BCA Virtual Account</span>
-                    <img src="{{ asset('images/BCA.png') }}" alt="" class="h-[24px] w-auto">
-                </div>
-                <div class="flex justify-between items-center border-b border-accent-3 pb-3 hidden" id="payment_school">
-                    <span class="font-semibold">Bayar Di Sekolah</span>
-                    <img src="{{ asset('images/logo.png') }}" alt="" class="h-[24px] w-auto">
-                </div>
-                <div class="flex justify-between items-center border-b border-accent-3 pb-3 hidden" id="payment_qris">
-                    <span class="font-semibold">QRIS</span>
-                    <img src="{{ asset('images/qris.png') }}" alt="" class="h-[24px] w-auto">
-                </div>
+                @if ($transaction->payment_method == 'va_bca')
+                    <x-public.payment.va-bca />
+                @endif
+                @if ($transaction->payment_method == 'va_bni')
+                    <x-public.payment.va-bni />
+                @endif
+                @if ($transaction->payment_method == 'va_bri')
+                    <x-public.payment.va-bri />
+                @endif
+                @if ($transaction->payment_method == 'va_permata')
+                    <x-public.payment.va-permata />
+                @endif
+                @if ($transaction->payment_method == 'offline')
+                    <x-public.payment.school />
+                @endif
+                @if ($transaction->payment_method == 'qris')
+                    <x-public.payment.qris />
+                @endif
+                @if ($transaction->payment_method == 'gopay')
+                    <x-public.payment.gopay />
+                @endif
+                @if ($transaction->payment_method == 'shopeepay')
+                    <x-public.payment.shopeepay />
+                @endif
             </div>
-            <div class="flex flex-col" id="payment_va_detail">
-                <span>Nomor Virtual Account</span>
-                <div class="flex justify-between items-center">
-                    <span class="text-xl font-semibold" id="va">80777082117694132</span>
-                    <span class="uppercase cursor-pointer text-accent-1 font-semibold" id="copy_va">Copy</span>
+            @if (in_array($transaction->payment_method, ['va_bca', 'va_bni', 'va_bri', 'va_permata', 'va_cimb']))
+                <div class="flex flex-col" id="payment_va_detail">
+                    <span>Nomor Virtual Account</span>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xl font-semibold" id="va">{{ $transaction->virtual_account }}</span>
+                        <span class="uppercase cursor-pointer text-accent-1 font-semibold" id="copy_va">Copy</span>
+                    </div>
                 </div>
-            </div>
-            <div class="flex flex-col hidden" id="payment_school_detail">
-                <span>Nomor Pendaftaran</span>
-                <div class="flex justify-between items-center">
-                    <span class="text-xl font-semibold">123123</span>
+            @endif
+            @if ($transaction->payment_method == 'offline')
+                <div class="flex flex-col" id="payment_school_detail">
+                    <span>Nomor Pendaftaran</span>
+                    <div class="flex justify-between items-center">
+                        <span class="text-xl font-semibold">{{ $transaction->order_id }}</span>
+                    </div>
                 </div>
-            </div>
-            <div class="flex flex-col hidden" id="payment_qris_detail">
-                <span class="block text-center">Scan QR Code</span>
-                <img src="{{ asset('images/qr.png') }}" alt="" class="w-40 mx-auto">
-                <p class="text-center">Dapat digunakan dengan GoPay, OVO, dan aplikasi sejenis yang mendukung QRIS</p>
-            </div>
+            @endif
+            @if ($transaction->payment_method == 'qris')
+                <div class="flex flex-col" id="payment_qris_detail">
+                    <span class="block text-center">Scan QR Code</span>
+                    <img src="{{ $transaction->link_qr_code }}" alt="" class="w-60 mx-auto">
+                    <p class="text-center">Dapat digunakan dengan GoPay, OVO, dan aplikasi sejenis yang mendukung QRIS</p>
+                </div>
+            @endif
+            @if ($transaction->payment_method == 'gopay')
+                <div class="flex flex-col" id="payment_qris_detail">
+                    <span class="block text-center">Scan QR Code</span>
+                    <img src="{{ $transaction->link_qr_code }}" alt="" class="w-60 mx-auto">
+                    <p class="text-center">Dapat digunakan dengan GoPay, OVO, dan aplikasi sejenis yang mendukung QRIS</p>
+                    <p class="text-center py-2.5">Atau</p>
+                    <a href="{{ $transaction->link_deeplink }}" class="bg-accent-1 btn mx-auto text-center flex items-center gap-1.5">
+                        <span class="text-accent-4">Buka Aplikasi</span>
+                        <span class="material-icons-outlined text-accent-4 text-sm">open_in_new</span>
+                    </a>
+                </div>
+            @endif
+            @if ($transaction->payment_method == 'shopeepay')
+                <div class="flex flex-col" id="payment_qris_detail">
+                    <a href="{{ $transaction->link_deeplink }}" class="bg-accent-1 btn mx-auto text-center flex items-center gap-1.5">
+                        <span class="text-accent-4">Buka Aplikasi</span>
+                        <span class="material-icons-outlined text-accent-4 text-sm">open_in_new</span>
+                    </a>
+                </div>
+            @endif
             <div class="flex justify-between">
                 <div>
                     <span>Total Pembayaran</span>
                     <div class="flex justify-between items-center">
-                        <span class="text-xl font-semibold">Rp 150,000</span>
+                        <span class="text-xl font-semibold">Rp {{ number_format($transaction->gross_amount, 0) }}</span>
                     </div>
                 </div>
                 <div>
                     <span>Berlaku Sampai</span>
                     <div class="flex justify-between items-center">
-                        <span class="text-xl font-semibold">30 Oktober 2023</span>
+                        <span class="text-xl font-semibold">{{ \Carbon\Carbon::parse($transaction->created_at)->addDays(31)->format('d-m-Y') }}</span>
                     </div>
                 </div>
             </div>
             <div class="flex justify-between gap-5 lg:flex-col lg:gap-3">
-                <a href="#" class="btn bg-accent-1 text-accent-4 w-full text-center capitalize">Hubungi admin</a>
-                <a href="#"
-                    class="btn bg-white border border-accent-1 text-accent-1 w-full text-center capitalize">Refresh</a>
+                <a href="https://wa.me/6282117694132" target="__blank" class="btn bg-accent-1 text-accent-4 w-full text-center capitalize">Hubungi admin</a>
+                <button type="button" class="btn bg-white border border-accent-1 text-accent-1 w-full text-center capitalize" onclick="event.preventDefault();location.reload()">Refresh</button>
             </div>
         </div>
         <div class="flex flex-col gap-3">
             <span class="text-xl font-semibold">Data Calon Siswa Terkait</span>
             <div class="flex flex-col">
                 <span class="block">NISN</span>
-                <span class="text-xl font-semibold block">000 000 000</span>
+                <span class="text-xl font-semibold block">{{ $student->nisn }}</span>
             </div>
             <div class="flex flex-col">
                 <span class="block">Nama Siswa</span>
-                <span class="text-xl font-semibold block">Syahrul Safarila</span>
+                <span class="text-xl font-semibold block">{{ $student->full_name }}</span>
             </div>
             <div class="flex flex-col">
                 <span class="block">Asal Sekolah</span>
-                <span class="text-xl font-semibold block">SMP Negeri 1 Warungkondang</span>
+                <span class="text-xl font-semibold block">{{ $student->last_school }}</span>
             </div>
         </div>
         <form action="#" method="POST" class="flex flex-col gap-3">
