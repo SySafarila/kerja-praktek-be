@@ -5,9 +5,14 @@
 
 @section('content')
 <div class="max-w-screen-lg mx-auto lg:px-5">
-    <img src="{{ asset('images/ppdb.png') }}" alt="" class="w-full">
+    <img src="{{ asset('images/banners/PPDB.png') }}" alt="" class="w-full">
 </div>
 <div class="max-w-screen-lg mx-auto p-5">
+    @if (session('error'))
+        <div class="bg-red-200 p-3 border border-red-300 mb-2">
+            {{ session('error') }}
+        </div>
+    @endif
     <h1 class="text-2xl font-bold mb-5">Pembayaran</h1>
     <div class="grid lg:grid-cols-3 gap-5">
         <div class="flex flex-col gap-3">
@@ -88,7 +93,9 @@
                 <div class="bg-accent-1/25 p-3 border border-accent-1" id="settlement">
                     <p>Pembayaran telah diterima, langkah selanjutnya:</p>
                     <ul class="list-disc list-inside">
-                        <li>Upload berkas yang diperlukan</li>
+                        <li>
+                            <a href="#upload-files" class="font-semibold underline">Upload berkas yang diperlukan</a>
+                        </li>
                     </ul>
                 </div>
             @endif
@@ -128,7 +135,7 @@
             @if (in_array($transaction->transaction_status, ['pending', 'expire']))
                 <div class="group relative">
                     <button type="button" class="btn bg-accent-1 border border-accent-1 text-accent-4 w-full text-center capitalize" onclick="event.preventDefault();">Ganti Metode Pembayaran</button>
-                    <div class="absolute left-0 top-12 w-full hidden flex-col gap-2 bg-white p-3 rounded-lg group-focus-within:flex lg:max-h-72 lg:overflow-y-auto border border-gray-200">
+                    <div class="absolute left-0 top-12 w-full hidden flex-col gap-2 bg-white p-3 rounded-lg group-focus-within:flex lg:max-h-72 lg:overflow-y-auto border border-gray-200 z-10">
                         <a href="{{ route('ppdb.payment', ['update_payment' => 'qris']) }}" class="bg-white text-accent-1 btn border border-accent-1 text-center">QRIS</a>
                         <a href="{{ route('ppdb.payment', ['update_payment' => 'va_bca']) }}" class="bg-white text-accent-1 btn border border-accent-1 text-center">BCA Virtual Account</a>
                         <a href="{{ route('ppdb.payment', ['update_payment' => 'va_bni']) }}" class="bg-white text-accent-1 btn border border-accent-1 text-center">BNI Virtual Account</a>
@@ -157,7 +164,10 @@
                 <span class="text-xl font-semibold block">{{ $student->last_school }}</span>
             </div>
         </div>
-        <form action="#" method="POST" class="flex flex-col gap-3">
+        <form action="#" method="POST" class="flex flex-col gap-3 relative" id="upload-files">
+            @if ($transaction->transaction_status != 'settlement')
+                <div class="-left-2.5 -top-2.5 w-[calc(100%+15px)] h-[calc(100%+15px)] backdrop-blur-[2px] absolute"></div>
+            @endif
             <span class="text-xl font-semibold">Upload Berkas</span>
             <div class="flex flex-col gap-1.5">
                 <label id="kk" class="font-semibold capitalize">Kartu Keluarga <span
