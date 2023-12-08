@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="max-w-screen-lg mx-auto lg:px-5">
-    <img src="{{ asset('images/ppdb.png') }}" alt="" class="w-full">
+    <img src="{{ asset('images/banners/PPDB.png') }}" alt="" class="w-full">
 </div>
 <div class="max-w-screen-lg mx-auto p-5">
     @if (session('error'))
