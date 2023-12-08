@@ -101,199 +101,7 @@ class PpdbControler extends Controller
 
             // create transaction
             $order_id = 'PPDB-' . uniqid();
-
-            if ($payment_method == 'offline') {
-                $user->transaction()->create([
-                    'order_id' => $order_id,
-                    'fraud_status' => null,
-                    'transaction_id' => $order_id,
-                    'transaction_status' => 'pending',
-                    'payment_method' => $payment_method,
-                    'virtual_account' => null,
-                    'bank' => null,
-                    'status_message' => null,
-                    'status_code' => null,
-                    'gross_amount' => 150000,
-                    'link_qr_code' => null,
-                    'link_deeplink' => null,
-                    'link_get_status' => null,
-                    'link_cancel' => null,
-                    'minimarket' => null,
-                    'minimarket_payment_code' => null,
-                    'settlement_time' => null
-                ]);
-            } else {
-                $params = [
-                    'transaction_details' => [
-                        'order_id' => $order_id,
-                        'gross_amount' => 150000,
-                    ],
-                    'item_details' => [
-                        [
-                            'id' => "$order_id-$create_student->full_name",
-                            'name' => "PPDB untuk $create_student->full_name",
-                            'quantity' => 1,
-                            'price' => 150000
-                        ]
-                    ],
-                    'customer_details' => [
-                        'first_name' => $user->name,
-                        'email' => $user->email
-                    ],
-                    'custom_expiry' => [
-                        'expiry_duration' => 44640, // 31 days
-                        'unit' => 'minute'
-                    ],
-                ];
-
-                // BCA virtual account
-                if ($payment_method == 'va_bca') {
-                    $params['payment_type'] = 'bank_transfer';
-                    $params['bank_transfer'] = [
-                        'bank' => 'bca'
-                    ];
-                }
-
-                // BNI virtual account
-                if ($payment_method == 'va_bni') {
-                    $params['payment_type'] = 'bank_transfer';
-                    $params['bank_transfer'] = [
-                        'bank' => 'bni'
-                    ];
-                }
-
-                // BRI virtual account
-                if ($payment_method == 'va_bri') {
-                    $params['payment_type'] = 'bank_transfer';
-                    $params['bank_transfer'] = [
-                        'bank' => 'bri'
-                    ];
-                }
-
-                // CIMB virtual account
-                if ($payment_method == 'va_cimb') {
-                    $params['payment_type'] = 'bank_transfer';
-                    $params['bank_transfer'] = [
-                        'bank' => 'cimb'
-                    ];
-                }
-
-                // Permata virtual account
-                if ($payment_method == 'va_permata') {
-                    $params['payment_type'] = 'permata';
-                }
-
-                // GoPay
-                if ($payment_method == 'gopay') {
-                    $params['payment_type'] = 'gopay';
-                    $params['gopay'] = [
-                        'enable_callback' => true,
-                        'callback_url' => route('ppdb.payment')
-                    ];
-                }
-
-                // QRIS
-                if ($payment_method == 'qris') {
-                    $params['payment_type'] = 'qris';
-                    $params['qris'] = [
-                        'acquirer' => 'gopay'
-                    ];
-                }
-
-                // ShopeePay
-                if ($payment_method == 'shopeepay') {
-                    $params['payment_type'] = 'shopeepay';
-                    $params['shopeepay'] = [
-                        'callback_url' => route('ppdb.payment')
-                    ];
-                }
-
-                try {
-                    $midtransConfig = json_decode($this->startMidtransConfig());
-                    $response = \Midtrans\CoreApi::charge($params);
-
-                    // virtual account
-                    // BCA virtual account
-                    if ($payment_method == 'va_bca') {
-                        $virtual_account = $response->va_numbers[0]->va_number;
-                        $bank = $response->va_numbers[0]->bank;
-                    }
-
-                    // BNI virtual account
-                    if ($payment_method == 'va_bni') {
-                        $virtual_account = $response->va_numbers[0]->va_number;
-                        $bank = $response->va_numbers[0]->bank;
-                    }
-
-                    // BRI virtual account
-                    if ($payment_method == 'va_bri') {
-                        $virtual_account = $response->va_numbers[0]->va_number;
-                        $bank = $response->va_numbers[0]->bank;
-                    }
-
-                    // CIMB virtual account
-                    if ($payment_method == 'va_cimb') {
-                        $virtual_account = $response->va_numbers[0]->va_number;
-                        $bank = $response->va_numbers[0]->bank;
-                    }
-
-                    // Permata virtual account
-                    if ($payment_method == 'va_permata') {
-                        $virtual_account = $response->permata_va_number;
-                        $bank = 'permata';
-                    }
-
-                    // e-wallet
-                    // GoPay
-                    if ($payment_method == 'gopay') {
-                        $link_qr_code = $response->actions[0]->url;
-                        $link_deeplink = $response->actions[1]->url;
-                        $link_get_status = $response->actions[2]->url;
-                        $link_cancel = $response->actions[3]->url;
-                    }
-
-                    // QRIS
-                    if ($payment_method == 'qris') {
-                        $link_qr_code = $response->actions[0]->url;
-                    }
-
-                    // ShopeePay
-                    if ($payment_method == 'shopeepay') {
-                        $link_deeplink = $response->actions[0]->url;
-                    }
-
-                    $user->transaction()->create([
-                        'order_id' => $response->order_id,
-                        'fraud_status' => $response->fraud_status,
-                        'transaction_id' => $response->transaction_id,
-                        'transaction_status' => $response->transaction_status,
-                        'payment_method' => $payment_method,
-                        'virtual_account' => $virtual_account ?? null,
-                        'bank' => $bank ?? null,
-                        'status_message' => $response->status_message,
-                        'status_code' => $response->status_code,
-                        'gross_amount' => $response->gross_amount,
-                        'link_qr_code' => $link_qr_code ?? null,
-                        'link_deeplink' => $link_deeplink ?? null,
-                        'link_get_status' => $link_get_status ?? null,
-                        'link_cancel' => $link_cancel ?? null,
-                        'minimarket' => null,
-                        'minimarket_payment_code' => null,
-                        'settlement_time' => null
-                    ]);
-                } catch (\Throwable $th) {
-                    //throw $th;
-                    switch ($th->getCode()) {
-                        case 402:
-                            Log::debug('Payment channel is not activated, you have to activate your Core API');
-                            break;
-
-                        default:
-                            Log::debug($th->getMessage());
-                            break;
-                    }
-                }
-            }
+            $this->charge_transaction($payment_method, $order_id, $create_student, $user);
         });
 
         return redirect()->route('ppdb.payment');
@@ -340,7 +148,7 @@ class PpdbControler extends Controller
         $student = $user->student;
         $transaction = $user->transaction;
 
-        if ($transaction->transaction_status == 'pending') {
+        if ($transaction->transaction_status == 'pending' && $transaction->payment_method != 'offline') {
             $this->startMidtransConfig();
             $response = \Midtrans\Transaction::status($transaction->transaction_id);
 
@@ -358,6 +166,219 @@ class PpdbControler extends Controller
             }
         }
 
+        if (in_array($transaction->transaction_status, ['pending', 'expire'])) {
+            if (request()->update_payment && in_array(request()->update_payment, ['qris', 'va_bca', 'va_bni', 'va_bri', 'va_permata', 'va_cimb', 'gopay', 'shopeepay', 'offline'])) {
+                $order_id = 'PPDB-' . uniqid();
+
+                if ($transaction->payment_method == 'offline') {
+                    $transaction->delete();
+                } else {
+                    $this->startMidtransConfig();
+                    $response = \Midtrans\Transaction::cancel($transaction->transaction_id);
+                    $transaction->delete();
+                }
+
+                $this->charge_transaction(request()->update_payment, $order_id, Auth::user()->student, Auth::user());
+                return redirect()->route('ppdb.payment');
+            }
+        }
+
         return view('ppdb-payment', compact('student', 'transaction'));
+    }
+
+    function charge_transaction($payment_method, $order_id, $create_student, $user)
+    {
+        if ($payment_method == 'offline') {
+            $user->transaction()->create([
+                'order_id' => $order_id,
+                'fraud_status' => null,
+                'transaction_id' => $order_id,
+                'transaction_status' => 'pending',
+                'payment_method' => $payment_method,
+                'virtual_account' => null,
+                'bank' => null,
+                'status_message' => null,
+                'status_code' => null,
+                'gross_amount' => 150000,
+                'link_qr_code' => null,
+                'link_deeplink' => null,
+                'link_get_status' => null,
+                'link_cancel' => null,
+                'minimarket' => null,
+                'minimarket_payment_code' => null,
+                'settlement_time' => null
+            ]);
+        } else {
+            $params = [
+                'transaction_details' => [
+                    'order_id' => $order_id,
+                    'gross_amount' => 150000,
+                ],
+                'item_details' => [
+                    [
+                        'id' => "$order_id-$create_student->full_name",
+                        'name' => "PPDB untuk $create_student->full_name",
+                        'quantity' => 1,
+                        'price' => 150000
+                    ]
+                ],
+                'customer_details' => [
+                    'first_name' => $user->name,
+                    'email' => $user->email
+                ],
+                'custom_expiry' => [
+                    'expiry_duration' => 44640, // 31 days
+                    'unit' => 'minute'
+                ],
+            ];
+
+            // BCA virtual account
+            if ($payment_method == 'va_bca') {
+                $params['payment_type'] = 'bank_transfer';
+                $params['bank_transfer'] = [
+                    'bank' => 'bca'
+                ];
+            }
+
+            // BNI virtual account
+            if ($payment_method == 'va_bni') {
+                $params['payment_type'] = 'bank_transfer';
+                $params['bank_transfer'] = [
+                    'bank' => 'bni'
+                ];
+            }
+
+            // BRI virtual account
+            if ($payment_method == 'va_bri') {
+                $params['payment_type'] = 'bank_transfer';
+                $params['bank_transfer'] = [
+                    'bank' => 'bri'
+                ];
+            }
+
+            // CIMB virtual account
+            if ($payment_method == 'va_cimb') {
+                $params['payment_type'] = 'bank_transfer';
+                $params['bank_transfer'] = [
+                    'bank' => 'cimb'
+                ];
+            }
+
+            // Permata virtual account
+            if ($payment_method == 'va_permata') {
+                $params['payment_type'] = 'permata';
+            }
+
+            // GoPay
+            if ($payment_method == 'gopay') {
+                $params['payment_type'] = 'gopay';
+                $params['gopay'] = [
+                    'enable_callback' => true,
+                    'callback_url' => route('ppdb.payment')
+                ];
+            }
+
+            // QRIS
+            if ($payment_method == 'qris') {
+                $params['payment_type'] = 'qris';
+                $params['qris'] = [
+                    'acquirer' => 'gopay'
+                ];
+            }
+
+            // ShopeePay
+            if ($payment_method == 'shopeepay') {
+                $params['payment_type'] = 'shopeepay';
+                $params['shopeepay'] = [
+                    'callback_url' => route('ppdb.payment')
+                ];
+            }
+
+            try {
+                $midtransConfig = json_decode($this->startMidtransConfig());
+                $response = \Midtrans\CoreApi::charge($params);
+
+                // virtual account
+                // BCA virtual account
+                if ($payment_method == 'va_bca') {
+                    $virtual_account = $response->va_numbers[0]->va_number;
+                    $bank = $response->va_numbers[0]->bank;
+                }
+
+                // BNI virtual account
+                if ($payment_method == 'va_bni') {
+                    $virtual_account = $response->va_numbers[0]->va_number;
+                    $bank = $response->va_numbers[0]->bank;
+                }
+
+                // BRI virtual account
+                if ($payment_method == 'va_bri') {
+                    $virtual_account = $response->va_numbers[0]->va_number;
+                    $bank = $response->va_numbers[0]->bank;
+                }
+
+                // CIMB virtual account
+                if ($payment_method == 'va_cimb') {
+                    $virtual_account = $response->va_numbers[0]->va_number;
+                    $bank = $response->va_numbers[0]->bank;
+                }
+
+                // Permata virtual account
+                if ($payment_method == 'va_permata') {
+                    $virtual_account = $response->permata_va_number;
+                    $bank = 'permata';
+                }
+
+                // e-wallet
+                // GoPay
+                if ($payment_method == 'gopay') {
+                    $link_qr_code = $response->actions[0]->url;
+                    $link_deeplink = $response->actions[1]->url;
+                    $link_get_status = $response->actions[2]->url;
+                    $link_cancel = $response->actions[3]->url;
+                }
+
+                // QRIS
+                if ($payment_method == 'qris') {
+                    $link_qr_code = $response->actions[0]->url;
+                }
+
+                // ShopeePay
+                if ($payment_method == 'shopeepay') {
+                    $link_deeplink = $response->actions[0]->url;
+                }
+
+                $user->transaction()->create([
+                    'order_id' => $response->order_id,
+                    'fraud_status' => $response->fraud_status,
+                    'transaction_id' => $response->transaction_id,
+                    'transaction_status' => $response->transaction_status,
+                    'payment_method' => $payment_method,
+                    'virtual_account' => $virtual_account ?? null,
+                    'bank' => $bank ?? null,
+                    'status_message' => $response->status_message,
+                    'status_code' => $response->status_code,
+                    'gross_amount' => $response->gross_amount,
+                    'link_qr_code' => $link_qr_code ?? null,
+                    'link_deeplink' => $link_deeplink ?? null,
+                    'link_get_status' => $link_get_status ?? null,
+                    'link_cancel' => $link_cancel ?? null,
+                    'minimarket' => null,
+                    'minimarket_payment_code' => null,
+                    'settlement_time' => null
+                ]);
+            } catch (\Throwable $th) {
+                //throw $th;
+                switch ($th->getCode()) {
+                    case 402:
+                        Log::debug('Payment channel is not activated, you have to activate your Core API');
+                        break;
+
+                    default:
+                        Log::debug($th->getMessage());
+                        break;
+                }
+            }
+        }
     }
 }
