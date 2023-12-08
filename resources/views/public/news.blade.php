@@ -35,7 +35,7 @@
             <h2 class="text-accent-1 font-bold text-2xl border-b-4 border-accent-1 w-fit">Berita Terbaru</h2>
             <div class="mt-5 flex flex-col gap-5">
                 @foreach ($latestNews as $item)
-                    <a href="{{ route('news.show', ['id' => $item->id]) }}" class="flex gap-5 flex-col lg:flex-row group">
+                    <a href="{{ route('news.show', ['id' => $item->id]) }}" class="flex gap-5 flex-col lg:flex-row group pb-4 border-b-2">
                         @php
                             $firstImage = '';
                             preg_match('/<img[^>]+src="([^"]+)"[^>]*>/i', $item->body, $matches);
