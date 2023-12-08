@@ -21,8 +21,9 @@ class PublicController extends Controller
         $news = News::findOrFail($id);
 
         $imageUrl = $this->getFirstImageUrl($news->body);
+        $randomNews = News::inRandomOrder()->take(10)->get();
 
-        return view('public.news-detail', compact('news', 'imageUrl'));
+        return view('public.news-detail', compact('news', 'imageUrl', 'randomNews'));
     }
 
     private function getFirstImageUrl($html)

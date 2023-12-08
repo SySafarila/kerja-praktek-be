@@ -66,15 +66,9 @@
         <div class="bg-white lg:col-start-9 lg:col-end-13 p-5">
             <h2 class="text-accent-1 font-bold text-2xl border-b-4 border-accent-1 w-fit">Berita Lainnya</h2>
             <div class="flex flex-col gap-3 mt-5">
-                <a href="#" class="hover:underline">SMA Ma’arif Pacet Rayakan Hari Guru Nasional 2023</a>
-                <a href="#" class="hover:underline">Lorem, ipsum dolor.</a>
-                <a href="#" class="hover:underline">Lorem ipsum dolor sit amet consectetur adipisicing elit.</a>
-                <a href="#" class="hover:underline">SMA Ma’arif Pacet Rayakan Hari Guru Nasional 2023</a>
-                <a href="#" class="hover:underline">Lorem, ipsum dolor.</a>
-                <a href="#" class="hover:underline">Lorem ipsum dolor sit amet consectetur adipisicing elit.</a>
-                <a href="#" class="hover:underline">SMA Ma’arif Pacet Rayakan Hari Guru Nasional 2023</a>
-                <a href="#" class="hover:underline">Lorem, ipsum dolor.</a>
-                <a href="#" class="hover:underline">Lorem ipsum dolor sit amet consectetur adipisicing elit.</a>
+                @foreach ($randomNews as $item)
+                    <a href="{{ route('news.show', ['id' => $item->id]) }}" class="hover:underline">{{ $item->title }}</a>
+                @endforeach
             </div>
         </div>
     </div>
