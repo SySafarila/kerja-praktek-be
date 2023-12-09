@@ -262,7 +262,7 @@
             @endforeach
         </div>
         <div class="flex justify-center mt-5 gap-3 text-lg">
-            <a href="#" class="font-semibold text-accent-1 hover:text-yellow-700">Lihat Semua</a>
+            <a href="{{route('news')}}" class="font-semibold text-accent-1 hover:text-yellow-700">Lihat Semua</a>
         </div>
     </div>
 

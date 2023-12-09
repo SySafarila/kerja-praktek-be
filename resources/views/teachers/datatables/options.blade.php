@@ -25,7 +25,9 @@
                         <div class="form-group">
                             <label>Subjects:</label>
                             @if ($model && $model->subjects->count() > 0)
-                            <input class="form-control" value="{{ $model->subjects->pluck('name')->implode(', ') }}" readonly>
+                            <input class="form-control" value="{{ $model->subjects->map(function ($subject) {
+                                return $subject->name . ' (' . $subject->grade . ')';
+                            })->implode(', ') }}" readonly>
                             @else
                                 <input class="form-control" readonly value="No subjects assigned."></input>
                             @endif
