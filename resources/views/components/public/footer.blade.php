@@ -32,7 +32,7 @@
                 <a href="#" class="text-accent-2">About Us</a>
                 <a href="#" class="text-accent-2">Contact Us</a>
                 <a href="#" class="text-accent-2">Staffs & Teachers</a>
-                <a href="#" class="text-accent-2">Subjetcs</a>
+                <a href="{{route('subjects')}}" class="text-accent-2">Subjetcs</a>
             </div>
         </div>
         <div>

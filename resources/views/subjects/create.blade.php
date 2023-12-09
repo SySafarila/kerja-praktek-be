@@ -33,14 +33,26 @@
                     <div class="card-body">
                         @csrf
                         <div class="form-group">
-                            <label for="name" class="text-capitalize">Name</label>
+                            <label for="name" class="text-capitalize">Subject</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Enter name" required>
+                                placeholder="Enter name of the subject" required>
                             @error('name')
                                 <div class="text-sm text-danger">{{ $message }}</div>
                             @enderror
                         </div>
+                        <div class="form-group">
+                            <label for="grade" class="text-capitalize">Grade</label>
+                            <select class="form-control" id="grade" name="grade" required>
+                                <option value="10">Grade 10</option>
+                                <option value="11">Grade 11</option>
+                                <option value="12">Grade 12</option>
+                            </select>
+                            @error('grade')
+                                <div class="text-sm text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div>
+
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary btn-sm">Save</button>
                     </div>
