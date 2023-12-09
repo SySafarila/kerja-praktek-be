@@ -39,6 +39,6 @@ class PublicController extends Controller
     public function subjects()
     {
         $subjects = Subject::all();
-        return view('public.news', compact('subjects'));
+        return view('public.subjects', compact('subjects'));
     }
 }

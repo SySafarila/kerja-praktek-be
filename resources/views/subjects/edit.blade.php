@@ -42,7 +42,17 @@
                                 <div class="text-sm text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-
+                        <div class="form-group">
+                            <label for="grade" class="text-capitalize">Grade</label>
+                            <select class="form-control" id="grade" name="grade" required>
+                                <option value="10" {{ old('grade', $subject->grade) == '10' ? 'selected' : '' }}>Grade 10</option>
+                                <option value="11" {{ old('grade', $subject->grade) == '11' ? 'selected' : '' }}>Grade 11</option>
+                                <option value="12" {{ old('grade', $subject->grade) == '12' ? 'selected' : '' }}>Grade 12</option>
+                            </select>
+                            @error('grade')
+                                <div class="text-sm text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary btn-sm">Save</button>

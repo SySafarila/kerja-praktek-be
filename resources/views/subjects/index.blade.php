@@ -43,8 +43,8 @@
                                     <input type="checkbox" class="w-100" style="cursor: pointer">
                                     <span style="display: none;">Selector</span>
                                 </th>
-                                <th>Name</th>
-                                <th>Created At</th>
+                                <th>Subject</th>
+                                <th>Grade</th>
                                 <th class="d-print-none">Options</th>
                             </tr>
                         </thead>
@@ -137,8 +137,8 @@
                     data: 'name',
                     name: 'name'
                 }, {
-                    data: 'created_at',
-                    name: 'created_at'
+                    data: 'grade',
+                    name: 'grade'
                 }, {
                     data: 'options',
                     name: 'options'
