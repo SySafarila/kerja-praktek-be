@@ -18,7 +18,7 @@
                         <i class="fa-brands fa-square-facebook text-white text-2xl"></i>
                     </a>
                     <a href="#">
-                        <i class="fa-brands fa-square-instagram text-white text-2xl"></i>
+                        <i class="fa-brands fa-instagram text-white text-2xl"></i>
                     </a>
                     <a href="#">
                         <i class="fa-brands fa-youtube text-white text-2xl"></i>

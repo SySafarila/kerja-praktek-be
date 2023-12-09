@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\News;
 use App\Models\Subject;
+use App\Models\Teacher;
+use App\Models\Staff;
 use Carbon\Carbon;
 
 class PublicController extends Controller
@@ -40,5 +42,12 @@ class PublicController extends Controller
     {
         $subjects = Subject::all();
         return view('public.subjects', compact('subjects'));
+    }
+
+    public function teachersStaffs()
+    {
+        $teachers = Teacher::all();
+        $staffs = Staff::all();
+        return view('public.teachers-staffs', compact('teachers','staffs'));
     }
 }
