@@ -83,100 +83,83 @@ class Controller extends BaseController
     {
         switch ($th->getCode()) {
             case 400:
-                // Log::error('400: Validation Error, merchant sends bad request data example; validation error, invalid transaction type, invalid credit card format, etc.');
-                return redirect()->route('ppdb.index')->with('error', 'Error 400')->withInput();
+                return redirect()->back()->with('error', 'Error 400')->withInput();
                 break;
 
             case 401:
-                // Log::error('401: Access denied due to unauthorized transaction, please check client key or server key');
-                return redirect()->route('ppdb.index')->with('error', 'Error 401')->withInput();
+                return redirect()->back()->with('error', 'Error 401')->withInput();
                 break;
 
             case 402:
-                return redirect()->route('ppdb.index')->with('error', 'Metode pembayaran yang dipilih sedang tidak tersedia, silahkan coba beberapa saat lagi.')->withInput();
+                return redirect()->back()->with('error', 'Metode pembayaran yang dipilih sedang tidak tersedia, silahkan coba beberapa saat lagi.')->withInput();
                 break;
 
             case 403:
-                // Log::error("403: The requested resource is only capable of generating content not acceptable according to the accepting headers that sent in the request");
-                return redirect()->route('ppdb.index')->with('error', 'Error 403')->withInput();
+                return redirect()->back()->with('error', 'Error 403')->withInput();
                 break;
 
             case 404:
-                // Log::error("404: The requested resource is not found");
-                return redirect()->route('ppdb.index')->with('error', 'Error 404')->withInput();
+                return redirect()->back()->with('error', 'Error 404')->withInput();
                 break;
 
             case 405:
-                // Log::error("405: HTTP method is not allowed");
-                return redirect()->route('ppdb.index')->with('error', 'Error 405')->withInput();
+                return redirect()->back()->with('error', 'Error 405')->withInput();
                 break;
 
             case 406:
-                // Log::error("406: Duplicate order ID. Order ID has already been utilized previously");
-                return redirect()->route('ppdb.index')->with('error', 'Error 406')->withInput();
+                return redirect()->back()->with('error', 'Error 406')->withInput();
                 break;
 
             case 407:
-                // Log::error("407: Expired transaction");
-                return redirect()->route('ppdb.index')->with('error', 'Error 407')->withInput();
+                return redirect()->back()->with('error', 'Error 407')->withInput();
                 break;
 
             case 408:
-                // Log::error("408: Merchant sends the wrong data type");
-                return redirect()->route('ppdb.index')->with('error', 'Error 408')->withInput();
+                return redirect()->back()->with('error', 'Error 408')->withInput();
                 break;
 
             case 410:
-                // Log::error("410: Merchant account is deactivated. Please contact Midtrans support");
-                return redirect()->route('ppdb.index')->with('error', 'Error 410')->withInput();
+                return redirect()->back()->with('error', 'Error 410')->withInput();
                 break;
 
             case 411:
-                // Log::error("411: Token id is missing, invalid, or timed out");
-                return redirect()->route('ppdb.index')->with('error', 'Error 411')->withInput();
+                return redirect()->back()->with('error', 'Error 411')->withInput();
                 break;
 
             case 412:
-                // Log::error("412: Merchant cannot modify status of the transaction");
-                return redirect()->route('ppdb.index')->with('error', 'Error 412')->withInput();
+                return redirect()->back()->with('error', 'Error 412')->withInput();
                 break;
 
             case 413:
-                // Log::error("413: The request cannot be processed due to malformed syntax in the request body");
-                return redirect()->route('ppdb.index')->with('error', 'Error 413')->withInput();
+                return redirect()->back()->with('error', 'Error 413')->withInput();
                 break;
 
             case 505:
-                return redirect()->route('ppdb.index')->with('error', 'Metode pembayaran yang dipilih sedang tidak tersedia.')->withInput();
+                return redirect()->back()->with('error', 'Metode pembayaran yang dipilih sedang tidak tersedia.')->withInput();
                 break;
 
             case 501:
-                // Log::error('501: Feature is not available yet');
-                return redirect()->route('ppdb.index')->with('error', 'Error 501')->withInput();
+                return redirect()->back()->with('error', 'Error 501')->withInput();
                 break;
 
             case 502:
-                // Log::error('502: Internal Server Error: Bank Connection Problem');
-                return redirect()->route('ppdb.index')->with('error', 'Koneksi dengan Bank terkait sedang bermasalah, silahkan coba beberapa saat lagi.')->withInput();
+                return redirect()->back()->with('error', 'Koneksi dengan Bank terkait sedang bermasalah, silahkan coba beberapa saat lagi.')->withInput();
                 break;
 
             case 503:
-                // Log::error('503: Internal Server Error');
-                return redirect()->route('ppdb.index')->with('error', 'Error 503')->withInput();
+                return redirect()->back()->with('error', 'Error 503')->withInput();
                 break;
 
             case 504:
-                // Log::error('504: Internal Server Error: Fraud detection is unavailable');
-                return redirect()->route('ppdb.index')->with('error', 'Error 504')->withInput();
+                return redirect()->back()->with('error', 'Error 504')->withInput();
                 break;
 
             case 505:
-                // Log::error('505: Unable to create virtual account number for this transaction');
-                return redirect()->route('ppdb.index')->with('error', 'Tidak dapat membuat virtual account untuk transaksi ini, silahkan coba beberapa saat lagi.')->withInput();
+                return redirect()->back()->with('error', 'Tidak dapat membuat virtual account untuk transaksi ini, silahkan coba beberapa saat lagi.')->withInput();
                 break;
 
             default:
-                return redirect()->route('ppdb.index')->with('error', $th->getMessage())->withInput();
+                return redirect()->back()->with('error', $th->getMessage())->withInput();
                 break;
         }
     }

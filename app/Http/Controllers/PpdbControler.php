@@ -211,12 +211,11 @@ class PpdbControler extends Controller
                         return $this->midtrans_error_redirect($th);
                     }
                 } else {
-                    // cancel current transaction
+                    // charge new transaction
                     DB::beginTransaction();
                     try {
                         $this->startMidtransConfig();
-                        $response = \Midtrans\Transaction::cancel($transaction->transaction_id);
-                        $transaction->delete();
+                        $this->charge_transaction(request()->update_payment, $order_id, Auth::user()->student->full_name, Auth::user());
                         DB::commit();
                     } catch (\Throwable $th) {
                         //throw $th;
@@ -224,11 +223,12 @@ class PpdbControler extends Controller
                         return $this->midtrans_error_redirect($th);
                     }
 
-                    // charge new transaction
+                    // cancel current transaction
                     DB::beginTransaction();
                     try {
                         $this->startMidtransConfig();
-                        $this->charge_transaction(request()->update_payment, $order_id, Auth::user()->student->full_name, Auth::user());
+                        $response = \Midtrans\Transaction::cancel($transaction->transaction_id);
+                        $transaction->delete();
                         DB::commit();
                     } catch (\Throwable $th) {
                         //throw $th;
