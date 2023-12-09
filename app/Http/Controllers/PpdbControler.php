@@ -113,6 +113,11 @@ class PpdbControler extends Controller
                     return redirect()->route('ppdb.index')->with('error', 'Metode pembayaran yang dipilih sedang dalam perbaikan.')->withInput();
                     break;
 
+                case 505:
+                    // Log::debug('Payment channel is not activated, you have to activate your Core API');
+                    return redirect()->route('ppdb.index')->with('error', 'Metode pembayaran yang dipilih sedang dalam perbaikan.')->withInput();
+                    break;
+
                 default:
                     // Log::debug($th->getMessage());
                     return redirect()->route('ppdb.index')->with('error', $th->getMessage())->withInput();
@@ -447,6 +452,10 @@ class PpdbControler extends Controller
                 switch ($th->getCode()) {
                     case 402:
                         Log::debug('Payment channel is not activated, you have to activate your Core API');
+                        break;
+
+                    case 505:
+                        Log::debug('Unable to create virtual account number for this transaction');
                         break;
 
                     default:
