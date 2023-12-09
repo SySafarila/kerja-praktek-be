@@ -155,6 +155,21 @@ class PpdbControler extends Controller
         $student = $user->student;
         $transaction = $user->transaction;
 
+        if (!$transaction) {
+            $order_id = 'PPDB-' . uniqid();
+            DB::beginTransaction();
+            try {
+                $this->startMidtransConfig();
+                $this->charge_transaction('qris', $order_id, Auth::user()->student->full_name, Auth::user());
+                DB::commit();
+                return redirect()->route('ppdb.payment')->with('error', 'Kami tidak dapat menemukan transaksi pembayaran kamu. Sebagai gantinya, QRIS akan digunakan untuk pembayaran PPDB kamu.');
+            } catch (\Throwable $th) {
+                //throw $th;
+                DB::rollBack();
+                return $this->midtrans_error_redirect($th);
+            }
+        }
+
         if ($transaction->transaction_status == 'pending' && $transaction->payment_method != 'offline') {
             $this->startMidtransConfig();
             try {
