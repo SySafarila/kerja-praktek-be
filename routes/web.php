@@ -15,6 +15,7 @@ use App\Http\Controllers\GalleriesController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\HomepageController;
+use App\Http\Controllers\MidtransSetting;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\PpdbControler;
 use Illuminate\Support\Facades\Route;
@@ -80,6 +81,9 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
 
     // articles
     // Route::resource('/articles', ArticleController::class);
+
+    // settings
+    Route::resource('/midtrans-settings', MidtransSetting::class)->only(['index', 'update']);
 
     // bulk delete
     Route::delete('/bulk-delete/permissions', [PermissionController::class, 'massDestroy'])->name('permissions.massDestroy');
