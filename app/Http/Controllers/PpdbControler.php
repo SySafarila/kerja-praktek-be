@@ -63,7 +63,6 @@ class PpdbControler extends Controller
             'payment_method' => ['required', 'string', 'in:qris,va_bca,va_bni,va_bri,va_permata,va_cimb,gopay,shopeepay,offline']
         ]);
 
-
         $student = $request->student;
         $parent = $request->parent;
         $payment_method = $request->payment_method;
@@ -110,13 +109,18 @@ class PpdbControler extends Controller
 
             switch ($th->getCode()) {
                 case 402:
-                    Log::debug('Payment channel is not activated, you have to activate your Core API');
+                    // Log::debug('Payment channel is not activated, you have to activate your Core API');
+                    return redirect()->route('ppdb.index')->with('error', 'Metode pembayaran yang dipilih sedang dalam perbaikan.')->withInput();
+                    break;
+
+                case 505:
+                    // Log::debug('Payment channel is not activated, you have to activate your Core API');
                     return redirect()->route('ppdb.index')->with('error', 'Metode pembayaran yang dipilih sedang dalam perbaikan.')->withInput();
                     break;
 
                 default:
-                    Log::debug($th->getMessage());
-                    return redirect()->route('ppdb.index')->with('error', $th->getMessage());
+                    // Log::debug($th->getMessage());
+                    return redirect()->route('ppdb.index')->with('error', $th->getMessage())->withInput();
                     break;
             }
         }
@@ -168,7 +172,12 @@ class PpdbControler extends Controller
 
         if ($transaction->transaction_status == 'pending' && $transaction->payment_method != 'offline') {
             $this->startMidtransConfig();
-            $response = \Midtrans\Transaction::status($transaction->transaction_id);
+            try {
+                $response = \Midtrans\Transaction::status($transaction->transaction_id);
+            } catch (\Throwable $th) {
+                //throw $th;
+                return view('errors.midtrans', ['code' => $th->getCode(), 'message' => 'Ada yang salah dengan pembayaranmu, silahkan hubungi admin']);
+            }
 
             if ($response->transaction_status == 'settlement') {
                 $transaction->update([
@@ -292,7 +301,17 @@ class PpdbControler extends Controller
             if ($payment_method == 'va_bca') {
                 $params['payment_type'] = 'bank_transfer';
                 $params['bank_transfer'] = [
-                    'bank' => 'bca'
+                    'bank' => 'bca',
+                    'free_text' => [
+                        'payment' => [
+                            'id' => "Pembayaran PPDB untuk $create_student->full_name",
+                            'en' => "PPDB payment for $create_student->full_name"
+                        ],
+                        'inquiry' => [
+                            'id' => "Pembayaran PPDB untuk $create_student->full_name",
+                            'en' => "PPDB payment for $create_student->full_name"
+                        ]
+                    ]
                 ];
             }
 
@@ -322,7 +341,13 @@ class PpdbControler extends Controller
 
             // Permata virtual account
             if ($payment_method == 'va_permata') {
-                $params['payment_type'] = 'permata';
+                $params['payment_type'] = 'bank_transfer';
+                $params['bank_transfer'] = [
+                    'bank' => 'permata',
+                    'permata' => [
+                        'recipient_name' => "Pembayaran PPDB untuk $create_student->full_name"
+                    ]
+                ];
             }
 
             // GoPay
@@ -427,6 +452,10 @@ class PpdbControler extends Controller
                 switch ($th->getCode()) {
                     case 402:
                         Log::debug('Payment channel is not activated, you have to activate your Core API');
+                        break;
+
+                    case 505:
+                        Log::debug('Unable to create virtual account number for this transaction');
                         break;
 
                     default:
