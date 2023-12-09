@@ -102,27 +102,12 @@ class PpdbControler extends Controller
             // create transaction
             $order_id = 'PPDB-' . uniqid();
 
-            $this->charge_transaction($payment_method, $order_id, $create_student, $user);
+            $this->charge_transaction($payment_method, $order_id, $student['full_name'], $user);
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
 
-            switch ($th->getCode()) {
-                case 402:
-                    // Log::debug('Payment channel is not activated, you have to activate your Core API');
-                    return redirect()->route('ppdb.index')->with('error', 'Metode pembayaran yang dipilih sedang dalam perbaikan.')->withInput();
-                    break;
-
-                case 505:
-                    // Log::debug('Payment channel is not activated, you have to activate your Core API');
-                    return redirect()->route('ppdb.index')->with('error', 'Metode pembayaran yang dipilih sedang dalam perbaikan.')->withInput();
-                    break;
-
-                default:
-                    // Log::debug($th->getMessage());
-                    return redirect()->route('ppdb.index')->with('error', $th->getMessage())->withInput();
-                    break;
-            }
+            return $this->midtrans_error_redirect($th);
         }
 
 
@@ -176,6 +161,7 @@ class PpdbControler extends Controller
                 $response = \Midtrans\Transaction::status($transaction->transaction_id);
             } catch (\Throwable $th) {
                 //throw $th;
+                $this->midtrans_error_logger($th);
                 return view('errors.midtrans', ['code' => $th->getCode(), 'message' => 'Ada yang salah dengan pembayaranmu, silahkan hubungi admin']);
             }
 
@@ -194,56 +180,35 @@ class PpdbControler extends Controller
         }
 
         if (in_array($transaction->transaction_status, ['pending', 'expire'])) {
+            // update payment method
             if (request()->update_payment && in_array(request()->update_payment, ['qris', 'va_bca', 'va_bni', 'va_bri', 'va_permata', 'va_cimb', 'gopay', 'shopeepay', 'offline'])) {
                 $order_id = 'PPDB-' . uniqid();
 
                 if ($transaction->payment_method == 'offline') {
                     DB::beginTransaction();
                     try {
-                        $this->charge_transaction(request()->update_payment, $order_id, Auth::user()->student, Auth::user());
+                        $this->charge_transaction(request()->update_payment, $order_id, Auth::user()->student->full_name, Auth::user());
                         $transaction->delete();
                         DB::commit();
                     } catch (\Throwable $th) {
                         //throw $th;
                         DB::rollBack();
-                        switch ($th->getCode()) {
-                            case 402:
-                                Log::debug('Payment channel is not activated, you have to activate your Core API');
-                                return redirect()->route('ppdb.payment')->with('error', 'Metode pembayaran yang dipilih sedang dalam perbaikan.')->withInput();
-                                break;
-
-                            default:
-                                Log::debug($th->getMessage());
-                                return redirect()->route('ppdb.payment')->with('error', $th->getMessage());
-                                break;
-                        }
+                        return $this->midtrans_error_redirect($th);
                     }
                 } else {
                     DB::beginTransaction();
                     try {
                         $this->startMidtransConfig();
-                        $this->charge_transaction(request()->update_payment, $order_id, Auth::user()->student, Auth::user());
+                        $this->charge_transaction(request()->update_payment, $order_id, Auth::user()->student->full_name, Auth::user());
                         $response = \Midtrans\Transaction::cancel($transaction->transaction_id);
                         $transaction->delete();
                         DB::commit();
                     } catch (\Throwable $th) {
                         //throw $th;
                         DB::rollBack();
-                        switch ($th->getCode()) {
-                            case 402:
-                                Log::debug('Payment channel is not activated, you have to activate your Core API');
-                                return redirect()->route('ppdb.payment')->with('error', 'Metode pembayaran yang dipilih sedang dalam perbaikan.')->withInput();
-                                break;
-
-                            default:
-                                Log::debug($th->getMessage());
-                                return redirect()->route('ppdb.payment')->with('error', $th->getMessage());
-                                break;
-                        }
+                        return $this->midtrans_error_redirect($th);
                     }
                 }
-
-                // $this->charge_transaction(request()->update_payment, $order_id, Auth::user()->student, Auth::user());
                 return redirect()->route('ppdb.payment');
             }
         }
@@ -251,9 +216,10 @@ class PpdbControler extends Controller
         return view('ppdb-payment', compact('student', 'transaction'));
     }
 
-    function charge_transaction($payment_method, $order_id, $create_student, $user)
+    function charge_transaction($payment_method, $order_id, $student_full_name, $user)
     {
         if ($payment_method == 'offline') {
+            // bayar di sekolah
             $user->transaction()->create([
                 'order_id' => $order_id,
                 'fraud_status' => null,
@@ -274,6 +240,7 @@ class PpdbControler extends Controller
                 'settlement_time' => null
             ]);
         } else {
+            // bayar secara online
             $params = [
                 'transaction_details' => [
                     'order_id' => $order_id,
@@ -281,8 +248,8 @@ class PpdbControler extends Controller
                 ],
                 'item_details' => [
                     [
-                        'id' => "$order_id-$create_student->full_name",
-                        'name' => "PPDB untuk $create_student->full_name",
+                        'id' => "$order_id-$student_full_name",
+                        'name' => "PPDB untuk $student_full_name",
                         'quantity' => 1,
                         'price' => 150000
                     ]
@@ -304,12 +271,12 @@ class PpdbControler extends Controller
                     'bank' => 'bca',
                     'free_text' => [
                         'payment' => [
-                            'id' => "Pembayaran PPDB untuk $create_student->full_name",
-                            'en' => "PPDB payment for $create_student->full_name"
+                            'id' => "Pembayaran PPDB untuk $student_full_name",
+                            'en' => "PPDB payment for $student_full_name"
                         ],
                         'inquiry' => [
-                            'id' => "Pembayaran PPDB untuk $create_student->full_name",
-                            'en' => "PPDB payment for $create_student->full_name"
+                            'id' => "Pembayaran PPDB untuk $student_full_name",
+                            'en' => "PPDB payment for $student_full_name"
                         ]
                     ]
                 ];
@@ -345,7 +312,7 @@ class PpdbControler extends Controller
                 $params['bank_transfer'] = [
                     'bank' => 'permata',
                     'permata' => [
-                        'recipient_name' => "Pembayaran PPDB untuk $create_student->full_name"
+                        'recipient_name' => "PPDB - $student_full_name"
                     ]
                 ];
             }
@@ -449,19 +416,7 @@ class PpdbControler extends Controller
                     'settlement_time' => null
                 ]);
             } catch (\Throwable $th) {
-                switch ($th->getCode()) {
-                    case 402:
-                        Log::debug('Payment channel is not activated, you have to activate your Core API');
-                        break;
-
-                    case 505:
-                        Log::debug('Unable to create virtual account number for this transaction');
-                        break;
-
-                    default:
-                        Log::debug($th->getMessage());
-                        break;
-                }
+                $this->midtrans_error_logger($th);
                 throw $th;
             }
         }

@@ -23,7 +23,7 @@
                     Nomor induk siswa nasional (NISN)
                     <span class="text-red-500">*</span>
                 </label>
-                <input type="text" name="student[nisn]" class="w-full border-gray-500 border outline-none rounded-lg" id="NISN" value="{{ old('student.nisn') }}" required>
+                <input type="number" name="student[nisn]" class="w-full border-gray-500 border outline-none rounded-lg" id="NISN" value="{{ old('student.nisn') }}" required>
                 @error('student.nisn')
                     <small class="text-red-500">{{ $message }}</small>
                 @enderror
