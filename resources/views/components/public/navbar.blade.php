@@ -26,13 +26,12 @@
             {{-- Check if the user is logged in --}}
             @auth
                 <div class="relative group" x-data="{ open: false }">
-                    <button @click="open = !open"
+                    <button @click="open = !open" id="toggleButton" onclick="toggleIcon()"
                         class="flex text-accent-2 transition text-sm font-semibold focus:outline-none">
-                        {{ explode(' ', auth()->user()->name)[0] }}<span class="fa fa-angle-down text-accent-2 pl-1 text-sm"></span>
-                        </span>
-                        {{-- <span class="fa fa-user text-accent-2"></span> --}}
-                        {{-- <span class="fa fa-angle-down text-accent-2 ml-1"></span> --}}
+                        {{ explode(' ', auth()->user()->name)[0] }}
+                        <span id="icon" class="fa fa-angle-down text-accent-2 pl-1 text-sm"></span>
                     </button>
+
                     <div x-show="open" @click.away="open = false"
                         class="absolute lg:right-0 mt-5 w-48 bg-white rounded-sm overflow-hidden shadow-lg z-10"
                         style="display: none;">
