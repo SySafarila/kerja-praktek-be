@@ -41,7 +41,6 @@
             <div class="card m-0">
                 <div class="card-body table-responsive">
                     <form action="{{ route('admin.ppdb.index') }}" method="GET" class="align-items-center d-flex justify-content-center justify-content-md-start mb-2" style="gap: 7px;">
-                        @csrf
                         <select name="payment" id="payment" class="custom-select custom-select-sm form-control form-control-sm" style="width: fit-content;">
                             <option value="all">Pembayaran: Semua</option>
                             <option value="pending" @if(request()->payment == 'pending') selected @endif>Pembayaran: Pending</option>
