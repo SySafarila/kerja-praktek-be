@@ -28,7 +28,6 @@ if (updatePaymentMethods.length > 0) {
             if (!updatePaymentStatus) {
                 return;
             }
-            console.log("submit");
             updatePaymentMethods.forEach((el) => {
                 el.style = "cursor: not-allowed;";
             });
