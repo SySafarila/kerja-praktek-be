@@ -7,6 +7,7 @@ use App\Models\News;
 use App\Models\Subject;
 use App\Models\Teacher;
 use App\Models\Staff;
+use App\Models\Extracurricular;
 use Carbon\Carbon;
 
 class PublicController extends Controller
@@ -49,5 +50,12 @@ class PublicController extends Controller
         $teachers = Teacher::all();
         $staffs = Staff::all();
         return view('public.teachers-staffs', compact('teachers','staffs'));
+    }
+
+    public function extracurriculars()
+    {
+        $extracurriculars = Extracurricular::all();
+
+        return view('public.extracurriculars', compact('extracurriculars'));
     }
 }

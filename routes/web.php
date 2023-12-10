@@ -36,7 +36,7 @@ Route::get('/', [HomepageController::class, 'index'])->name('homepage');
 Route::get('/news', [PublicController::class, 'news'])->name('news');
 Route::get('/news/{id}', [PublicController::class, 'newsDetails'])->name('news.show');
 
-// Route::get('/extracurriculars', [PublicController::class, 'extracurriculars'])->name('extracurriculars');
+Route::get('/extracurriculars', [PublicController::class, 'extracurriculars'])->name('extracurriculars');
 // Route::get('/extracurriculars/{id}', [PublicController::class, 'extracurricularsDetails'])->name('extracurriculars.show');
 
 Route::get('/subjects', [PublicController::class, 'subjects'])->name('subjects');

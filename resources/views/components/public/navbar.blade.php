@@ -18,7 +18,7 @@
                 style="text-decoration: none">News</a>
             <a href="#" class="text-accent-2 hover:text-orange-200 transition text-sm"
                 style="text-decoration: none">Galleries</a>
-            <a href="#" class="text-accent-2 hover:text-orange-200 transition text-sm"
+            <a href="{{ route('extracurriculars') }}" class="text-accent-2 hover:text-orange-200 transition text-sm"
                 style="text-decoration: none">Extracurriculars</a>
             <a href="#" class="text-accent-2 hover:text-orange-200 transition text-sm"
                 style="text-decoration: none">eLibrary</a>
