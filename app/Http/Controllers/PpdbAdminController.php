@@ -6,7 +6,6 @@ use App\Models\Student;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Spatie\Permission\Models\Permission;
 use Yajra\DataTables\Facades\DataTables;
 
 class PpdbAdminController extends Controller
@@ -15,7 +14,7 @@ class PpdbAdminController extends Controller
     {
         $this->middleware('can:ppdb-create')->only(['create', 'store']);
         $this->middleware('can:ppdb-read')->only('index');
-        $this->middleware('can:ppdb-update')->only(['edit', 'update']);
+        $this->middleware('can:ppdb-update')->only(['edit', 'update', 'confirm_offline_payment']);
         $this->middleware('can:ppdb-delete')->only(['destroy', 'massDestroy']);
     }
     /**
@@ -26,7 +25,19 @@ class PpdbAdminController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            return DataTables::of(Student::query()->with('user.transaction', 'parent'))
+            $model = Student::with(['user.transaction', 'parent']);
+
+            if (request()->payment == 'pending') {
+                $model->whereRelation('user.transaction', 'transaction_status', '=', 'pending');
+            }
+            if (request()->payment == 'settlement') {
+                $model->whereRelation('user.transaction', 'transaction_status', '=', 'settlement');
+            }
+            if (request()->payment == 'expire') {
+                $model->whereRelation('user.transaction', 'transaction_status', '=', 'expire');
+            }
+
+            return DataTables::of($model)
                 ->addColumn('created_at', function ($model) {
                     return $model->created_at->diffForHumans();
                 })
@@ -179,5 +190,20 @@ class PpdbAdminController extends Controller
         }
 
         return redirect()->route('ppdb.index')->with('status', 'Bulk delete success');
+    }
+
+    function confirm_offline_payment($student_id) {
+        $student = Student::with('user.transaction')->findOrFail($student_id);
+        $transaction = $student->user->transaction;
+
+        if ($transaction->payment_method == 'offline' && $transaction->transaction_status == 'pending') {
+            $transaction->update([
+                'transaction_status' => 'settlement',
+                'settlement_time' => now()
+            ]);
+
+            return back()->with('success', "Pembayaran PPDB untuk $student->full_name berhasil dikonfirmasi");
+        }
+        return back()->with('warning', 'Pembayaran tidak dapat dikonfirmasi');
     }
 }

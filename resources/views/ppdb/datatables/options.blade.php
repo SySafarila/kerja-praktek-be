@@ -37,7 +37,7 @@
                                     <th>Pending</th>
                                     @break
                                 @case('settlement')
-                                    <th>Lunas - {{ \Carbon\Carbon::parse($model->user->transaction->settlement_time)->format('d-m-Y') }}</th>
+                                    <th>Lunas ({{ \Carbon\Carbon::parse($model->user->transaction->settlement_time)->format('d-m-Y') }})</th>
                                     @break
                                 @case('expire')
                                     <th>Kadaluarsa</th>
@@ -50,34 +50,34 @@
                             <td>Payment Method</td>
                             @switch(@$model->user->transaction->payment_method)
                                 @case('qris')
-                                    <td>QRIS</td>
+                                    <th>QRIS</th>
                                     @break
                                 @case('va_bca')
-                                    <td>BCA Virtual Account</td>
+                                    <th>BCA Virtual Account</th>
                                     @break
                                 @case('va_bni')
-                                    <td>BNI Virtual Account</td>
+                                    <th>BNI Virtual Account</th>
                                     @break
                                 @case('va_bri')
-                                    <td>BRI Virtual Account</td>
+                                    <th>BRI Virtual Account</th>
                                     @break
                                 @case('va_permata')
-                                    <td>Permata Virtual Account</td>
+                                    <th>Permata Virtual Account</th>
                                     @break
                                 @case('va_cimb')
-                                    <td>CIMB Virtual Account</td>
+                                    <th>CIMB Virtual Account</th>
                                     @break
                                 @case('gopay')
-                                    <td>GoPay</td>
+                                    <th>GoPay</th>
                                     @break
                                 @case('shopeepay')
-                                    <td>ShopeePay</td>
+                                    <th>ShopeePay</th>
                                     @break
                                 @case('offline')
-                                    <td>Bayar Di Sekolah</td>
+                                    <th>Bayar Di Sekolah</th>
                                     @break
                                 @default
-                                    <td>-</td>
+                                    <th>-</th>
                             @endswitch
                         </tr>
                         <tr>
@@ -121,7 +121,7 @@
                         </tr>
                         <tr>
                             <td>Organitaion Experience</td>
-                            <td>{{ $model->org_experience }}</td>
+                            <td>{{ $model->org_experience ?? '-' }}</td>
                         </tr>
                         <tr>
                             <td>Height/Weight</td>
@@ -129,7 +129,7 @@
                         </tr>
                         <tr>
                             <td>History Illness</td>
-                            <td>{{ $model->history_illness }}</td>
+                            <td>{{ $model->history_illness ?? '-' }}</td>
                         </tr>
                         <tr>
                             <th colspan="2">Parent</th>
@@ -161,9 +161,36 @@
                     </tbody>
                 </table>
             </div>
-            {{-- <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div> --}}
+            @if ($model->user->transaction->payment_method == 'offline' && $model->user->transaction->transaction_status == 'pending')
+                <form action="{{ route('admin.ppdb.confirm-offline-payment', $model->id) }}" method="POST" class="modal-footer" id="confirm-{{ $model->id }}">
+                    @csrf
+                    @method('PATCH')
+                    <button type="submit" class="btn btn-primary" id="confirm">Konfirmasi Pembayaran</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </form>
+            @endif
         </div>
     </div>
 </div>
+
+@if ($model->user->transaction->payment_method == 'offline' && $model->user->transaction->transaction_status == 'pending')
+    <script>
+        const confirmOfflinePaymentForm = document.getElementById('confirm-{{ $model->id }}')
+        confirmOfflinePaymentForm.querySelector('#confirm').addEventListener('click', (e) => {
+            e.preventDefault()
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this data!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((willDelete) => {
+                    if (willDelete) {
+                        confirmOfflinePaymentForm.submit()
+                    } else {
+                        // swal("Your data is safe!");
+                    }
+                });
+        })
+    </script>
+@endif

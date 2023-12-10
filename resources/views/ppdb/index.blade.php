@@ -40,6 +40,15 @@
         <div class="container-fluid">
             <div class="card m-0">
                 <div class="card-body table-responsive">
+                    <form action="{{ route('admin.ppdb.index') }}" method="GET" class="align-items-center d-flex justify-content-center justify-content-md-start mb-2" style="gap: 7px;">
+                        @csrf
+                        <select name="payment" id="payment" class="custom-select custom-select-sm form-control form-control-sm" style="width: fit-content;">
+                            <option value="all">Pembayaran: Semua</option>
+                            <option value="pending" @if(request()->payment == 'pending') selected @endif>Pembayaran: Pending</option>
+                            <option value="settlement" @if(request()->payment == 'settlement') selected @endif>Pembayaran: Lunas</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary btn-sm">Filter</button>
+                    </form>
                     <table id="datatable" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
@@ -137,7 +146,9 @@
                 language: {
                     processing: 'Loading...'
                 },
-                ajax: '{!! route('admin.ppdb.index') !!}',
+                ajax: '{!! route('admin.ppdb.index', [
+                    'payment' => request()->payment
+                ]) !!}',
                 lengthMenu: [
                     [10, 50, 100, 500, 1000, -1],
                     [10, 50, 100, 500, 1000, 'All']
