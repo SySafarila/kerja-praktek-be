@@ -136,15 +136,15 @@
                 <div class="group relative">
                     <button type="button" class="btn bg-accent-1 border border-accent-1 text-accent-4 w-full text-center capitalize" onclick="event.preventDefault();">Ganti Metode Pembayaran</button>
                     <div class="absolute left-0 top-12 w-full hidden flex-col gap-2 bg-white p-3 rounded-lg group-focus-within:flex lg:max-h-72 lg:overflow-y-auto border border-gray-200 z-10">
-                        <a href="{{ route('ppdb.payment', ['update_payment' => 'qris']) }}" class="bg-white text-accent-1 btn border border-accent-1 text-center">QRIS</a>
-                        <a href="{{ route('ppdb.payment', ['update_payment' => 'va_bca']) }}" class="bg-white text-accent-1 btn border border-accent-1 text-center">BCA Virtual Account</a>
-                        <a href="{{ route('ppdb.payment', ['update_payment' => 'va_bni']) }}" class="bg-white text-accent-1 btn border border-accent-1 text-center">BNI Virtual Account</a>
-                        <a href="{{ route('ppdb.payment', ['update_payment' => 'va_bri']) }}" class="bg-white text-accent-1 btn border border-accent-1 text-center">BRI Virtual Account</a>
-                        <a href="{{ route('ppdb.payment', ['update_payment' => 'va_permata']) }}" class="bg-white text-accent-1 btn border border-accent-1 text-center">Permata Virtual Account</a>
-                        <a href="{{ route('ppdb.payment', ['update_payment' => 'va_cimb']) }}" class="bg-white text-accent-1 btn border border-accent-1 text-center">CIMB Virtual Account</a>
-                        <a href="{{ route('ppdb.payment', ['update_payment' => 'gopay']) }}" class="bg-white text-accent-1 btn border border-accent-1 text-center">GoPay</a>
-                        <a href="{{ route('ppdb.payment', ['update_payment' => 'shopeepay']) }}" class="bg-white text-accent-1 btn border border-accent-1 text-center">ShopeePay</a>
-                        <a href="{{ route('ppdb.payment', ['update_payment' => 'offline']) }}" class="bg-white text-accent-1 btn border border-accent-1 text-center">Bayar Di Sekolah</a>
+                        <a href="{{ route('ppdb.payment', ['update_payment' => 'qris']) }}" class="bg-white text-accent-1 btn border border-accent-1 text-center" id="update-payment-method">QRIS</a>
+                        <a href="{{ route('ppdb.payment', ['update_payment' => 'va_bca']) }}" class="bg-white text-accent-1 btn border border-accent-1 text-center" id="update-payment-method">BCA Virtual Account</a>
+                        <a href="{{ route('ppdb.payment', ['update_payment' => 'va_bni']) }}" class="bg-white text-accent-1 btn border border-accent-1 text-center" id="update-payment-method">BNI Virtual Account</a>
+                        <a href="{{ route('ppdb.payment', ['update_payment' => 'va_bri']) }}" class="bg-white text-accent-1 btn border border-accent-1 text-center" id="update-payment-method">BRI Virtual Account</a>
+                        <a href="{{ route('ppdb.payment', ['update_payment' => 'va_permata']) }}" class="bg-white text-accent-1 btn border border-accent-1 text-center" id="update-payment-method">Permata Virtual Account</a>
+                        <a href="{{ route('ppdb.payment', ['update_payment' => 'va_cimb']) }}" class="bg-white text-accent-1 btn border border-accent-1 text-center" id="update-payment-method">CIMB Virtual Account</a>
+                        <a href="{{ route('ppdb.payment', ['update_payment' => 'gopay']) }}" class="bg-white text-accent-1 btn border border-accent-1 text-center" id="update-payment-method">GoPay</a>
+                        <a href="{{ route('ppdb.payment', ['update_payment' => 'shopeepay']) }}" class="bg-white text-accent-1 btn border border-accent-1 text-center" id="update-payment-method">ShopeePay</a>
+                        <a href="{{ route('ppdb.payment', ['update_payment' => 'offline']) }}" class="bg-white text-accent-1 btn border border-accent-1 text-center" id="update-payment-method">Bayar Di Sekolah</a>
                     </div>
                 </div>
             @endif

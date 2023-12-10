@@ -68,6 +68,10 @@ class PpdbControler extends Controller
         $payment_method = $request->payment_method;
         $user = Auth::user();
 
+        if ($user->student) {
+            return redirect()->route('ppdb.payment');
+        }
+
         DB::beginTransaction();
         try {
             // registering student
@@ -102,11 +106,25 @@ class PpdbControler extends Controller
             // create transaction
             $order_id = 'PPDB-' . uniqid();
 
-            $this->charge_transaction($payment_method, $order_id, $student['full_name'], $user);
+            // $this->charge_transaction($payment_method, $order_id, $student['full_name'], $user);
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
 
+            // $this->midtrans_error_logger($th);
+            return $this->midtrans_error_redirect($th);
+        }
+
+        // charge transaction
+        DB::beginTransaction();
+        try {
+            $this->charge_transaction($payment_method, $order_id, $student['full_name'], $user);
+            DB::commit();
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack();
+
+            $this->midtrans_error_logger($th);
             return $this->midtrans_error_redirect($th);
         }
 
@@ -156,23 +174,26 @@ class PpdbControler extends Controller
         $transaction = $user->transaction;
 
         if (!$transaction) {
+            // if transaction not found
             $order_id = 'PPDB-' . uniqid();
             DB::beginTransaction();
             try {
-                $this->startMidtransConfig();
                 $this->charge_transaction('qris', $order_id, Auth::user()->student->full_name, Auth::user());
                 DB::commit();
                 return redirect()->route('ppdb.payment')->with('error', 'Kami tidak dapat menemukan transaksi pembayaran kamu. Sebagai gantinya, QRIS akan digunakan untuk pembayaran PPDB kamu.');
             } catch (\Throwable $th) {
                 //throw $th;
                 DB::rollBack();
+                $this->midtrans_error_logger($th);
                 return $this->midtrans_error_redirect($th);
             }
         }
 
         if ($transaction->transaction_status == 'pending' && $transaction->payment_method != 'offline') {
-            $this->startMidtransConfig();
+            // if transaction status is PENDING and the payment method is not OFFLINE
             try {
+                // get transaction status
+                $this->startMidtransConfig();
                 $response = \Midtrans\Transaction::status($transaction->transaction_id);
             } catch (\Throwable $th) {
                 //throw $th;
@@ -181,16 +202,23 @@ class PpdbControler extends Controller
             }
 
             if ($response->transaction_status == 'settlement') {
+                // if paid
                 $transaction->update([
                     'transaction_status' => $response->transaction_status,
                     'settlement_time' => $response->settlement_time
                 ]);
             }
             if ($response->transaction_status == 'expire') {
+                // if expired
                 $transaction->update([
                     'transaction_status' => $response->transaction_status,
                     'settlement_time' => null
                 ]);
+            }
+            if ($response->transaction_status == 'cancel') {
+                // if canceled
+                $transaction->delete();
+                return redirect()->route('ppdb.payment')->with('error', 'Kami tidak dapat menemukan transaksi pembayaran kamu. Sebagai gantinya, QRIS akan digunakan untuk pembayaran PPDB kamu.');
             }
         }
 
@@ -200,6 +228,7 @@ class PpdbControler extends Controller
                 $order_id = 'PPDB-' . uniqid();
 
                 if ($transaction->payment_method == 'offline') {
+                    // change payment method to offline
                     DB::beginTransaction();
                     try {
                         $this->charge_transaction(request()->update_payment, $order_id, Auth::user()->student->full_name, Auth::user());
@@ -208,18 +237,20 @@ class PpdbControler extends Controller
                     } catch (\Throwable $th) {
                         //throw $th;
                         DB::rollBack();
+                        $this->midtrans_error_logger($th);
                         return $this->midtrans_error_redirect($th);
                     }
                 } else {
+                    // change payment method to another online payment
                     // charge new transaction
                     DB::beginTransaction();
                     try {
-                        $this->startMidtransConfig();
                         $this->charge_transaction(request()->update_payment, $order_id, Auth::user()->student->full_name, Auth::user());
                         DB::commit();
                     } catch (\Throwable $th) {
                         //throw $th;
                         DB::rollBack();
+                        $this->midtrans_error_logger($th);
                         return $this->midtrans_error_redirect($th);
                     }
 
@@ -233,6 +264,7 @@ class PpdbControler extends Controller
                     } catch (\Throwable $th) {
                         //throw $th;
                         DB::rollBack();
+                        $this->midtrans_error_logger($th);
                         return $this->midtrans_error_redirect($th);
                     }
                 }

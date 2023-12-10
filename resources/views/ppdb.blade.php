@@ -7,7 +7,7 @@
 <div class="max-w-screen-lg mx-auto lg:px-5">
     <img src="{{ asset('images/banners/PPDB.png') }}" alt="" class="w-full">
 </div>
-<form action="{{ route('ppdb.store') }}" method="POST" class="max-w-screen-lg mx-auto p-5">
+<form action="{{ route('ppdb.store') }}" method="POST" class="max-w-screen-lg mx-auto p-5" id="register-ppdb">
     @if (session('error'))
         <div class="bg-red-200 p-3 border border-red-300 mb-2">
             {{ session('error') }}
@@ -259,7 +259,7 @@
             </div>
         </div>
     </div>
-    <button class="btn bg-accent-1 text-accent-4 mt-5 w-full lg:w-auto">Daftar</button>
+    <button type="submit" class="btn bg-accent-1 text-accent-4 mt-5 w-full lg:w-auto">Daftar</button>
 </form>
 @endsection
 
