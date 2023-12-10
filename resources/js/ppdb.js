@@ -25,6 +25,9 @@ if (updatePaymentMethods.length > 0) {
                 e.preventDefault();
             }
             updatePaymentStatus = false;
+            updatePaymentMethods.forEach((el) => {
+                el.style = "cursor: not-allowed;";
+            });
         });
     });
 }
