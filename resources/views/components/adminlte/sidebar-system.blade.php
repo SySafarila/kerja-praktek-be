@@ -1,4 +1,4 @@
-@canany(['users-read', 'permissions-read', 'roles-read'])
+@canany(['users-read', 'permissions-read', 'roles-read', 'midtrans-settings'])
     <li class="nav-header text-uppercase">System Control</li>
 
     @can('users-read')
@@ -36,4 +36,18 @@
             </a>
         </li>
     @endcan
+    @if (Route::has('admin.midtrans-settings.index'))
+        @can('articles-read')
+            <li class="nav-item">
+                <a href="{{ route('admin.midtrans-settings.index') }}"
+                    class="nav-link {{ request()->routeIs('admin.midtrans-settings.index') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-credit-card"></i>
+                    <p class="text-capitalize">
+                        Midtrans
+                        {{-- <span class="right badge badge-danger">New</span> --}}
+                    </p>
+                </a>
+            </li>
+        @endcan
+    @endif
 @endcanany

@@ -15,6 +15,8 @@ use App\Http\Controllers\GalleriesController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\HomepageController;
+use App\Http\Controllers\MidtransSetting;
+use App\Http\Controllers\PpdbAdminController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\PpdbControler;
 use Illuminate\Support\Facades\Route;
@@ -81,6 +83,13 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     // articles
     // Route::resource('/articles', ArticleController::class);
 
+    // settings
+    Route::resource('/midtrans-settings', MidtransSetting::class)->only(['index', 'update']);
+
+    // ppdb
+    Route::patch('/ppdb/confirm-offline-payment/{student_id}', [PpdbAdminController::class, 'confirm_offline_payment'])->name('ppdb.confirm-offline-payment');
+    Route::resource('/ppdb', PpdbAdminController::class);
+
     // bulk delete
     Route::delete('/bulk-delete/permissions', [PermissionController::class, 'massDestroy'])->name('permissions.massDestroy');
     Route::delete('/bulk-delete/roles', [RoleController::class, 'massDestroy'])->name('roles.massDestroy');
@@ -92,6 +101,7 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     Route::delete('/bulk-delete/extracurriculars', [ExtracurricularsController::class, 'massDestroy'])->name('extracurriculars.massDestroy');
     Route::delete('/bulk-delete/galleries', [GalleriesController::class, 'massDestroy'])->name('galleries.massDestroy');
     Route::delete('/bulk-delete/testimonials', [TestimonialController::class, 'massDestroy'])->name('testimonials.massDestroy');
+    Route::delete('/bulk-delete/ppdb', [PpdbAdminController::class, 'massDestroy'])->name('ppdb.massDestroy');
     // Route::delete('/bulk-delete/articles', [ArticleController::class, 'massDestroy'])->name('articles.massDestroy');
 });
 

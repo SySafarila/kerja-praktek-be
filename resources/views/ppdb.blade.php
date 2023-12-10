@@ -78,7 +78,7 @@
                     <span class="text-red-500">*</span>
                 </label>
                 <select type="text" name="student[religion]" class="w-full border-gray-500 border outline-none rounded-lg" id="agama" required>
-                    <option value="0" selected> Pilih</option>
+                    <option value="0" selected disabled> Pilih</option>
                     <option value="islam" @if(old('student.religion') == 'islam') selected @endif>islam</option>
                     <option value="hindu" @if(old('student.religion') == 'hindu') selected @endif>Hindu</option>
                     <option value="kristen" @if(old('student.religion') == 'kristen') selected @endif>Kristen</option>
