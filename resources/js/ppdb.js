@@ -5,11 +5,12 @@ if (form) {
     let formStatus = true;
     form.addEventListener("submit", (e) => {
         if (!formStatus) {
-            e.preventDefault();
+            return;
         }
         formStatus = false;
         formButton.innerText = "Loading...";
         formButton.disabled = true;
+        form.action = "";
     });
 }
 
