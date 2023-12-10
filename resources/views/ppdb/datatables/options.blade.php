@@ -15,7 +15,7 @@
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="detailModal-{{ $model->id }}Label">Detail</h5>
+                <h5 class="modal-title" id="detailModal-{{ $model->id }}Label">Detail {{ $model->full_name }} - {{ $model->nisn }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -28,11 +28,11 @@
                         </tr>
                         <tr>
                             <td>PPDB ID</td>
-                            <td>{{ $model->user->transaction->order_id }}</td>
+                            <td>{{ @$model->user->transaction->order_id }}</td>
                         </tr>
                         <tr>
                             <td>Status</td>
-                            @switch($model->user->transaction->transaction_status)
+                            @switch(@$model->user->transaction->transaction_status)
                                 @case('pending')
                                     <th>Pending</th>
                                     @break
@@ -48,8 +48,7 @@
                         </tr>
                         <tr>
                             <td>Payment Method</td>
-                            {{-- qris,va_bca,va_bni,va_bri,va_permata,va_cimb,gopay,shopeepay,offline --}}
-                            @switch($model->user->transaction->payment_method)
+                            @switch(@$model->user->transaction->payment_method)
                                 @case('qris')
                                     <td>QRIS</td>
                                     @break
@@ -83,7 +82,7 @@
                         </tr>
                         <tr>
                             <td>Amount</td>
-                            <td>Rp {{ number_format($model->user->transaction->gross_amount) }}</td>
+                            <td>Rp {{ @number_format($model->user->transaction->gross_amount) }}</td>
                         </tr>
                         <tr>
                             <th colspan="2">Student</th>
@@ -162,9 +161,9 @@
                     </tbody>
                 </table>
             </div>
-            <div class="modal-footer">
+            {{-- <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>

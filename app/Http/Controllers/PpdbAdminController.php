@@ -56,6 +56,9 @@ class PpdbAdminController extends Controller
                 ->editColumn('birth', function($model) {
                     return "$model->birth_place - " . Carbon::parse($model->birth_date)->format('d-m-Y');
                 })
+                ->editColumn('created_at', function ($model) {
+                    return $model->created_at->format('H:i/d-m-Y');
+                })
                 ->setRowAttr([
                     'data-model-id' => function ($model) {
                         return $model->id;

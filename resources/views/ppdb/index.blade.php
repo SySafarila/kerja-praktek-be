@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.4/css/select.dataTables.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp">
     <style>
-        tr td:nth-child(5) {
+        td:nth-child(5), td:nth-child(10) {
             text-wrap: nowrap;
         }
     </style>
@@ -55,7 +55,7 @@
                                 <th style="text-wrap: nowrap;">Address</th>
                                 <th style="text-wrap: nowrap;">Whatsapp</th>
                                 <th style="text-wrap: nowrap;">Payment</th>
-                                <th style="text-wrap: nowrap;">Created At</th>
+                                <th style="text-wrap: nowrap;">Registered At</th>
                                 <th class="d-print-none">Options</th>
                             </tr>
                         </thead>
@@ -190,7 +190,7 @@
                     targets: 0
                 }, {
                     orderable: false,
-                    targets: [1, 4, 6, 7, 10]
+                    targets: [6, 7, 8, 10]
                 }],
                 order: [
                     // [1, 'asc']
