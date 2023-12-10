@@ -180,7 +180,7 @@ class PpdbControler extends Controller
             try {
                 $this->charge_transaction('qris', $order_id, Auth::user()->student->full_name, Auth::user());
                 DB::commit();
-                return redirect()->route('ppdb.payment')->with('error', 'Kami tidak dapat menemukan transaksi pembayaran kamu. Sebagai gantinya, QRIS akan digunakan untuk pembayaran PPDB kamu.');
+                return redirect()->route('ppdb.payment')->with('error', 'Kami tidak dapat menemukan transaksi pembayaran kamu. Sebagai gantinya, kami telah membuatkan transaksi yang baru.');
             } catch (\Throwable $th) {
                 //throw $th;
                 DB::rollBack();
@@ -218,7 +218,7 @@ class PpdbControler extends Controller
             if ($response->transaction_status == 'cancel') {
                 // if canceled
                 $transaction->delete();
-                return redirect()->route('ppdb.payment')->with('error', 'Kami tidak dapat menemukan transaksi pembayaran kamu. Sebagai gantinya, QRIS akan digunakan untuk pembayaran PPDB kamu.');
+                return redirect()->route('ppdb.payment')->with('error', 'Kami tidak dapat menemukan transaksi pembayaran kamu. Sebagai gantinya, kami telah membuatkan transaksi yang baru.');
             }
         }
 
