@@ -22,6 +22,7 @@ class Controller extends BaseController
         if ($midtransProd) {
             if ($midtransProd->isProd) {
                 \Midtrans\Config::$isProduction = true;
+                \Midtrans\Config::$overrideNotifUrl = config('app.url') . '/api/midtrans';
                 $isProd = true;
 
                 $serverKeyProd = MidtransKey::where('type', 'server key prod')->first();
@@ -247,5 +248,26 @@ class Controller extends BaseController
                 Log::error($th->getCode() . ': ' . $th->getMessage());
                 break;
         }
+    }
+
+    public function midtrans_settlement($transaction, $response)
+    {
+        $transaction->update([
+            'transaction_status' => $response->transaction_status,
+            'settlement_time' => $response->settlement_time
+        ]);
+    }
+
+    public function midtrans_expire($transaction, $response)
+    {
+        $transaction->update([
+            'transaction_status' => $response->transaction_status,
+            'settlement_time' => null
+        ]);
+    }
+
+    public function midtrans_cancel($transaction, $response)
+    {
+        $transaction->delete();
     }
 }
