@@ -75,7 +75,7 @@ class PpdbControler extends Controller
         DB::beginTransaction();
         try {
             // registering student
-            $create_student = $user->student()->create([
+            $student = $user->student()->create([
                 'nisn' => $student['nisn'],
                 'full_name' => $student['full_name'],
                 'gender' => $student['gender'],
@@ -94,7 +94,7 @@ class PpdbControler extends Controller
             ]);
 
             // registering student's parent
-            $create_student->parent()->create([
+            $student->parent()->create([
                 'full_name' => $parent['full_name'],
                 'gender' => $parent['gender'],
                 'job' => $parent['job'],
@@ -118,7 +118,7 @@ class PpdbControler extends Controller
         // charge transaction
         DB::beginTransaction();
         try {
-            $this->charge_transaction($payment_method, $order_id, $student['full_name'], $user);
+            $this->charge_transaction($payment_method, $order_id, $student, $user);
             DB::commit();
         } catch (\Throwable $th) {
             //throw $th;
@@ -188,7 +188,7 @@ class PpdbControler extends Controller
                     // change payment method to offline
                     DB::beginTransaction();
                     try {
-                        $this->charge_transaction($request->update_payment_method, $order_id, Auth::user()->student->full_name, Auth::user());
+                        $this->charge_transaction($request->update_payment_method, $order_id, $user->student, $user);
                         $transaction->delete();
                         DB::commit();
                     } catch (\Throwable $th) {
@@ -202,7 +202,7 @@ class PpdbControler extends Controller
                     // charge new transaction
                     DB::beginTransaction();
                     try {
-                        $this->charge_transaction($request->update_payment_method, $order_id, Auth::user()->student->full_name, Auth::user());
+                        $this->charge_transaction($request->update_payment_method, $order_id, $user->student, $user);
                         DB::commit();
                     } catch (\Throwable $th) {
                         //throw $th;
@@ -245,7 +245,7 @@ class PpdbControler extends Controller
             $order_id = 'PPDB-' . uniqid();
             DB::beginTransaction();
             try {
-                $this->charge_transaction('qris', $order_id, Auth::user()->student->full_name, Auth::user());
+                $this->charge_transaction('qris', $order_id, $user->student, $user);
                 DB::commit();
                 return redirect()->route('ppdb.payment')->with('error', 'Kami tidak dapat menemukan transaksi pembayaran kamu. Sebagai gantinya, kami telah membuatkan transaksi yang baru.');
             } catch (\Throwable $th) {
@@ -343,11 +343,12 @@ class PpdbControler extends Controller
         return view('ppdb-payment', compact('student', 'transaction'));
     }
 
-    function charge_transaction($payment_method, $order_id, $student_full_name, $user)
+    function charge_transaction($payment_method, $order_id, $student, $user)
     {
         if ($payment_method == 'offline') {
             // bayar di sekolah
             $user->transaction()->create([
+                'student_id' => $student->id,
                 'order_id' => $order_id,
                 'fraud_status' => null,
                 'transaction_id' => $order_id,
@@ -375,8 +376,8 @@ class PpdbControler extends Controller
                 ],
                 'item_details' => [
                     [
-                        'id' => "$order_id-$student_full_name",
-                        'name' => "PPDB untuk $student_full_name",
+                        'id' => "$order_id-$student->full_name",
+                        'name' => "PPDB untuk $student->full_name",
                         'quantity' => 1,
                         'price' => 150000
                     ]
@@ -398,12 +399,12 @@ class PpdbControler extends Controller
                     'bank' => 'bca',
                     'free_text' => [
                         'payment' => [
-                            'id' => "Pembayaran PPDB untuk $student_full_name",
-                            'en' => "PPDB payment for $student_full_name"
+                            'id' => "Pembayaran PPDB untuk $student->full_name",
+                            'en' => "PPDB payment for $student->full_name"
                         ],
                         'inquiry' => [
-                            'id' => "Pembayaran PPDB untuk $student_full_name",
-                            'en' => "PPDB payment for $student_full_name"
+                            'id' => "Pembayaran PPDB untuk $student->full_name",
+                            'en' => "PPDB payment for $student->full_name"
                         ]
                     ]
                 ];
@@ -439,7 +440,7 @@ class PpdbControler extends Controller
                 $params['bank_transfer'] = [
                     'bank' => 'permata',
                     'permata' => [
-                        'recipient_name' => "PPDB - $student_full_name"
+                        'recipient_name' => "PPDB - $student->full_name"
                     ]
                 ];
             }
@@ -524,6 +525,7 @@ class PpdbControler extends Controller
                 }
 
                 $user->transaction()->create([
+                    'student_id' => $student->id,
                     'order_id' => $response->order_id,
                     'fraud_status' => $response->fraud_status,
                     'transaction_id' => $response->transaction_id,
