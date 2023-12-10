@@ -39,8 +39,9 @@ Route::get('/news', [PublicController::class, 'index'])->name('news');
 Route::get('/news/{id}', [PublicController::class, 'show'])->name('news.show');
 
 Route::view('/authentication', 'authentication');
-Route::resource('/ppdb', PpdbControler::class);
+Route::resource('/ppdb', PpdbControler::class)->only(['index', 'store']);
 Route::get('/ppdb-payment', [PpdbControler::class, 'payment'])->name('ppdb.payment');
+Route::patch('/ppdb-payment', [PpdbControler::class, 'update_payment'])->name('ppdb.payment-update');
 // Route::view('/news', 'news');
 // Route::view('/news/1', 'news-detail');
 

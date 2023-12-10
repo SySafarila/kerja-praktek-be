@@ -46,7 +46,7 @@ class PpdbAdminController extends Controller
                     return $model->gender == 'male' ? 'L' : 'P';
                 })
                 ->editColumn('payment', function($model) {
-                    switch ($model->user->transaction->transaction_status) {
+                    switch (@$model->user->transaction->transaction_status) {
                         case 'pending':
                             return 'Pending';
                             break;
