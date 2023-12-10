@@ -164,6 +164,73 @@ class PpdbControler extends Controller
         //
     }
 
+    public function update_payment(Request $request)
+    {
+        $request->validate([
+            'update_payment_method' => ['required', 'string', 'in:qris,va_bca,va_bni,va_bri,va_permata,va_cimb,gopay,shopeepay,offline']
+        ]);
+
+        $user = Auth::user();
+        if (!$user->student) {
+            return redirect()->route('ppdb.index');
+        }
+        $transaction = $user->transaction;
+        if (!$transaction) {
+            return redirect()->route('ppdb.payment');
+        }
+
+        if (in_array($transaction->transaction_status, ['pending', 'expire'])) {
+            // update payment method
+            if ($request->update_payment_method && in_array($request->update_payment_method, ['qris', 'va_bca', 'va_bni', 'va_bri', 'va_permata', 'va_cimb', 'gopay', 'shopeepay', 'offline'])) {
+                $order_id = 'PPDB-' . uniqid();
+
+                if ($transaction->payment_method == 'offline') {
+                    // change payment method to offline
+                    DB::beginTransaction();
+                    try {
+                        $this->charge_transaction($request->update_payment_method, $order_id, Auth::user()->student->full_name, Auth::user());
+                        $transaction->delete();
+                        DB::commit();
+                    } catch (\Throwable $th) {
+                        //throw $th;
+                        DB::rollBack();
+                        $this->midtrans_error_logger($th);
+                        return $this->midtrans_error_redirect($th);
+                    }
+                } else {
+                    // change payment method to another online payment
+                    // charge new transaction
+                    DB::beginTransaction();
+                    try {
+                        $this->charge_transaction($request->update_payment_method, $order_id, Auth::user()->student->full_name, Auth::user());
+                        DB::commit();
+                    } catch (\Throwable $th) {
+                        //throw $th;
+                        DB::rollBack();
+                        $this->midtrans_error_logger($th);
+                        return $this->midtrans_error_redirect($th);
+                    }
+
+                    // cancel current transaction
+                    DB::beginTransaction();
+                    try {
+                        $this->startMidtransConfig();
+                        $response = \Midtrans\Transaction::cancel($transaction->transaction_id);
+                        $transaction->delete();
+                        DB::commit();
+                    } catch (\Throwable $th) {
+                        //throw $th;
+                        DB::rollBack();
+                        $this->midtrans_error_logger($th);
+                        return $this->midtrans_error_redirect($th);
+                    }
+                }
+                return redirect()->route('ppdb.payment');
+            }
+        }
+        return redirect()->route('ppdb.payment');
+    }
+
     public function payment()
     {
         $user = Auth::user();
@@ -189,6 +256,7 @@ class PpdbControler extends Controller
             }
         }
 
+        // check transaction
         if ($transaction->transaction_status == 'pending' && $transaction->payment_method != 'offline') {
             // if transaction status is PENDING and the payment method is not OFFLINE
             try {
@@ -222,55 +290,55 @@ class PpdbControler extends Controller
             }
         }
 
-        if (in_array($transaction->transaction_status, ['pending', 'expire'])) {
-            // update payment method
-            if (request()->update_payment && in_array(request()->update_payment, ['qris', 'va_bca', 'va_bni', 'va_bri', 'va_permata', 'va_cimb', 'gopay', 'shopeepay', 'offline'])) {
-                $order_id = 'PPDB-' . uniqid();
+        // if (in_array($transaction->transaction_status, ['pending', 'expire'])) {
+        //     // update payment method
+        //     if (request()->update_payment && in_array(request()->update_payment, ['qris', 'va_bca', 'va_bni', 'va_bri', 'va_permata', 'va_cimb', 'gopay', 'shopeepay', 'offline'])) {
+        //         $order_id = 'PPDB-' . uniqid();
 
-                if ($transaction->payment_method == 'offline') {
-                    // change payment method to offline
-                    DB::beginTransaction();
-                    try {
-                        $this->charge_transaction(request()->update_payment, $order_id, Auth::user()->student->full_name, Auth::user());
-                        $transaction->delete();
-                        DB::commit();
-                    } catch (\Throwable $th) {
-                        //throw $th;
-                        DB::rollBack();
-                        $this->midtrans_error_logger($th);
-                        return $this->midtrans_error_redirect($th);
-                    }
-                } else {
-                    // change payment method to another online payment
-                    // charge new transaction
-                    DB::beginTransaction();
-                    try {
-                        $this->charge_transaction(request()->update_payment, $order_id, Auth::user()->student->full_name, Auth::user());
-                        DB::commit();
-                    } catch (\Throwable $th) {
-                        //throw $th;
-                        DB::rollBack();
-                        $this->midtrans_error_logger($th);
-                        return $this->midtrans_error_redirect($th);
-                    }
+        //         if ($transaction->payment_method == 'offline') {
+        //             // change payment method to offline
+        //             DB::beginTransaction();
+        //             try {
+        //                 $this->charge_transaction(request()->update_payment, $order_id, Auth::user()->student->full_name, Auth::user());
+        //                 $transaction->delete();
+        //                 DB::commit();
+        //             } catch (\Throwable $th) {
+        //                 //throw $th;
+        //                 DB::rollBack();
+        //                 $this->midtrans_error_logger($th);
+        //                 return $this->midtrans_error_redirect($th);
+        //             }
+        //         } else {
+        //             // change payment method to another online payment
+        //             // charge new transaction
+        //             DB::beginTransaction();
+        //             try {
+        //                 $this->charge_transaction(request()->update_payment, $order_id, Auth::user()->student->full_name, Auth::user());
+        //                 DB::commit();
+        //             } catch (\Throwable $th) {
+        //                 //throw $th;
+        //                 DB::rollBack();
+        //                 $this->midtrans_error_logger($th);
+        //                 return $this->midtrans_error_redirect($th);
+        //             }
 
-                    // cancel current transaction
-                    DB::beginTransaction();
-                    try {
-                        $this->startMidtransConfig();
-                        $response = \Midtrans\Transaction::cancel($transaction->transaction_id);
-                        $transaction->delete();
-                        DB::commit();
-                    } catch (\Throwable $th) {
-                        //throw $th;
-                        DB::rollBack();
-                        $this->midtrans_error_logger($th);
-                        return $this->midtrans_error_redirect($th);
-                    }
-                }
-                return redirect()->route('ppdb.payment');
-            }
-        }
+        //             // cancel current transaction
+        //             DB::beginTransaction();
+        //             try {
+        //                 $this->startMidtransConfig();
+        //                 $response = \Midtrans\Transaction::cancel($transaction->transaction_id);
+        //                 $transaction->delete();
+        //                 DB::commit();
+        //             } catch (\Throwable $th) {
+        //                 //throw $th;
+        //                 DB::rollBack();
+        //                 $this->midtrans_error_logger($th);
+        //                 return $this->midtrans_error_redirect($th);
+        //             }
+        //         }
+        //         return redirect()->route('ppdb.payment');
+        //     }
+        // }
 
         return view('ppdb-payment', compact('student', 'transaction'));
     }
