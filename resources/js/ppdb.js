@@ -35,6 +35,7 @@ if (updatePaymentMethods.length > 0) {
                 '#update-payment-method-form input[name="update_payment_method"]'
             ).value = payment.dataset.payment;
             updatePaymentMethodForm.submit();
+            updatePaymentMethodForm.remove();
             updatePaymentStatus = false;
         });
     });
