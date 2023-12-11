@@ -68,3 +68,39 @@ if (studentDetailModal && studentDetailToggle && studentDetailCloseToggle) {
         studentDetailModal.classList.toggle("hidden");
     });
 }
+
+const editable = document.querySelectorAll("[data-name]");
+const editableToggle = document.querySelector(
+    "#student_detail_modal #edit-ppdb"
+);
+
+if (editable.length > 0 && editableToggle) {
+    editableToggle.addEventListener("click", (e) => {
+        e.preventDefault();
+        editable.forEach((element) => {
+            element.classList.remove("p-2");
+
+            if (element.dataset.typeinput == 'select') {
+                if (element.dataset.selecttype == 'gender') {
+                    element.innerHTML = `<select name="${element.dataset.name}" required="${element.dataset.required == 1 ? true : false}" style="border: none; width:100%;">
+                        <option value="0" selected disabled>Pilih</option>
+                        <option value="male" ${element.dataset.value == 'male' ? 'selected' : ''}>Laki-Laki</option>
+                        <option value="female" ${element.dataset.value == 'female' ? 'selected' : ''}>Perempuan</option>
+                    </select>`;
+                } else if (element.dataset.selecttype == 'religion') {
+                    element.innerHTML = `<select name="${element.dataset.name}" required="${element.dataset.required == 1 ? true : false}" style="border: none; width:100%;">
+                        <option value="0" selected disabled>Pilih</option>
+                        <option class="capitalize" value="islam" ${element.dataset.value == 'islam' ? 'selected' : ''}>islam</option>
+                        <option class="capitalize" value="kristen_protestan" ${element.dataset.value == 'kristen_protestan' ? 'selected' : ''}>kristen_protestan</option>
+                        <option class="capitalize" value="kristen_katolik" ${element.dataset.value == 'kristen_katolik' ? 'selected' : ''}>kristen_katolik</option>
+                        <option class="capitalize" value="hindu" ${element.dataset.value == 'hindu' ? 'selected' : ''}>hindu</option>
+                        <option class="capitalize" value="buddha" ${element.dataset.value == 'buddha' ? 'selected' : ''}>buddha</option>
+                        <option class="capitalize" value="khonghucu" ${element.dataset.value == 'khonghucu' ? 'selected' : ''}>khonghucu</option>
+                    </select>`;
+                }
+            } else {
+                element.innerHTML = `<input name="${element.dataset.name}" type="${element.dataset.typeinput}" value="${element.dataset.value}" style="border: none; width:100%;" required="${element.dataset.required == 1 ? true : false}" />`;
+            }
+        });
+    });
+}
