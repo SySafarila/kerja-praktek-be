@@ -139,7 +139,9 @@
             </div>
             <div class="flex justify-between gap-5 lg:flex-col lg:gap-3">
                 <a href="https://wa.me/6282117694132" target="__blank" class="btn bg-accent-1 text-accent-4 w-full text-center capitalize">Hubungi admin</a>
-                <button type="button" class="btn bg-white border border-accent-1 text-accent-1 w-full text-center capitalize" onclick="event.preventDefault();location.reload()">Refresh</button>
+                @if (!$transaction->settlement_time)
+                    <button type="button" class="btn bg-white border border-accent-1 text-accent-1 w-full text-center capitalize" onclick="event.preventDefault();location.reload()">Refresh</button>
+                @endif
             </div>
             @if (in_array($transaction->transaction_status, ['pending', 'expire']))
                 <div class="group relative">
