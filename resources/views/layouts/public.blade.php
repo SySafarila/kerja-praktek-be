@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-pt-[72px] lg:scroll-pt-[68px] scroll-smooth">
 
 <head>
     <meta charset="UTF-8">
@@ -20,7 +20,7 @@
 <body>
     <x-public.navbar />
 
-    <main class="mt-[64px] lg:mt-[60px]">
+    <main class="mt-[72px] lg:mt-[68px]">
         @yield('content')
     </main>
 

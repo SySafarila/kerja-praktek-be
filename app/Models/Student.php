@@ -18,4 +18,8 @@ class Student extends Model
     function parent() {
         return $this->hasOne(StudentParent::class);
     }
+
+    function transaction() {
+        return $this->hasOne(Transaction::class);
+    }
 }

@@ -350,6 +350,47 @@ class PermissionSeeder extends Seeder
 
         );
 
+        // ppdb
+        array_push(
+            $arr,
+            [
+                'guard_name' => 'web',
+                'name' => 'ppdb-create',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'ppdb-read',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'ppdb-update',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'ppdb-delete',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+
+        );
+
+        // midtrans
+        array_push(
+            $arr,
+            [
+                'guard_name' => 'web',
+                'name' => 'midtrans-settings',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+        );
+
         DB::table('permissions')->insert($arr);
     }
 }

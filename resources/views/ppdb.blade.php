@@ -5,9 +5,9 @@
 
 @section('content')
 <div class="max-w-screen-lg mx-auto lg:px-5">
-    <img src="{{ asset('images/ppdb.png') }}" alt="" class="w-full">
+    <img src="{{ asset('images/banners/PPDB.png') }}" alt="" class="w-full">
 </div>
-<form action="{{ route('ppdb.store') }}" method="POST" class="max-w-screen-lg mx-auto p-5">
+<form action="{{ route('ppdb.store') }}" method="POST" class="max-w-screen-lg mx-auto p-5" id="register-ppdb">
     @if (session('error'))
         <div class="bg-red-200 p-3 border border-red-300 mb-2">
             {{ session('error') }}
@@ -23,7 +23,7 @@
                     Nomor induk siswa nasional (NISN)
                     <span class="text-red-500">*</span>
                 </label>
-                <input type="text" name="student[nisn]" class="w-full border-gray-500 border outline-none rounded-lg" id="NISN" value="{{ old('student.nisn') }}" required>
+                <input type="number" name="student[nisn]" class="w-full border-gray-500 border outline-none rounded-lg" id="NISN" value="{{ old('student.nisn') }}" required>
                 @error('student.nisn')
                     <small class="text-red-500">{{ $message }}</small>
                 @enderror
@@ -78,7 +78,7 @@
                     <span class="text-red-500">*</span>
                 </label>
                 <select type="text" name="student[religion]" class="w-full border-gray-500 border outline-none rounded-lg" id="agama" required>
-                    <option value="0" selected> Pilih</option>
+                    <option value="0" selected disabled> Pilih</option>
                     <option value="islam" @if(old('student.religion') == 'islam') selected @endif>islam</option>
                     <option value="hindu" @if(old('student.religion') == 'hindu') selected @endif>Hindu</option>
                     <option value="kristen" @if(old('student.religion') == 'kristen') selected @endif>Kristen</option>
@@ -259,7 +259,7 @@
             </div>
         </div>
     </div>
-    <button class="btn bg-accent-1 text-accent-4 mt-5 w-full lg:w-auto">Daftar</button>
+    <button type="submit" class="btn bg-accent-1 text-accent-4 mt-5 w-full lg:w-auto">Daftar</button>
 </form>
 @endsection
 

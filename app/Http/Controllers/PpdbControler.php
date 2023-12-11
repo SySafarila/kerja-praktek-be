@@ -63,16 +63,19 @@ class PpdbControler extends Controller
             'payment_method' => ['required', 'string', 'in:qris,va_bca,va_bni,va_bri,va_permata,va_cimb,gopay,shopeepay,offline']
         ]);
 
-
         $student = $request->student;
         $parent = $request->parent;
         $payment_method = $request->payment_method;
         $user = Auth::user();
 
+        if ($user->student) {
+            return redirect()->route('ppdb.payment');
+        }
+
         DB::beginTransaction();
         try {
             // registering student
-            $create_student = $user->student()->create([
+            $student = $user->student()->create([
                 'nisn' => $student['nisn'],
                 'full_name' => $student['full_name'],
                 'gender' => $student['gender'],
@@ -91,7 +94,7 @@ class PpdbControler extends Controller
             ]);
 
             // registering student's parent
-            $create_student->parent()->create([
+            $student->parent()->create([
                 'full_name' => $parent['full_name'],
                 'gender' => $parent['gender'],
                 'job' => $parent['job'],
@@ -103,22 +106,26 @@ class PpdbControler extends Controller
             // create transaction
             $order_id = 'PPDB-' . uniqid();
 
-            $this->charge_transaction($payment_method, $order_id, $create_student, $user);
+            // $this->charge_transaction($payment_method, $order_id, $student['full_name'], $user);
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
 
-            switch ($th->getCode()) {
-                case 402:
-                    Log::debug('Payment channel is not activated, you have to activate your Core API');
-                    return redirect()->route('ppdb.index')->with('error', 'Metode pembayaran yang dipilih sedang dalam perbaikan.')->withInput();
-                    break;
+            // $this->midtrans_error_logger($th);
+            return $this->midtrans_error_redirect($th);
+        }
 
-                default:
-                    Log::debug($th->getMessage());
-                    return redirect()->route('ppdb.index')->with('error', $th->getMessage());
-                    break;
-            }
+        // charge transaction
+        DB::beginTransaction();
+        try {
+            $this->charge_transaction($payment_method, $order_id, $student, $user);
+            DB::commit();
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack();
+
+            $this->midtrans_error_logger($th);
+            return $this->midtrans_error_redirect($th);
         }
 
 
@@ -157,6 +164,73 @@ class PpdbControler extends Controller
         //
     }
 
+    public function update_payment(Request $request)
+    {
+        $request->validate([
+            'update_payment_method' => ['required', 'string', 'in:qris,va_bca,va_bni,va_bri,va_permata,va_cimb,gopay,shopeepay,offline']
+        ]);
+
+        $user = Auth::user();
+        if (!$user->student) {
+            return redirect()->route('ppdb.index');
+        }
+        $transaction = $user->transaction;
+        if (!$transaction) {
+            return redirect()->route('ppdb.payment');
+        }
+
+        if (in_array($transaction->transaction_status, ['pending', 'expire'])) {
+            // update payment method
+            if ($request->update_payment_method && in_array($request->update_payment_method, ['qris', 'va_bca', 'va_bni', 'va_bri', 'va_permata', 'va_cimb', 'gopay', 'shopeepay', 'offline'])) {
+                $order_id = 'PPDB-' . uniqid();
+
+                if ($transaction->payment_method == 'offline') {
+                    // change payment method to offline
+                    DB::beginTransaction();
+                    try {
+                        $this->charge_transaction($request->update_payment_method, $order_id, $user->student, $user);
+                        $transaction->delete();
+                        DB::commit();
+                    } catch (\Throwable $th) {
+                        //throw $th;
+                        DB::rollBack();
+                        $this->midtrans_error_logger($th);
+                        return $this->midtrans_error_redirect($th);
+                    }
+                } else {
+                    // change payment method to another online payment
+                    // charge new transaction
+                    DB::beginTransaction();
+                    try {
+                        $this->charge_transaction($request->update_payment_method, $order_id, $user->student, $user);
+                        DB::commit();
+                    } catch (\Throwable $th) {
+                        //throw $th;
+                        DB::rollBack();
+                        $this->midtrans_error_logger($th);
+                        return $this->midtrans_error_redirect($th);
+                    }
+
+                    // cancel current transaction
+                    DB::beginTransaction();
+                    try {
+                        $this->startMidtransConfig();
+                        $response = \Midtrans\Transaction::cancel($transaction->transaction_id);
+                        $transaction->delete();
+                        DB::commit();
+                    } catch (\Throwable $th) {
+                        //throw $th;
+                        DB::rollBack();
+                        $this->midtrans_error_logger($th);
+                        return $this->midtrans_error_redirect($th);
+                    }
+                }
+                return redirect()->route('ppdb.payment');
+            }
+        }
+        return redirect()->route('ppdb.payment');
+    }
+
     public function payment()
     {
         $user = Auth::user();
@@ -166,48 +240,59 @@ class PpdbControler extends Controller
         $student = $user->student;
         $transaction = $user->transaction;
 
-        if ($transaction->transaction_status == 'pending' && $transaction->payment_method != 'offline') {
-            $this->startMidtransConfig();
-            $response = \Midtrans\Transaction::status($transaction->transaction_id);
-
-            if ($response->transaction_status == 'settlement') {
-                $transaction->update([
-                    'transaction_status' => $response->transaction_status,
-                    'settlement_time' => $response->settlement_time
-                ]);
-            }
-            if ($response->transaction_status == 'expire') {
-                $transaction->update([
-                    'transaction_status' => $response->transaction_status,
-                    'settlement_time' => null
-                ]);
+        if (!$transaction) {
+            // if transaction not found
+            $order_id = 'PPDB-' . uniqid();
+            DB::beginTransaction();
+            try {
+                $this->charge_transaction('qris', $order_id, $user->student, $user);
+                DB::commit();
+                return redirect()->route('ppdb.payment')->with('error', 'Kami tidak dapat menemukan transaksi pembayaran kamu. Sebagai gantinya, kami telah membuatkan transaksi yang baru.');
+            } catch (\Throwable $th) {
+                //throw $th;
+                DB::rollBack();
+                $this->midtrans_error_logger($th);
+                return $this->midtrans_error_redirect($th);
             }
         }
 
-        if (in_array($transaction->transaction_status, ['pending', 'expire'])) {
-            if (request()->update_payment && in_array(request()->update_payment, ['qris', 'va_bca', 'va_bni', 'va_bri', 'va_permata', 'va_cimb', 'gopay', 'shopeepay', 'offline'])) {
-                $order_id = 'PPDB-' . uniqid();
+        // check transaction
+        if ($transaction->transaction_status == 'pending' && $transaction->payment_method != 'offline') {
+            // if transaction status is PENDING and the payment method is not OFFLINE
+            try {
+                // get transaction status
+                $this->startMidtransConfig();
+                $response = \Midtrans\Transaction::status($transaction->transaction_id);
+            } catch (\Throwable $th) {
+                //throw $th;
+                $this->midtrans_error_logger($th);
+                return view('errors.midtrans', ['code' => $th->getCode(), 'message' => 'Ada yang salah dengan pembayaranmu, silahkan hubungi admin']);
+            }
 
-                if ($transaction->payment_method == 'offline') {
-                    $transaction->delete();
-                } else {
-                    $this->startMidtransConfig();
-                    $response = \Midtrans\Transaction::cancel($transaction->transaction_id);
-                    $transaction->delete();
-                }
-
-                $this->charge_transaction(request()->update_payment, $order_id, Auth::user()->student, Auth::user());
-                return redirect()->route('ppdb.payment');
+            if ($response->transaction_status == 'settlement') {
+                // if paid
+                $this->midtrans_settlement($transaction, $response);
+            }
+            if ($response->transaction_status == 'expire') {
+                // if expired
+                $this->midtrans_expire($transaction, $response);
+            }
+            if ($response->transaction_status == 'cancel') {
+                // if canceled
+                $this->midtrans_cancel($transaction, $response);
+                return redirect()->route('ppdb.payment')->with('error', 'Kami tidak dapat menemukan transaksi pembayaran kamu. Sebagai gantinya, kami telah membuatkan transaksi yang baru.');
             }
         }
 
         return view('ppdb-payment', compact('student', 'transaction'));
     }
 
-    function charge_transaction($payment_method, $order_id, $create_student, $user)
+    function charge_transaction($payment_method, $order_id, $student, $user)
     {
         if ($payment_method == 'offline') {
+            // bayar di sekolah
             $user->transaction()->create([
+                'student_id' => $student->id,
                 'order_id' => $order_id,
                 'fraud_status' => null,
                 'transaction_id' => $order_id,
@@ -227,6 +312,7 @@ class PpdbControler extends Controller
                 'settlement_time' => null
             ]);
         } else {
+            // bayar secara online
             $params = [
                 'transaction_details' => [
                     'order_id' => $order_id,
@@ -234,8 +320,8 @@ class PpdbControler extends Controller
                 ],
                 'item_details' => [
                     [
-                        'id' => "$order_id-$create_student->full_name",
-                        'name' => "PPDB untuk $create_student->full_name",
+                        'id' => "$order_id-$student->full_name",
+                        'name' => "PPDB untuk $student->full_name",
                         'quantity' => 1,
                         'price' => 150000
                     ]
@@ -254,7 +340,17 @@ class PpdbControler extends Controller
             if ($payment_method == 'va_bca') {
                 $params['payment_type'] = 'bank_transfer';
                 $params['bank_transfer'] = [
-                    'bank' => 'bca'
+                    'bank' => 'bca',
+                    'free_text' => [
+                        'payment' => [
+                            'id' => "Pembayaran PPDB untuk $student->full_name",
+                            'en' => "PPDB payment for $student->full_name"
+                        ],
+                        'inquiry' => [
+                            'id' => "Pembayaran PPDB untuk $student->full_name",
+                            'en' => "PPDB payment for $student->full_name"
+                        ]
+                    ]
                 ];
             }
 
@@ -284,7 +380,13 @@ class PpdbControler extends Controller
 
             // Permata virtual account
             if ($payment_method == 'va_permata') {
-                $params['payment_type'] = 'permata';
+                $params['payment_type'] = 'bank_transfer';
+                $params['bank_transfer'] = [
+                    'bank' => 'permata',
+                    'permata' => [
+                        'recipient_name' => "PPDB - $student->full_name"
+                    ]
+                ];
             }
 
             // GoPay
@@ -367,6 +469,7 @@ class PpdbControler extends Controller
                 }
 
                 $user->transaction()->create([
+                    'student_id' => $student->id,
                     'order_id' => $response->order_id,
                     'fraud_status' => $response->fraud_status,
                     'transaction_id' => $response->transaction_id,
@@ -386,16 +489,7 @@ class PpdbControler extends Controller
                     'settlement_time' => null
                 ]);
             } catch (\Throwable $th) {
-                switch ($th->getCode()) {
-                    case 402:
-                        Log::debug('Payment channel is not activated, you have to activate your Core API');
-                        // $user->student()->delete();
-                        break;
-
-                    default:
-                        Log::debug($th->getMessage());
-                        break;
-                }
+                $this->midtrans_error_logger($th);
                 throw $th;
             }
         }
