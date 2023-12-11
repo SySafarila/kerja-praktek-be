@@ -17,7 +17,11 @@
     <div class="grid lg:grid-cols-3 gap-5">
         <div class="flex flex-col gap-3">
             <div class="flex flex-col gap-3">
-                <span class="text-xl font-semibold">Ayo selesaikan pendaftaran kamu</span>
+                @if (in_array($transaction->transaction_status, ['pending', 'expire', 'cancel']))
+                    <span class="text-xl font-semibold">Ayo selesaikan pendaftaran kamu</span>
+                @else
+                    <span class="text-xl font-semibold border-l-4 border-accent-1 pl-2.5 rounded-[4px]">Pembayaran telah selesai</span>
+                @endif
                 @if ($transaction->payment_method == 'va_bca')
                     <x-public.payment.va-bca />
                 @endif
@@ -168,6 +172,7 @@
                 <span class="block">Asal Sekolah</span>
                 <span class="text-xl font-semibold block">{{ $student->last_school }}</span>
             </div>
+            <button type="button" class="btn bg-accent-1 text-accent-4 w-full text-center capitalize" id="student-detail-toggle">Lihat Detail</button>
         </div>
         <form action="#" method="POST" class="flex flex-col gap-3 relative" id="upload-files">
             @if ($transaction->transaction_status != 'settlement')
@@ -198,6 +203,99 @@
             </div>
             <button type="submit" class="btn bg-accent-1 text-accent-4 lg:w-fit">Upload</button>
         </form>
+    </div>
+</div>
+
+<div id="student_detail_modal" class="left-0 top-0 fixed z-[100] bg-black/30 backdrop-blur-[2px] w-full h-full flex items-center justify-center hidden">
+    <div class="bg-white m-5 p-5 flex flex-col gap-5 max-h-[calc(100%-10rem)] lg:max-h-[calc(100%-20rem)] overflow-y-auto max-w-screen-lg w-full" id="content">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <h2 class="font-bold text-xl">Detail</h2>
+                <span>|</span>
+                <a href="#edit" class="text-accent-1 hover:underline">Edit</a>
+            </div>
+            <button type="button" class="material-icons" id="close-detail">close</button>
+        </div>
+        <table class="border-collapse border border-slate-500">
+            <tr>
+                <th class="border border-slate-500 p-2" colspan="2">Student</th>
+            </tr>
+            <tr>
+                <td class="border border-slate-500 p-2">NISN</td>
+                <td class="border border-slate-500 p-2">{{ $student->nisn ?? '-' }}</td>
+            </tr>
+            <tr>
+                <td class="border border-slate-500 p-2">Full Name</td>
+                <td class="border border-slate-500 p-2">{{ $student->full_name ?? '-' }}</td>
+            </tr>
+            <tr>
+                <td class="border border-slate-500 p-2">Gender</td>
+                <td class="border border-slate-500 p-2">{{ $student->gender == 'male' ? 'L' : 'P' }}</td>
+            </tr>
+            <tr>
+                <td class="border border-slate-500 p-2">Birth</td>
+                <td class="border border-slate-500 p-2">{{ $student->birth_place ?? '-' }} - {{ \Carbon\Carbon::parse($student->birth_date)->format('d-m-Y') }}</td>
+            </tr>
+            <tr>
+                <td class="border border-slate-500 p-2">Religion</td>
+                <td class="border border-slate-500 p-2">{{ $student->religion ?? '-' }}</td>
+            </tr>
+            <tr>
+                <td class="border border-slate-500 p-2">Address</td>
+                <td class="border border-slate-500 p-2">{{ $student->address ?? '-' }}</td>
+            </tr>
+            <tr>
+                <td class="border border-slate-500 p-2">Email</td>
+                <td class="border border-slate-500 p-2">{{ $student->email ?? '-' }}</td>
+            </tr>
+            <tr>
+                <td class="border border-slate-500 p-2">Whatsapp</td>
+                <td class="border border-slate-500 p-2">{{ $student->whatsapp ?? '-' }}</td>
+            </tr>
+            <tr>
+                <td class="border border-slate-500 p-2">Last School</td>
+                <td class="border border-slate-500 p-2">{{ $student->last_school ?? '-' }}</td>
+            </tr>
+            <tr>
+                <td class="border border-slate-500 p-2">Organitaion Experience</td>
+                <td class="border border-slate-500 p-2">{{ $student->org_experience ?? '-' }}</td>
+            </tr>
+            <tr>
+                <td class="border border-slate-500 p-2">Height/Weight</td>
+                <td class="border border-slate-500 p-2">{{ $student->height ?? '-' }}cm/{{ $student->weight ?? '-' }}kg</td>
+            </tr>
+            <tr>
+                <td class="border border-slate-500 p-2">History Illness</td>
+                <td class="border border-slate-500 p-2">{{ $student->history_illness ?? '-' }}</td>
+            </tr>
+            <tr>
+                <th class="border border-slate-500 p-2" colspan="2">Parent</th>
+            </tr>
+            <tr>
+                <td class="border border-slate-500 p-2">Full Name</td>
+                <td class="border border-slate-500 p-2">{{ $student->parent->full_name ?? '-' }}</td>
+            </tr>
+            <tr>
+                <td class="border border-slate-500 p-2">Gender</td>
+                <td class="border border-slate-500 p-2">{{ $student->parent->gender == 'male' ? 'L' : 'P' }}</td>
+            </tr>
+            <tr>
+                <td class="border border-slate-500 p-2">Job</td>
+                <td class="border border-slate-500 p-2">{{ $student->parent->job ?? '-' }}</td>
+            </tr>
+            <tr>
+                <td class="border border-slate-500 p-2">Income Per Month</td>
+                <td class="border border-slate-500 p-2">Rp {{ number_format($student->parent->income_per_month, 0) }}</td>
+            </tr>
+            <tr>
+                <td class="border border-slate-500 p-2">Whatsapp</td>
+                <td class="border border-slate-500 p-2">{{ $student->parent->whatsapp ?? '-' }}</td>
+            </tr>
+            <tr>
+                <td class="border border-slate-500 p-2">Email</td>
+                <td class="border border-slate-500 p-2">{{ $student->parent->email ?? '-' }}</td>
+            </tr>
+        </table>
     </div>
 </div>
 @endsection

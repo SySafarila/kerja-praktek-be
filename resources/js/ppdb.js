@@ -40,3 +40,31 @@ if (updatePaymentMethods.length > 0) {
         });
     });
 }
+
+const studentDetailModal = document.getElementById("student_detail_modal");
+const studentDetailCloseToggle = document.getElementById("close-detail");
+const studentDetailToggle = document.getElementById("student-detail-toggle");
+
+if (studentDetailModal && studentDetailToggle && studentDetailCloseToggle) {
+    studentDetailModal.addEventListener("click", (e) => {
+        e.stopPropagation();
+        studentDetailModal.classList.toggle("hidden");
+    });
+
+    studentDetailModal
+        .querySelector("#content")
+        .addEventListener("click", (e) => {
+            e.stopPropagation();
+        });
+
+    studentDetailToggle.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        studentDetailModal.classList.toggle("hidden");
+    });
+
+    studentDetailCloseToggle.addEventListener("click", (e) => {
+        e.preventDefault();
+        studentDetailModal.classList.toggle("hidden");
+    });
+}
