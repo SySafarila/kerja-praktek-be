@@ -71,7 +71,7 @@
                                 @foreach ($subjects as $subject)
                                     <option value="{{ $subject->id }}"
                                         {{ optional($teacher)->subjects ? (in_array($subject->id, $teacher->subjects->pluck('id')->toArray()) ? 'selected' : '') : '' }}>
-                                        {{ $subject->name }}
+                                        {{ $subject->name }} - Kelas {{ $subject->grade }}
                                     </option>
                                 @endforeach
                             </select>

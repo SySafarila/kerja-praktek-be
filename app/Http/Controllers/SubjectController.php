@@ -48,17 +48,16 @@ class SubjectController extends Controller
 
     public function store(Request $request)
     {
-        // Validate the form data
         $request->validate([
             'name' => 'required|string|max:255',
+            'grade' => 'required|in:10,11,12',
         ]);
 
-        // Create a new subject instance
         $subject = Subject::create([
             'name' => $request->name,
+            'grade' => $request->grade,
         ]);
 
-        // Redirect to a success page or show a success message
         return redirect()->route('admin.subjects.index')->with('success', 'A Subject added successfully');
     }
 
@@ -76,6 +75,7 @@ class SubjectController extends Controller
     // Validate the form data
     $request->validate([
         'name' => 'required|string|max:255',
+        'grade' => 'required|in:10,11,12',
     ]);
 
     $subject = Subject::findOrFail($id);
@@ -83,6 +83,7 @@ class SubjectController extends Controller
     // Update the subject instance with the validated data
     $subject->update([
         'name' => $request->name,
+        'grade' => $request->grade,
     ]);
 
     // Redirect to a success page or show a success message

@@ -35,15 +35,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomepageController::class, 'index'])->name('homepage');
 
-Route::get('/news', [PublicController::class, 'index'])->name('news');
-Route::get('/news/{id}', [PublicController::class, 'show'])->name('news.show');
+Route::get('/news', [PublicController::class, 'news'])->name('news');
+Route::get('/news/{id}', [PublicController::class, 'newsDetails'])->name('news.show');
+
+Route::get('/extracurriculars', [PublicController::class, 'extracurriculars'])->name('extracurriculars');
+Route::get('/extracurriculars/{id}', [PublicController::class, 'extracurricularsDetails'])->name('extracurriculars.show');
+
+Route::get('/subjects', [PublicController::class, 'subjects'])->name('subjects');
+Route::get('/teachers-staffs', [PublicController::class, 'teachersStaffs'])->name('teachers-staffs');
 
 Route::view('/authentication', 'authentication');
 Route::resource('/ppdb', PpdbControler::class)->only(['index', 'store']);
 Route::get('/ppdb-payment', [PpdbControler::class, 'payment'])->name('ppdb.payment');
 Route::patch('/ppdb-payment', [PpdbControler::class, 'update_payment'])->name('ppdb.payment-update');
-// Route::view('/news', 'news');
-// Route::view('/news/1', 'news-detail');
 
 Route::get('/dashboard', function () {
     return redirect()->route('admin.index');

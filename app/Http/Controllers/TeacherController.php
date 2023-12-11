@@ -39,14 +39,14 @@ class TeacherController extends Controller
             ->toJson();
     }
 
-    $teachers = Teacher::all(); // Fetching teachers from the database
+    $teachers = Teacher::all();
     return view('teachers.index', compact('teachers'));
 }
 
     public function create()
     {
         $subjects = Subject::all();
-        $teacher = null; // If you are creating a new teacher, set $teacher to null
+        $teacher = null;
         return view('teachers.create',compact('subjects','teacher'));
     }
 
@@ -62,14 +62,11 @@ class TeacherController extends Controller
             'nuptk' => 'nullable|string|max:255',
         ]);
 
-        // Upload and store the image
         $imageName = time() . '.' . $request->file('image')->getClientOriginalExtension();
 
-        // Adjust the image directory path according to your actual storage path
         $imageDir = 'teacherImages';
         $request->file('image')->storeAs($imageDir, $imageName, 'public');
 
-        // Create a new teacher instance
         $teacher = Teacher::create([
             'name' => $request->name,
             'image' => $imageName,
@@ -77,28 +74,23 @@ class TeacherController extends Controller
             'nuptk' => $request->nuptk,
         ]);
 
-    // Sync the subjects
     if ($request->has('subject_id')) {
         $teacher->subjects()->sync($request->input('subject_id'));
     }
 
-        // Redirect to a success page or show a success message
         return redirect()->route('admin.teachers.index')->with('success', 'A Teacher added successfully');
     }
 
     public function edit($id)
 {
-    // Retrieve the teacher record from the database
     $teacher = Teacher::findOrFail($id);
     $subjects = Subject::all();
 
-    // Pass the $teacher variable to the view
     return view('teachers.edit', compact('teacher','subjects'));
 }
 
     public function update(Request $request, $id)
     {
-    // Validate the form data
     $request->validate([
         'name' => 'required|string|max:255',
         'subject_id' => 'nullable|array',
@@ -109,39 +101,32 @@ class TeacherController extends Controller
 
     $teacher = Teacher::findOrFail($id);
 
-    // Check if a new image was provided and update it
     if ($request->hasFile('image')) {
         $request->validate([
             'image' => ['required', 'image', 'max:2048']
         ]);
 
-        // Upload and store the new image
         $imageName = time() . '.' . $request->file('image')->getClientOriginalExtension();
         $imageDir = 'teacherImages';
         $request->file('image')->storeAs($imageDir, $imageName, 'public');
         if (Storage::disk('public')->exists($imageDir . '/' . $teacher->image)) {
             Storage::disk('public')->delete($imageDir . '/' . $teacher->image);
         }
-        // Update the image path in the database
         $teacher->image = $imageName;
     }
 
-    // Update the teacher instance with the validated data
     $teacher->update([
         'name' => $request->name,
         'nip' => $request->nip,
         'nuptk' => $request->nuptk,
     ]);
 
-    // Sync the subjects
     if ($request->has('subject_id')) {
         $teacher->subjects()->sync($request->input('subject_id'));
     } else {
-        // If no subjects were selected, detach all existing subjects
         $teacher->subjects()->detach();
     }
 
-    // Redirect to a success page or show a success message
     return redirect()->route('admin.teachers.index')->with('success', 'A Teacher updated successfully');
     }
 
