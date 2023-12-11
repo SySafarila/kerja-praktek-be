@@ -44,10 +44,13 @@ Route::get('/extracurriculars/{id}', [PublicController::class, 'extracurriculars
 Route::get('/subjects', [PublicController::class, 'subjects'])->name('subjects');
 Route::get('/teachers-staffs', [PublicController::class, 'teachersStaffs'])->name('teachers-staffs');
 
-Route::view('/authentication', 'authentication');
+// Route::view('/authentication', 'authentication');
+
+// ppdb
 Route::resource('/ppdb', PpdbControler::class)->only(['index', 'store', 'update']);
 Route::get('/ppdb-payment', [PpdbControler::class, 'payment'])->name('ppdb.payment');
 Route::patch('/ppdb-payment', [PpdbControler::class, 'update_payment'])->name('ppdb.payment-update');
+Route::post('/ppdb-files', [PpdbControler::class, 'upload_files'])->name('ppdb.upload-files');
 
 Route::get('/dashboard', function () {
     return redirect()->route('admin.index');

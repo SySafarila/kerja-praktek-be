@@ -107,3 +107,53 @@ if (editable.length > 0 && editableToggle) {
         });
     });
 }
+
+const formFiles = document.getElementById("upload-files");
+if (formFiles) {
+    const formFilesSubmitButton = formFiles.querySelector(
+        "button[type=submit]"
+    );
+    const formKk = document.getElementById("form-kk");
+    if (formKk) {
+        formKk.querySelector("#reupload").addEventListener("click", (e) => {
+            e.preventDefault();
+            formKk.querySelector("input").classList.remove("hidden");
+            formKk.querySelector("p").classList.add("hidden");
+            formFilesSubmitButton.disabled = false;
+            formFilesSubmitButton.classList.remove("cursor-not-allowed");
+        });
+    }
+
+    const formAkta = document.getElementById("form-akta");
+    if (formAkta) {
+        formAkta.querySelector("#reupload").addEventListener("click", (e) => {
+            e.preventDefault();
+            formAkta.querySelector("input").classList.remove("hidden");
+            formAkta.querySelector("p").classList.add("hidden");
+            formFilesSubmitButton.disabled = false;
+            formFilesSubmitButton.classList.remove("cursor-not-allowed");
+        });
+    }
+
+    const formKip = document.getElementById("form-kip");
+    if (formKip) {
+        formKip.querySelector("#reupload").addEventListener("click", (e) => {
+            e.preventDefault();
+            formKip.querySelector("input").classList.remove("hidden");
+            formKip.querySelector("p").classList.add("hidden");
+            formFilesSubmitButton.disabled = false;
+            formFilesSubmitButton.classList.remove("cursor-not-allowed");
+        });
+    }
+
+    const formPkh = document.getElementById("form-pkh");
+    if (formPkh) {
+        formPkh.querySelector("#reupload").addEventListener("click", (e) => {
+            e.preventDefault();
+            formPkh.querySelector("input").classList.remove("hidden");
+            formPkh.querySelector("p").classList.add("hidden");
+            formFilesSubmitButton.disabled = false;
+            formFilesSubmitButton.classList.remove("cursor-not-allowed");
+        });
+    }
+}
