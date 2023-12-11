@@ -605,6 +605,14 @@ class PpdbControler extends Controller
                 if (Storage::exists($kk->file_name)) {
                     Storage::delete($kk->file_name);
                 }
+                DB::beginTransaction();
+                try {
+                    $kk->delete();
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    DB::rollBack();
+                }
                 $kk_upload = Storage::putFile('/student-files/kk', new File($request->file('kk')));
                 $student->files()->create([
                     'file_name' => $kk_upload,
@@ -632,6 +640,14 @@ class PpdbControler extends Controller
                 ]);
                 if (Storage::exists($akta->file_name)) {
                     Storage::delete($akta->file_name);
+                }
+                DB::beginTransaction();
+                try {
+                    $akta->delete();
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    DB::rollBack();
                 }
                 $akta_upload = Storage::putFile('/student-files/akta', new File($request->file('akta')));
                 $student->files()->create([
@@ -663,6 +679,14 @@ class PpdbControler extends Controller
                 if (Storage::exists($kip->file_name)) {
                     Storage::delete($kip->file_name);
                 }
+                DB::beginTransaction();
+                try {
+                    $kip->delete();
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    DB::rollBack();
+                }
 
                 $kip_upload = Storage::putFile('/student-files/kip', new File($request->file('kip')));
                 $student->files()->create([
@@ -693,6 +717,14 @@ class PpdbControler extends Controller
                 ]);
                 if (Storage::exists($pkh->file_name)) {
                     Storage::delete($pkh->file_name);
+                }
+                DB::beginTransaction();
+                try {
+                    $pkh->delete();
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    DB::rollBack();
                 }
 
                 $pkh_upload = Storage::putFile('/student-files/pkh', new File($request->file('pkh')));

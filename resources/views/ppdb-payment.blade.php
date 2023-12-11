@@ -102,9 +102,26 @@
                 <div class="bg-accent-1/25 p-3 border border-accent-1" id="settlement">
                     <p>Pembayaran telah diterima, langkah selanjutnya:</p>
                     <ul class="list-disc list-inside">
-                        <li>
-                            <a href="#upload-files" class="font-semibold underline">Upload berkas yang diperlukan</a>
-                        </li>
+                        @if (!$files->where('file_type', 'kk')->first())
+                            <li>
+                                <a href="#upload-files" class="font-semibold underline">Upload berkas Kartu Kelahiran</a>
+                            </li>
+                        @endif
+                        @if (!$files->where('file_type', 'akta')->first())
+                            <li>
+                                <a href="#upload-files" class="font-semibold underline">Upload berkas Akta Kelahiran</a>
+                            </li>
+                        @endif
+                        @if (!$files->where('file_type', 'kip')->first())
+                            <li>
+                                <a href="#upload-files" class="font-semibold underline">Upload berkas KIP (Jika Ada)</a>
+                            </li>
+                        @endif
+                        @if (!$files->where('file_type', 'pkh')->first())
+                            <li>
+                                <a href="#upload-files" class="font-semibold underline">Upload berkas PKH (Jika Ada)</a>
+                            </li>
+                        @endif
                     </ul>
                 </div>
             @endif
