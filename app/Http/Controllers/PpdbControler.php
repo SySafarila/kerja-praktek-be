@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\File;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class PpdbControler extends Controller
@@ -309,6 +311,7 @@ class PpdbControler extends Controller
         }
         $student = $user->student;
         $transaction = $user->transaction;
+        $files = $student->files;
 
         if (!$transaction) {
             // if transaction not found
@@ -354,7 +357,8 @@ class PpdbControler extends Controller
             }
         }
 
-        return view('ppdb-payment', compact('student', 'transaction'));
+        // return $files->where('file_type', 'kk')->first();
+        return view('ppdb-payment', compact('student', 'transaction', 'files'));
     }
 
     function charge_transaction($payment_method, $order_id, $student, $user)
@@ -563,5 +567,143 @@ class PpdbControler extends Controller
                 throw $th;
             }
         }
+    }
+
+    public function upload_files(Request $request)
+    {
+        $request->validate([
+            'kk' => ['file', 'max:10240'],
+            'akta' => ['file', 'max:10240'],
+            'kip' => ['file', 'max:10240', 'nullable'],
+            'pkh' => ['file', 'max:10240', 'nullable'],
+        ]);
+
+        $user = Auth::user();
+        $student = $user->student;
+
+        $kk = $student->files()->where('file_type', 'kk')->first();
+        $akta = $student->files()->where('file_type', 'akta')->first();
+        $kip = $student->files()->where('file_type', 'kip')->first();
+        $pkh = $student->files()->where('file_type', 'pkh')->first();
+
+        // kartu keluarga
+        if (!$kk) {
+            $request->validate([
+                'kk' => ['file', 'max:10240', 'required']
+            ]);
+            $kk_upload = Storage::putFile('/student-files/kk', new File($request->file('kk')));
+            $student->files()->create([
+                'file_name' => $kk_upload,
+                'file_type' => 'kk',
+                'original_file_name' => $request->file('kk')->getClientOriginalName()
+            ]);
+        } else {
+            if ($request->hasFile('kk')) {
+                $request->validate([
+                    'kk' => ['file', 'max:10240', 'required']
+                ]);
+                if (Storage::exists($kk->file_name)) {
+                    Storage::delete($kk->file_name);
+                }
+                $kk_upload = Storage::putFile('/student-files/kk', new File($request->file('kk')));
+                $student->files()->create([
+                    'file_name' => $kk_upload,
+                    'file_type' => 'kk',
+                    'original_file_name' => $request->file('kk')->getClientOriginalName()
+                ]);
+            }
+        }
+
+        // akta kelahiran
+        if (!$akta) {
+            $request->validate([
+                'akta' => ['file', 'max:10240', 'required']
+            ]);
+            $akta_upload = Storage::putFile('/student-files/akta', new File($request->file('akta')));
+            $student->files()->create([
+                'file_name' => $akta_upload,
+                'file_type' => 'akta',
+                'original_file_name' => $request->file('akta')->getClientOriginalName()
+            ]);
+        } else {
+            if ($request->hasFile('akta')) {
+                $request->validate([
+                    'akta' => ['file', 'max:10240', 'required']
+                ]);
+                if (Storage::exists($akta->file_name)) {
+                    Storage::delete($akta->file_name);
+                }
+                $akta_upload = Storage::putFile('/student-files/akta', new File($request->file('akta')));
+                $student->files()->create([
+                    'file_name' => $akta_upload,
+                    'file_type' => 'akta',
+                    'original_file_name' => $request->file('akta')->getClientOriginalName()
+                ]);
+            }
+        }
+
+        // kip
+        if (!$kip) {
+            if ($request->hasFile('kip')) {
+                $request->validate([
+                    'kip' => ['file', 'max:10240', 'required']
+                ]);
+                $kip_upload = Storage::putFile('/student-files/kip', new File($request->file('kip')));
+                $student->files()->create([
+                    'file_name' => $kip_upload,
+                    'file_type' => 'kip',
+                    'original_file_name' => $request->file('kip')->getClientOriginalName()
+                ]);
+            }
+        } else {
+            if ($request->hasFile('kip')) {
+                $request->validate([
+                    'kip' => ['file', 'max:10240', 'required']
+                ]);
+                if (Storage::exists($kip->file_name)) {
+                    Storage::delete($kip->file_name);
+                }
+
+                $kip_upload = Storage::putFile('/student-files/kip', new File($request->file('kip')));
+                $student->files()->create([
+                    'file_name' => $kip_upload,
+                    'file_type' => 'kip',
+                    'original_file_name' => $request->file('kip')->getClientOriginalName()
+                ]);
+            }
+        }
+
+        // pkh
+        if (!$pkh) {
+            if ($request->hasFile('pkh')) {
+                $request->validate([
+                    'pkh' => ['file', 'max:10240', 'required']
+                ]);
+                $pkh_upload = Storage::putFile('/student-files/pkh', new File($request->file('pkh')));
+                $student->files()->create([
+                    'file_name' => $pkh_upload,
+                    'file_type' => 'pkh',
+                    'original_file_name' => $request->file('pkh')->getClientOriginalName()
+                ]);
+            }
+        } else {
+            if ($request->hasFile('pkh')) {
+                $request->validate([
+                    'pkh' => ['file', 'max:10240', 'required']
+                ]);
+                if (Storage::exists($pkh->file_name)) {
+                    Storage::delete($pkh->file_name);
+                }
+
+                $pkh_upload = Storage::putFile('/student-files/pkh', new File($request->file('pkh')));
+                $student->files()->create([
+                    'file_name' => $pkh_upload,
+                    'file_type' => 'pkh',
+                    'original_file_name' => $request->file('pkh')->getClientOriginalName()
+                ]);
+            }
+        }
+
+        return back()->with('success', 'Berkas berhasil ter-upload!');
     }
 }

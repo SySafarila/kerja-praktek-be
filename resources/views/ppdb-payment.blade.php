@@ -139,7 +139,9 @@
             </div>
             <div class="flex justify-between gap-5 lg:flex-col lg:gap-3">
                 <a href="https://wa.me/6282117694132" target="__blank" class="btn bg-accent-1 text-accent-4 w-full text-center capitalize">Hubungi admin</a>
-                <button type="button" class="btn bg-white border border-accent-1 text-accent-1 w-full text-center capitalize" onclick="event.preventDefault();location.reload()">Refresh</button>
+                @if (!$transaction->settlement_time)
+                    <button type="button" class="btn bg-white border border-accent-1 text-accent-1 w-full text-center capitalize" onclick="event.preventDefault();location.reload()">Refresh</button>
+                @endif
             </div>
             @if (in_array($transaction->transaction_status, ['pending', 'expire']))
                 <div class="group relative">
@@ -179,34 +181,75 @@
             </div>
             <button type="button" class="btn bg-accent-1 text-accent-4 w-full text-center capitalize" id="student-detail-toggle">Lihat Detail</button>
         </div>
-        <form action="#" method="POST" class="flex flex-col gap-3 relative" id="upload-files">
+        <form action="{{ route('ppdb.upload-files') }}" method="POST" class="flex flex-col gap-3 relative" id="upload-files" enctype="multipart/form-data">
+            @csrf
             @if ($transaction->transaction_status != 'settlement')
                 <div class="-left-2.5 -top-2.5 w-[calc(100%+15px)] h-[calc(100%+15px)] backdrop-blur-[2px] absolute"></div>
             @endif
             <span class="text-xl font-semibold">Upload Berkas</span>
-            <div class="flex flex-col gap-1.5">
-                <label id="kk" class="font-semibold capitalize">Kartu Keluarga <span
-                        class="text-red-500">*</span></label>
-                <input type="file" name="" id="kk"
-                    class="file:bg-white file:border file:border-accent-1 file:rounded-md file:px-5 file:py-1.5">
+            <div class="flex flex-col gap-1.5" id="form-kk">
+                <label id="kk" class="font-semibold capitalize flex items-center gap-2">
+                    Kartu Keluarga
+                    {!! $files->where('file_type', 'kk')->first() ? '' : '<span class="text-red-500">*</span>' !!}
+                </label>
+                <input type="file" name="kk" id="kk"
+                    class="file:bg-white file:border file:border-accent-1 file:rounded-md file:px-5 file:py-1.5 {{ $files->where('file_type', 'kk')->first() ? 'hidden' : '' }}" {{ $files->where('file_type', 'kk')->first() ? '' : 'required' }}>
+                @if ($files->where('file_type', 'kk')->first())
+                    <p class="flex flex-col">
+                        <span class="flex items-center gap-1.5">{{ $files->where('file_type', 'kk')->first()->original_file_name }} {!! $files->where('file_type', 'kk')->first() ? '<span class="material-icons text-accent-1">check_circle</span>' : '' !!}</span> <small class="text-accent-1 cursor-pointer" id="reupload">Upload Ulang?</small>
+                    </p>
+                @endif
+                @error('kk')
+                    <small class="text-red-500">{{ $message }}</small>
+                @enderror
             </div>
-            <div class="flex flex-col gap-1.5">
-                <label id="akta" class="font-semibold capitalize">Akta Kelahiran <span
-                        class="text-red-500">*</span></label>
-                <input type="file" name="" id="akta"
-                    class="file:bg-white file:border file:border-accent-1 file:rounded-md file:px-5 file:py-1.5">
+            <div class="flex flex-col gap-1.5" id="form-akta">
+                <label id="akta" class="font-semibold capitalize flex items-center gap-2">
+                    Akta Kelahiran
+                    {!! $files->where('file_type', 'akta')->first() ? '' : '<span class="text-red-500">*</span>' !!}
+                </label>
+                <input type="file" name="akta" id="akta"
+                    class="file:bg-white file:border file:border-accent-1 file:rounded-md file:px-5 file:py-1.5 {{ $files->where('file_type', 'akta')->first() ? 'hidden' : '' }}" {{ $files->where('file_type', 'akta')->first() ? '' : 'required' }}>
+                @if ($files->where('file_type', 'akta')->first())
+                <p class="flex flex-col">
+                    <span class="flex items-center gap-1.5">{{ $files->where('file_type', 'akta')->first()->original_file_name }} {!! $files->where('file_type', 'akta')->first() ? '<span class="material-icons text-accent-1">check_circle</span>' : '' !!}</span> <small class="text-accent-1 cursor-pointer" id="reupload">Upload Ulang?</small>
+                </p>
+                @endif
+                @error('akta')
+                    <small class="text-red-500">{{ $message }}</small>
+                @enderror
             </div>
-            <div class="flex flex-col gap-1.5">
-                <label id="kip" class="font-semibold capitalize">KIP</label>
-                <input type="file" name="" id="kip"
-                    class="file:bg-white file:border file:border-accent-1 file:rounded-md file:px-5 file:py-1.5">
+            <div class="flex flex-col gap-1.5" id="form-kip">
+                <label id="kip" class="font-semibold capitalize flex items-center gap-2">
+                    KIP
+                </label>
+                <input type="file" name="kip" id="kip"
+                    class="file:bg-white file:border file:border-accent-1 file:rounded-md file:px-5 file:py-1.5 {{ $files->where('file_type', 'kip')->first() ? 'hidden' : '' }}">
+                @if ($files->where('file_type', 'kip')->first())
+                <p class="flex flex-col">
+                    <span class="flex items-center gap-1.5">{{ $files->where('file_type', 'kip')->first()->original_file_name }} {!! $files->where('file_type', 'kip')->first() ? '<span class="material-icons text-accent-1">check_circle</span>' : '' !!}</span> <small class="text-accent-1 cursor-pointer" id="reupload">Upload Ulang?</small>
+                </p>
+                @endif
+                @error('kip')
+                    <small class="text-red-500">{{ $message }}</small>
+                @enderror
             </div>
-            <div class="flex flex-col gap-1.5">
-                <label id="pkh" class="font-semibold capitalize">PKH</label>
-                <input type="file" name="" id="pkh"
-                    class="file:bg-white file:border file:border-accent-1 file:rounded-md file:px-5 file:py-1.5">
+            <div class="flex flex-col gap-1.5" id="form-pkh">
+                <label id="pkh" class="font-semibold capitalize flex items-center gap-2">
+                    PKH
+                </label>
+                <input type="file" name="pkh" id="pkh"
+                    class="file:bg-white file:border file:border-accent-1 file:rounded-md file:px-5 file:py-1.5 {{ $files->where('file_type', 'pkh')->first() ? 'hidden' : '' }}">
+                @if ($files->where('file_type', 'pkh')->first())
+                <p class="flex flex-col">
+                    <span class="flex items-center gap-1.5">{{ $files->where('file_type', 'pkh')->first()->original_file_name }} {!! $files->where('file_type', 'pkh')->first() ? '<span class="material-icons text-accent-1">check_circle</span>' : '' !!}</span> <small class="text-accent-1 cursor-pointer" id="reupload">Upload Ulang?</small>
+                </p>
+                @endif
+                @error('pkh')
+                    <small class="text-red-500">{{ $message }}</small>
+                @enderror
             </div>
-            <button type="submit" class="btn bg-accent-1 text-accent-4 lg:w-fit">Upload</button>
+            <button type="submit" class="btn bg-accent-1 text-accent-4 @if($files->where('file_type', 'kk')->first() && $files->where('file_type', 'akta')->first() && $files->where('file_type', 'kip')->first() && $files->where('file_type', 'pkh')->first()) cursor-not-allowed @endif" @if($files->where('file_type', 'kk')->first() && $files->where('file_type', 'akta')->first() && $files->where('file_type', 'kip')->first() && $files->where('file_type', 'pkh')->first()) disabled @endif>Upload</button>
         </form>
     </div>
 </div>
