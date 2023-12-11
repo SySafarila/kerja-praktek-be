@@ -212,7 +212,7 @@
 </div>
 
 <div id="student_detail_modal" class="left-0 top-0 fixed z-[100] bg-black/30 backdrop-blur-[2px] w-full h-full flex items-center justify-center hidden">
-    <div class="bg-white m-5 p-5 flex flex-col gap-5 max-h-[calc(100%-10rem)] lg:max-h-[calc(100%-20rem)] overflow-y-auto max-w-screen-lg w-full" id="content">
+    <div class="bg-white m-5 p-5 flex flex-col gap-5 max-h-[calc(100%-10rem)] lg:max-h-[calc(100%-20rem)] overflow-y-auto max-w-screen-lg w-full overscroll-contain" id="content">
         <div class="flex justify-between items-center">
             <div class="flex items-center gap-2">
                 <h2 class="font-bold text-xl">Detail</h2>
