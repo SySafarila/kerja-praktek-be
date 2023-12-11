@@ -1,3 +1,4 @@
+<!-- Dibuat dengan hati oleh Syahrul Safarila, M Dagistan Silawane, dan M Linggar Hadistiawandi-->
 <!doctype html>
 <html lang="en" class="scroll-pt-[72px] lg:scroll-pt-[68px] scroll-smooth">
 
