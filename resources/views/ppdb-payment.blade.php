@@ -13,11 +13,20 @@
             {{ session('error') }}
         </div>
     @endif
+    @if (session('success'))
+        <div class="bg-accent-1/25 p-3 border border-accent-1 mb-2">
+            {{ session('success') }}
+        </div>
+    @endif
     <h1 class="text-2xl font-bold mb-5">Pembayaran</h1>
     <div class="grid lg:grid-cols-3 gap-5">
         <div class="flex flex-col gap-3">
             <div class="flex flex-col gap-3">
-                <span class="text-xl font-semibold">Ayo selesaikan pendaftaran kamu</span>
+                @if (in_array($transaction->transaction_status, ['pending', 'expire', 'cancel']))
+                    <span class="text-xl font-semibold">Ayo selesaikan pendaftaran kamu</span>
+                @else
+                    <span class="text-xl font-semibold border-l-4 border-accent-1 pl-2.5 rounded-[4px]">Pembayaran telah selesai</span>
+                @endif
                 @if ($transaction->payment_method == 'va_bca')
                     <x-public.payment.va-bca />
                 @endif
@@ -168,6 +177,7 @@
                 <span class="block">Asal Sekolah</span>
                 <span class="text-xl font-semibold block">{{ $student->last_school }}</span>
             </div>
+            <button type="button" class="btn bg-accent-1 text-accent-4 w-full text-center capitalize" id="student-detail-toggle">Lihat Detail</button>
         </div>
         <form action="#" method="POST" class="flex flex-col gap-3 relative" id="upload-files">
             @if ($transaction->transaction_status != 'settlement')
@@ -200,9 +210,129 @@
         </form>
     </div>
 </div>
+
+<div id="student_detail_modal" class="left-0 top-0 fixed z-[100] bg-black/30 backdrop-blur-[2px] w-full h-full flex items-center justify-center hidden">
+    <div class="bg-white m-5 p-5 flex flex-col gap-5 max-h-[calc(100%-10rem)] lg:max-h-[calc(100%-20rem)] overflow-y-auto max-w-screen-lg w-full" id="content">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <h2 class="font-bold text-xl">Detail</h2>
+                <span>|</span>
+                <a href="#edit" class="text-accent-1 hover:underline" id="edit-ppdb">Edit</a>
+            </div>
+            <button type="button" class="material-icons" id="close-detail">close</button>
+        </div>
+        @if ($errors->any())
+            <ul class="list-disc list-inside">
+                @foreach ($errors->all() as $error)
+                    <li class="text-red-500">{{ $error }}</li>
+                @endforeach
+            </ul>
+        @endif
+        <form action="{{ route('ppdb.update', 'update') }}" method="post">
+            @csrf
+            @method('PATCH')
+            <table class="border-collapse border border-slate-500 w-full">
+                <tr>
+                    <th class="border border-slate-500 p-2" colspan="2">Student</th>
+                </tr>
+                <tr>
+                    <td class="border border-slate-500 p-2">NISN</td>
+                    <td class="border border-slate-500 p-2" data-value="{{ $student->nisn ?? '-' }}" data-required="1" data-typeinput="number" data-name="student[nisn]">{{ $student->nisn ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-slate-500 p-2">Full Name</td>
+                    <td class="border border-slate-500 p-2" data-value="{{ $student->full_name ?? '-' }}" data-required="1" data-typeinput="text" data-name="student[full_name]">{{ $student->full_name ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-slate-500 p-2">Gender</td>
+                    <td class="border border-slate-500 p-2" data-value="{{ $student->gender ?? '-' }}" data-required="1" data-typeinput="select" data-selecttype="gender" data-name="student[gender]">{{ $student->gender == 'male' ? 'L' : 'P' }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-slate-500 p-2">Birth Place</td>
+                    <td class="border border-slate-500 p-2" data-value="{{ $student->birth_place ?? '-' }}" data-required="1" data-typeinput="text" data-name="student[birth_place]">{{ $student->birth_place ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-slate-500 p-2">Birth Date</td>
+                    <td class="border border-slate-500 p-2" data-value="{{ \Carbon\Carbon::parse($student->birth_date)->format('Y-m-d') }}" data-required="1" data-typeinput="date" data-name="student[birth_date]">{{ \Carbon\Carbon::parse($student->birth_date)->format('d-m-Y') }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-slate-500 p-2">Religion</td>
+                    <td class="border border-slate-500 p-2" data-value="{{ $student->religion ?? '-' }}" data-required="1" data-typeinput="select" data-selecttype="religion" data-name="student[religion]">{{ $student->religion ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-slate-500 p-2">Address</td>
+                    <td class="border border-slate-500 p-2" data-value="{{ $student->address ?? '-' }}" data-required="1" data-typeinput="text" data-name="student[address]">{{ $student->address ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-slate-500 p-2">Email</td>
+                    <td class="border border-slate-500 p-2" data-value="{{ $student->email ?? '-' }}" data-value="{{ $student->email ?? '-' }}" data-required="1" data-typeinput="email" data-name="student[email]">{{ $student->email ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-slate-500 p-2">Whatsapp</td>
+                    <td class="border border-slate-500 p-2" data-value="{{ $student->whatsapp ?? '-' }}" data-required="1" data-typeinput="number" data-name="student[whatsapp]">{{ $student->whatsapp ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-slate-500 p-2">Last School</td>
+                    <td class="border border-slate-500 p-2" data-value="{{ $student->last_school ?? '-' }}" data-required="1" data-typeinput="text" data-name="student[last_school]">{{ $student->last_school ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-slate-500 p-2">Organitaion Experience</td>
+                    <td class="border border-slate-500 p-2" data-value="{{ $student->org_experience ?? '-' }}" data-required="0" data-typeinput="text" data-name="student[org_experience]">{{ $student->org_experience ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-slate-500 p-2">Height (CM)</td>
+                    <td class="border border-slate-500 p-2" data-value="{{ $student->height ?? '-' }}" data-required="1" data-typeinput="number" data-name="student[height]">{{ $student->height ?? '-' }}cm</td>
+                </tr>
+                <tr>
+                    <td class="border border-slate-500 p-2">Weight (KG)</td>
+                    <td class="border border-slate-500 p-2" data-value="{{ $student->weight ?? '-' }}" data-required="1" data-typeinput="number" data-name="student[weight]">{{ $student->weight ?? '-' }}kg</td>
+                </tr>
+                <tr>
+                    <td class="border border-slate-500 p-2">History Illness</td>
+                    <td class="border border-slate-500 p-2" data-value="{{ $student->history_illness ?? '-' }}" data-required="0" data-typeinput="text" data-name="student[history_illness]">{{ $student->history_illness ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <th class="border border-slate-500 p-2" colspan="2">Parent</th>
+                </tr>
+                <tr>
+                    <td class="border border-slate-500 p-2">Full Name</td>
+                    <td class="border border-slate-500 p-2" data-value="{{ $student->parent->full_name ?? '-' }}" data-required="1" data-typeinput="text" data-name="parent[full_name]">{{ $student->parent->full_name ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-slate-500 p-2">Gender</td>
+                    <td class="border border-slate-500 p-2" data-value="{{ $student->parent->gender ?? '-' }}" data-required="1" data-typeinput="select" data-selecttype="gender" data-name="parent[gender]">{{ $student->parent->gender == 'male' ? 'L' : 'P' }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-slate-500 p-2">Job</td>
+                    <td class="border border-slate-500 p-2" data-value="{{ $student->parent->job ?? '-' }}" data-required="1" data-typeinput="text" data-name="parent[job]">{{ $student->parent->job ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-slate-500 p-2">Income Per Month</td>
+                    <td class="border border-slate-500 p-2" data-value="{{ $student->parent->income_per_month ?? '-' }}" data-required="1" data-typeinput="number" data-name="parent[income_per_month]">Rp {{ number_format($student->parent->income_per_month, 0) }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-slate-500 p-2">Whatsapp</td>
+                    <td class="border border-slate-500 p-2" data-value="{{ $student->parent->whatsapp ?? '-' }}" data-required="1" data-typeinput="number" data-name="parent[whatsapp]">{{ $student->parent->whatsapp ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td class="border border-slate-500 p-2">Email</td>
+                    <td class="border border-slate-500 p-2" data-value="{{ $student->parent->email ?? '-' }}" data-required="1" data-typeinput="email" data-name="parent[email]">{{ $student->parent->email ?? '-' }}</td>
+                </tr>
+            </table>
+            <button type="submit" class="bg-accent-1 btn mt-4 text-accent-4 hidden" id="update-ppd-button" disabled>Update</button>
+        </form>
+    </div>
+</div>
 @endsection
 
 @section('script')
+    @if (session('update-error'))
+        <script>
+            setTimeout(() => {
+                document.getElementById('student-detail-toggle').click();
+            }, 500);
+        </script>
+    @endif
     @isset($transaction)
         @if (in_array($transaction->payment_method, ['va_bca', 'va_bni', 'va_bri', 'va_permata', 'va_cimb']) && $transaction->transaction_status == 'pending')
             <script>
