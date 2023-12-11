@@ -30,20 +30,39 @@
         </div>
     </div>
 
-    <div class="my-10">
-        <div class="max-w-screen-lg mx-auto bg-white">
-            <div class="grid grid-cols-2 gap-x-8 gap-y-6 mx-8 py-8">
-                @foreach ($extracurriculars as $item)
-                <a href="{{route('extracurriculars.show', ['id' => $item->id])}}" class="group relative block transition-transform transform hover:scale-105">
-                    <img src="{{ asset('storage/extracurricularImages/' . $item->image) }}" class="w-full h-72 object-cover rounded-lg " alt="">
-                    <div class="absolute bottom-0 left-0 w-full bg-accent-1/70 text-center text-white p-2 font-semibold rounded-b-lg">
-                        {{ $item->name }}
-                    </div>
-                </a>
 
+    <div class="max-w-screen-lg mx-auto p-5 grid lg:grid-cols-12 gap-5">
+        <div class="bg-white lg:col-span-8">
 
-                @endforeach
-
+            <img src="{{ asset('storage/extracurricularImages/' . $extracurriculars->image) }}" class="w-full"
+                alt="">
+            <div class="mt-2 flex flex-col p-5">
+                <p class="-my-2 text-sm"><i class="fa fa-calendar text-sm text-accent-1"></i>
+                    {{ $extracurriculars->created_at }}</p>
+                <p class="whitespace-pre-line">
+                    {{ $extracurriculars->description }}
+                </p>
+                <p class="mt-4">Extrakurikuler Lainnnya :</p>
+                <div class="flex flex-col font-semibold">
+                    @foreach ($eskul as $item)
+                        <a class="hover:underline" href="{{ route('extracurriculars.show', ['id' => $item->id]) }}">- {{ $item->name }}</a>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+        <div class="bg-white lg:col-start-9 lg:col-end-13 p-5">
+            <h2 class="text-accent-1 font-bold text-2xl border-b-4 border-accent-1 w-fit">{{ $extracurriculars->name }}</h2>
+            <div class="flex flex-col mt-5">
+                <p class="font-semibold ">Pembimbing :</p>
+                <img src="{{ asset('storage/teacherImages/' . $extracurriculars->mentor->image) }}"
+                    class="w-full h-80 px-5 my-2 object-cover" alt="">
+                <p class="text-sm align-middle">{{ $extracurriculars->mentor->name }}</p>
+                <p class="text-sm align-middle">NUPTK : {{ $extracurriculars->mentor->nuptk }}</p>
+                <p class="font-semibold mt-2">Jadwal & Lokasi :</p>
+                <p class="text-sm align-middle"><i class="fas fa-map-marker-alt text-accent-1"></i>
+                    {{ $extracurriculars->location }} - SMA Ma'arif Pacet</p>
+                <p class="text-sm align-middle"><i class="fas fa-calendar text-accent-1"></i>
+                    {{ $extracurriculars->schedule }} - </p>
             </div>
         </div>
     </div>

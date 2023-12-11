@@ -58,4 +58,14 @@ class PublicController extends Controller
 
         return view('public.extracurriculars', compact('extracurriculars'));
     }
+
+    public function extracurricularsDetails($id){
+
+        $extracurriculars = Extracurricular::findOrFail($id);
+        $eskul = Extracurricular::inRandomOrder()->take(2)->get();
+
+        return view('public.extracurriculars-details', compact('extracurriculars','eskul'));
+    }
+
+
 }
