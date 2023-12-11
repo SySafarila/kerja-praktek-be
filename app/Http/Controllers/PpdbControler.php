@@ -45,7 +45,7 @@ class PpdbControler extends Controller
             'student.gender' => ['required', 'string', 'in:male,female'],
             'student.birth_place' => ['required', 'string', 'max:255'],
             'student.birth_date' => ['required', 'date'],
-            'student.religion' => ['required', 'string', 'max:255'],
+            'student.religion' => ['required', 'string', 'max:255', 'in:islam,kristen_protestan,kristen_katolik,hindu,buddha,khonghucu'],
             'student.address' => ['required', 'string'],
             'student.whatsapp' => ['required', 'string', 'max:255'],
             'student.email' => ['required', 'email', 'max:255'],
