@@ -45,7 +45,10 @@
                 <p class="mt-4">Extrakurikuler Lainnnya :</p>
                 <div class="flex flex-col font-semibold">
                     @foreach ($eskul as $item)
-                        <a class="hover:underline" href="{{ route('extracurriculars.show', ['id' => $item->id]) }}">- {{ $item->name }}</a>
+                        <span>-
+                            <a class="hover:underline"
+                                href="{{ route('extracurriculars.show', ['id' => $item->id]) }}">{{ $item->name }}</a>
+                        </span>
                     @endforeach
                 </div>
             </div>
@@ -54,16 +57,34 @@
             <h2 class="text-accent-1 font-bold text-2xl border-b-4 border-accent-1 w-fit">{{ $extracurriculars->name }}</h2>
             <div class="flex flex-col mt-5">
                 <p class="font-semibold ">Pembimbing :</p>
-                <img src="{{ asset('storage/teacherImages/' . $extracurriculars->mentor->image) }}"
-                    class="w-full h-80 px-5 my-2 object-cover" alt="">
-                <p class="text-sm align-middle">{{ $extracurriculars->mentor->name }}</p>
-                <p class="text-sm align-middle">NUPTK : {{ $extracurriculars->mentor->nuptk }}</p>
+
+                @if($extracurriculars->mentor)
+                    <img src="{{ asset('storage/teacherImages/' . $extracurriculars->mentor->image) }}"
+                        class="w-full h-80 px-5 my-2 object-cover" alt="">
+                    <p class="text-sm align-middle">{{ $extracurriculars->mentor->name }}</p>
+                    <p class="text-sm align-middle">NUPTK : {{ $extracurriculars->mentor->nuptk }}</p>
+                @else
+                    <div class="text-red-500">No mentor assigned yet</div>
+                @endif
+
                 <p class="font-semibold mt-2">Jadwal & Lokasi :</p>
                 <p class="text-sm align-middle"><i class="fas fa-map-marker-alt text-accent-1"></i>
                     {{ $extracurriculars->location }} - SMA Ma'arif Pacet</p>
-                <p class="text-sm align-middle"><i class="fas fa-calendar text-accent-1"></i>
-                    {{ $extracurriculars->schedule }} - </p>
+
+                    @if(is_array($extracurriculars->schedule))
+                    <p class="text-sm align-middle"><i class="fas fa-calendar text-accent-1"></i>
+                        {{ implode(', ', $extracurriculars->schedule) }}
+                    </p>
+                @else
+                    @php
+                        $scheduleArray = json_decode($extracurriculars->schedule);
+                    @endphp
+                    <p class="text-sm align-middle"><i class="fas fa-calendar text-accent-1"></i>
+                        {{ implode(', ', $scheduleArray) }}
+                    </p>
+                @endif
             </div>
+
         </div>
     </div>
 @endsection
