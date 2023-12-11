@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class PpdbControler extends Controller
 {
@@ -153,7 +154,76 @@ class PpdbControler extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'student.nisn' => ['required', 'string', 'max:255'],
+            'student.full_name' => ['required', 'string', 'max:255'],
+            'student.gender' => ['required', 'string', 'in:male,female'],
+            'student.birth_place' => ['required', 'string', 'max:255'],
+            'student.birth_date' => ['required', 'date'],
+            'student.religion' => ['required', 'string', 'max:255', 'in:islam,kristen_protestan,kristen_katolik,hindu,buddha,khonghucu'],
+            'student.address' => ['required', 'string'],
+            'student.whatsapp' => ['required', 'string', 'max:255'],
+            'student.email' => ['required', 'email', 'max:255'],
+            'student.last_school' => ['required', 'string', 'max:255'],
+            'student.org_experience' => ['string', 'nullable'],
+            'student.height' => ['required', 'numeric'],
+            'student.weight' => ['required', 'numeric'],
+            'student.history_illness' => ['string', 'nullable'],
+            'parent.full_name' => ['required', 'string', 'max:255'],
+            'parent.gender' => ['required', 'string', 'in:male,female'],
+            'parent.job' => ['required', 'string'],
+            'parent.income_per_month' => ['required', 'numeric'],
+            'parent.whatsapp' => ['required', 'string', 'max:255'],
+            'parent.email' => ['required', 'email', 'max:255']
+        ]);
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('update-error', 'true');
+        }
+
+        $user = Auth::user();
+        $student = $request->student;
+        $parent = $request->parent;
+        $current_student = $user->student;
+        $current_parent = $current_student->parent;
+
+        DB::beginTransaction();
+        try {
+            $current_student->update([
+                'nisn' => $student['nisn'],
+                'full_name' => $student['full_name'],
+                'gender' => $student['gender'],
+                'birth_place' => $student['birth_place'],
+                'birth_date' => $student['birth_date'],
+                'religion' => $student['religion'],
+                'address' => $student['address'],
+                'email' => $student['email'],
+                'whatsapp' => $student['whatsapp'],
+                'last_school' => $student['last_school'],
+                'org_experience' => $student['org_experience'],
+                'height' => $student['height'],
+                'weight' => $student['weight'],
+                'history_illness' => $student['history_illness']
+            ]);
+            $current_parent->update([
+                'full_name' => $parent['full_name'],
+                'gender' => $parent['gender'],
+                'job' => $parent['job'],
+                'income_per_month' => $parent['income_per_month'],
+                'whatsapp' => $parent['whatsapp'],
+                'email' => $parent['email'],
+            ]);
+            DB::commit();
+        } catch (\Throwable $th) {
+            // throw $th;
+            Log::error($th->getMessage());
+            DB::rollBack();
+            return back()->with('error', 'Tidak dapat memperbarui data PPDB');
+        }
+        return back()->with('success', 'Data PPDB berhasil diperbarui');
     }
 
     /**

@@ -45,7 +45,7 @@ Route::get('/subjects', [PublicController::class, 'subjects'])->name('subjects')
 Route::get('/teachers-staffs', [PublicController::class, 'teachersStaffs'])->name('teachers-staffs');
 
 Route::view('/authentication', 'authentication');
-Route::resource('/ppdb', PpdbControler::class)->only(['index', 'store']);
+Route::resource('/ppdb', PpdbControler::class)->only(['index', 'store', 'update']);
 Route::get('/ppdb-payment', [PpdbControler::class, 'payment'])->name('ppdb.payment');
 Route::patch('/ppdb-payment', [PpdbControler::class, 'update_payment'])->name('ppdb.payment-update');
 

@@ -77,6 +77,9 @@ const editableToggle = document.querySelector(
 if (editable.length > 0 && editableToggle) {
     editableToggle.addEventListener("click", (e) => {
         e.preventDefault();
+        const updatePpdbButton = studentDetailModal.querySelector('#update-ppd-button');
+        updatePpdbButton.disabled = false;
+        updatePpdbButton.classList.remove('hidden');
         editable.forEach((element) => {
             element.classList.remove("p-2");
 

@@ -13,6 +13,11 @@
             {{ session('error') }}
         </div>
     @endif
+    @if (session('success'))
+        <div class="bg-accent-1/25 p-3 border border-accent-1 mb-2">
+            {{ session('success') }}
+        </div>
+    @endif
     <h1 class="text-2xl font-bold mb-5">Pembayaran</h1>
     <div class="grid lg:grid-cols-3 gap-5">
         <div class="flex flex-col gap-3">
@@ -216,7 +221,16 @@
             </div>
             <button type="button" class="material-icons" id="close-detail">close</button>
         </div>
-        <form action="#" method="post">
+        @if ($errors->any())
+            <ul class="list-disc list-inside">
+                @foreach ($errors->all() as $error)
+                    <li class="text-red-500">{{ $error }}</li>
+                @endforeach
+            </ul>
+        @endif
+        <form action="{{ route('ppdb.update', 'update') }}" method="post">
+            @csrf
+            @method('PATCH')
             <table class="border-collapse border border-slate-500 w-full">
                 <tr>
                     <th class="border border-slate-500 p-2" colspan="2">Student</th>
@@ -305,12 +319,20 @@
                     <td class="border border-slate-500 p-2" data-value="{{ $student->parent->email ?? '-' }}" data-required="1" data-typeinput="email" data-name="parent[email]">{{ $student->parent->email ?? '-' }}</td>
                 </tr>
             </table>
+            <button type="submit" class="bg-accent-1 btn mt-4 text-accent-4 hidden" id="update-ppd-button" disabled>Update</button>
         </form>
     </div>
 </div>
 @endsection
 
 @section('script')
+    @if (session('update-error'))
+        <script>
+            setTimeout(() => {
+                document.getElementById('student-detail-toggle').click();
+            }, 500);
+        </script>
+    @endif
     @isset($transaction)
         @if (in_array($transaction->payment_method, ['va_bca', 'va_bni', 'va_bri', 'va_permata', 'va_cimb']) && $transaction->transaction_status == 'pending')
             <script>
