@@ -271,74 +271,18 @@ class PpdbControler extends Controller
 
             if ($response->transaction_status == 'settlement') {
                 // if paid
-                $transaction->update([
-                    'transaction_status' => $response->transaction_status,
-                    'settlement_time' => $response->settlement_time
-                ]);
+                $this->midtrans_settlement($transaction, $response);
             }
             if ($response->transaction_status == 'expire') {
                 // if expired
-                $transaction->update([
-                    'transaction_status' => $response->transaction_status,
-                    'settlement_time' => null
-                ]);
+                $this->midtrans_expire($transaction, $response);
             }
             if ($response->transaction_status == 'cancel') {
                 // if canceled
-                $transaction->delete();
+                $this->midtrans_cancel($transaction, $response);
                 return redirect()->route('ppdb.payment')->with('error', 'Kami tidak dapat menemukan transaksi pembayaran kamu. Sebagai gantinya, kami telah membuatkan transaksi yang baru.');
             }
         }
-
-        // if (in_array($transaction->transaction_status, ['pending', 'expire'])) {
-        //     // update payment method
-        //     if (request()->update_payment && in_array(request()->update_payment, ['qris', 'va_bca', 'va_bni', 'va_bri', 'va_permata', 'va_cimb', 'gopay', 'shopeepay', 'offline'])) {
-        //         $order_id = 'PPDB-' . uniqid();
-
-        //         if ($transaction->payment_method == 'offline') {
-        //             // change payment method to offline
-        //             DB::beginTransaction();
-        //             try {
-        //                 $this->charge_transaction(request()->update_payment, $order_id, Auth::user()->student->full_name, Auth::user());
-        //                 $transaction->delete();
-        //                 DB::commit();
-        //             } catch (\Throwable $th) {
-        //                 //throw $th;
-        //                 DB::rollBack();
-        //                 $this->midtrans_error_logger($th);
-        //                 return $this->midtrans_error_redirect($th);
-        //             }
-        //         } else {
-        //             // change payment method to another online payment
-        //             // charge new transaction
-        //             DB::beginTransaction();
-        //             try {
-        //                 $this->charge_transaction(request()->update_payment, $order_id, Auth::user()->student->full_name, Auth::user());
-        //                 DB::commit();
-        //             } catch (\Throwable $th) {
-        //                 //throw $th;
-        //                 DB::rollBack();
-        //                 $this->midtrans_error_logger($th);
-        //                 return $this->midtrans_error_redirect($th);
-        //             }
-
-        //             // cancel current transaction
-        //             DB::beginTransaction();
-        //             try {
-        //                 $this->startMidtransConfig();
-        //                 $response = \Midtrans\Transaction::cancel($transaction->transaction_id);
-        //                 $transaction->delete();
-        //                 DB::commit();
-        //             } catch (\Throwable $th) {
-        //                 //throw $th;
-        //                 DB::rollBack();
-        //                 $this->midtrans_error_logger($th);
-        //                 return $this->midtrans_error_redirect($th);
-        //             }
-        //         }
-        //         return redirect()->route('ppdb.payment');
-        //     }
-        // }
 
         return view('ppdb-payment', compact('student', 'transaction'));
     }
