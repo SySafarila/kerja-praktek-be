@@ -8,6 +8,8 @@ use App\Models\Subject;
 use App\Models\Teacher;
 use App\Models\Staff;
 use App\Models\Extracurricular;
+use App\Models\Gallery;
+use App\Models\GalleryImage;
 use Carbon\Carbon;
 
 class PublicController extends Controller
@@ -65,6 +67,20 @@ class PublicController extends Controller
         $eskul = Extracurricular::inRandomOrder()->take(2)->get();
 
         return view('public.extracurriculars-details', compact('extracurriculars','eskul'));
+    }
+
+    public function galleries()
+    {
+        $galleries = Gallery::all();
+
+        return view('public.galleries', compact('galleries'));
+    }
+
+    public function galleriesDetails($id){
+
+        $galleries = Gallery::findOrFail($id);
+
+        return view('public.galleries-details', compact('galleries'));
     }
 
 

@@ -114,7 +114,15 @@
                     Impedit reiciendis suscipit facere. Distinctio, aspernatur suscipit.</p>
                 <a href="#" class="block text-center underline">Info Detail</a>
             </div>
-            <div class="flex flex-col justify-center gap-3 p-5 lg:p-2 bg-accent-1 text-white rounded-lg">
+            <div class="flex flex-col justify-center gap-3 p-5">
+                <img src="{{ asset('icons/boarding school.svg') }}" alt="" class="w-[100px] mx-auto">
+                <h3 class="font-bold text-xl text-center">Boarding School</h3>
+                <p class="text-center">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos quisquam ut possimus
+                    nulla, cupiditate odio illum. Quam voluptatibus unde, praesentium quisquam cupiditate doloremque.
+                    Impedit reiciendis suscipit facere. Distinctio, aspernatur suscipit.</p>
+                <a href="#" class="block text-center underline">Info Detail</a>
+            </div>
+            {{-- <div class="flex flex-col justify-center gap-3 p-5 lg:p-2 bg-accent-1 text-white rounded-lg">
                 <img src="{{ asset('icons/takhasus.svg') }}" alt="" class="w-[100px] mx-auto">
                 <h3 class="font-bold text-xl text-center text-accent-2">Boarding School</h3>
                 <p class="text-center text-accent-2">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos quisquam
@@ -122,7 +130,7 @@
                     nulla, cupiditate odio illum. Quam voluptatibus unde, praesentium quisquam cupiditate doloremque.
                     Impedit reiciendis suscipit facere. Distinctio, aspernatur suscipit.</p>
                 <a href="#" class="block text-center underline">Info Detail</a>
-            </div>
+            </div> --}}
             <div class="flex flex-col justify-center gap-3 p-5">
                 <img src="{{ asset('icons/full day school.svg') }}" alt="" class="w-[100px] mx-auto">
                 <h3 class="font-bold text-xl text-center">Boarding School</h3>
@@ -134,10 +142,26 @@
         </div>
     </div>
 
+
+    {{-- <div class="max-w-full bg-cover "
+        style="background-image: url({{ asset('images/backgrounds/bg1.png') }}); background-position: center;">
+        <div class="bg-[#356F11]/0">
+            <div class="max-w-screen-lg mx-auto ">
+                <div class="p-5 py-8 lg:py-20 text-accent-4  flex flex-col gap-4">
+                    <h1 class="text-3xl text-center text-white uppercase font-bold">Pendaftaran Peserta Didik Baru</h1>
+                    <p class="text-white text-center">Kami mengundang putra terbaik Negeri untuk bergabung bersama SMA
+                        Ma’arif Pacet</p>
+                    <a href="#"
+                        class="bg-accent-1 transition hover:bg-yellow-200 hover:text-black mx-auto btn">Daftar Sekarang</a>
+                </div>
+            </div>
+        </div>
+    </div> --}}
+
     {{-- featured videos --}}
     <div class="max-w-full bg-cover" style="background-image: url({{ asset('images/backgrounds/bg1.png') }});">
         <div class="max-w-screen-lg mx-auto p-5 lg:py-10 text-accent-4">
-            <h1 class="text-3xl text-center text-accent-2">Selayang Pandang</h1>
+            <h1 class="text-3xl text-center text-accent-2">Sambutan Kepala Sekolah</h1>
             <div class="grid lg:grid-cols-2 lg:px-10 mt-5 lg:mt-10 gap-5">
                 <div class="flex flex-col gap-3">
                     <p class="text-accent-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis non rerum
@@ -152,10 +176,10 @@
                         dolorem?</p>
                 </div>
                 <div>
-                    {{-- <iframe class="w-full aspect-video" src="https://www.youtube.com/embed/sTTiTTr12a8?si=5NSxvqRjwOtu_Ueg"
+                    <iframe class="w-full aspect-video" src="https://www.youtube.com/embed/sTTiTTr12a8?si=5NSxvqRjwOtu_Ueg"
                     title="YouTube video player" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen></iframe> --}}
+                    allowfullscreen></iframe>
                 </div>
             </div>
         </div>
@@ -262,7 +286,7 @@
             @endforeach
         </div>
         <div class="flex justify-center mt-5 gap-3 text-lg">
-            <a href="{{route('news')}}" class=" text-accent-1 hover:text-yellow-700">Lihat Semua</a>
+            <a href="{{ route('news') }}" class=" text-accent-1 hover:text-yellow-700">Lihat Semua</a>
         </div>
     </div>
 
@@ -343,46 +367,63 @@
     </div>
 
     {{-- alumni --}}
-    {{-- <div class="max-w-screen-lg mx-auto p-5 py-8 lg:py-10"
-        style="background-image: url({{ asset('images/wave.svg') }}); background-repeat: no-repeat; background-position: bottom;">
-        <h1 class="text-3xl text-center text-accent-1">Sebaran <span class="text-accent-3">Alumni</span></h1>
-        <div class="splide mt-5" id="splide4" aria-label="Splide Basic HTML Example">
-            <div class="splide__track">
-                <ul class="splide__list">
-                    <li class="splide__slide">
-                        <img src="{{ asset('images/unpi.png') }}" alt="" class="w-full aspect-square">
-                    </li>
-                    <li class="splide__slide">
-                        <img src="{{ asset('images/unpi.png') }}" alt="" class="w-full aspect-square">
-                    </li>
-                    <li class="splide__slide">
-                        <img src="{{ asset('images/unpi.png') }}" alt="" class="w-full aspect-square">
-                    </li>
-                    <li class="splide__slide">
-                        <img src="{{ asset('images/unpi.png') }}" alt="" class="w-full aspect-square">
-                    </li>
-                    <li class="splide__slide">
-                        <img src="{{ asset('images/unpi.png') }}" alt="" class="w-full aspect-square">
-                    </li>
-                    <li class="splide__slide">
-                        <img src="{{ asset('images/unpi.png') }}" alt="" class="w-full aspect-square">
-                    </li>
-                    <li class="splide__slide">
-                        <img src="{{ asset('images/unpi.png') }}" alt="" class="w-full aspect-square">
-                    </li>
-                    <li class="splide__slide">
-                        <img src="{{ asset('images/unpi.png') }}" alt="" class="w-full aspect-square">
-                    </li>
-                    <li class="splide__slide">
-                        <img src="{{ asset('images/unpi.png') }}" alt="" class="w-full aspect-square">
-                    </li>
-                    <li class="splide__slide">
-                        <img src="{{ asset('images/unpi.png') }}" alt="" class="w-full aspect-square">
-                    </li>
-                </ul>
+    <div class="p-5 py-8 lg:py-10"
+        style="background-image: url({{ asset('images/svgs/Wave.svg') }});
+            background-position: bottom;
+            background-size: contain;
+            background-repeat: repeat-x;
+    ">
+        <h1 class="text-3xl text-center text-accent-1">Sponsors</h1>
+        <div class="max-w-screen-lg mx-auto">
+
+            <div class="splide mt-5 " id="splide4" aria-label="Splide Basic HTML Example">
+                <div class="splide__track">
+                    <ul class="splide__list">
+                        <li class="splide__slide">
+                            <img src="{{ asset('images/logos/logo1a.png') }}" alt=""
+                                class="w-full aspect-square">
+                        </li>
+                        <li class="splide__slide">
+                            <img src="{{ asset('images/logos/logo1a.png') }}" alt=""
+                                class="w-full aspect-square">
+                        </li>
+                        <li class="splide__slide">
+                            <img src="{{ asset('images/logos/logo1a.png') }}" alt=""
+                                class="w-full aspect-square">
+                        </li>
+                        <li class="splide__slide">
+                            <img src="{{ asset('images/logos/logo1a.png') }}" alt=""
+                                class="w-full aspect-square">
+                        </li>
+                        <li class="splide__slide">
+                            <img src="{{ asset('images/logos/logo1a.png') }}" alt=""
+                                class="w-full aspect-square">
+                        </li>
+                        <li class="splide__slide">
+                            <img src="{{ asset('images/logos/logo1a.png') }}" alt=""
+                                class="w-full aspect-square">
+                        </li>
+                        <li class="splide__slide">
+                            <img src="{{ asset('images/logos/logo1a.png') }}" alt=""
+                                class="w-full aspect-square">
+                        </li>
+                        <li class="splide__slide">
+                            <img src="{{ asset('images/logos/logo1a.png') }}" alt=""
+                                class="w-full aspect-square">
+                        </li>
+                        <li class="splide__slide">
+                            <img src="{{ asset('images/logos/logo1a.png') }}" alt=""
+                                class="w-full aspect-square">
+                        </li>
+                        <li class="splide__slide">
+                            <img src="{{ asset('images/logos/logo1a.png') }}" alt=""
+                                class="w-full aspect-square">
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div> --}}
+    </div>
 @endsection
 
 @section('script')

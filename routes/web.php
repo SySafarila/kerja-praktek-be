@@ -41,6 +41,9 @@ Route::get('/news/{id}', [PublicController::class, 'newsDetails'])->name('news.s
 Route::get('/extracurriculars', [PublicController::class, 'extracurriculars'])->name('extracurriculars');
 Route::get('/extracurriculars/{id}', [PublicController::class, 'extracurricularsDetails'])->name('extracurriculars.show');
 
+Route::get('/galleries', [PublicController::class, 'galleries'])->name('galleries');
+Route::get('/galleries/{id}', [PublicController::class, 'galleriesDetails'])->name('galleries.show');
+
 Route::get('/subjects', [PublicController::class, 'subjects'])->name('subjects');
 Route::get('/teachers-staffs', [PublicController::class, 'teachersStaffs'])->name('teachers-staffs');
 

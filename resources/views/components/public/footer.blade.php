@@ -41,7 +41,7 @@
                 <a href="#" class="text-accent-2">E-Library</a>
                 <a href="#" class="text-accent-2">PPDB</a>
                 <a href="{{route('extracurriculars')}}" class="text-accent-2">Extracurriculars</a>
-                <a href="#" class="text-accent-2">Galleries</a>
+                <a href="{{ route('galleries') }}" class="text-accent-2">Galleries</a>
             </div>
         </div>
     </div>

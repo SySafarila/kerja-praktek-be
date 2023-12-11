@@ -38,7 +38,7 @@
                 alt="">
             <div class="mt-2 flex flex-col p-5">
                 <p class="-my-2 text-sm"><i class="fa fa-calendar text-sm text-accent-1"></i>
-                    {{ $extracurriculars->created_at }}</p>
+                    {{ Carbon\Carbon::parse($extracurriculars->created_at)->format('d F Y') }}</p>
                 <p class="whitespace-pre-line">
                     {{ $extracurriculars->description }}
                 </p>
