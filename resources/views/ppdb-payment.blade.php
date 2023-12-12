@@ -386,6 +386,7 @@
 @endsection
 
 @section('script')
+    @vite('resources/js/ppdb.js')
     @if (session('update-error'))
         <script>
             setTimeout(() => {
