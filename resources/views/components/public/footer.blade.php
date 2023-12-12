@@ -1,4 +1,4 @@
-<footer class="bg-accent-5 text-accent-2">
+<footer class="bg-accent-1 text-accent-2">
     <div class="max-w-screen-lg mx-auto grid lg:grid-cols-3 p-5 gap-5 lg:gap-8">
         <div>
             <h3 class="font-semibold text-lg mb-2 text-accent-2 uppercase">SMA Ma'arif Pacet Cianjur</h3>
