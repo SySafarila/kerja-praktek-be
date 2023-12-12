@@ -31,21 +31,26 @@
     </div>
 
     <div class="my-10">
-        <div class="max-w-screen-lg mx-auto bg-white">
-            <div class="grid grid-cols-2 gap-x-8 gap-y-6 mx-8 py-8">
-                @foreach ($extracurriculars as $item)
-                <a href="{{route('extracurriculars.show', ['id' => $item->id])}}" class="group relative block transition-transform transform hover:scale-105">
-                    <img src="{{ asset('storage/extracurricularImages/' . $item->image) }}" class="w-full h-72 object-cover rounded-lg " alt="">
-                    <div class="absolute bottom-0 left-0 w-full bg-accent-1/70 text-center text-white p-2 font-semibold rounded-b-lg">
-                        {{ $item->name }}
-                    </div>
-                </a>
+        @if ($extracurriculars->isEmpty())
+            <p class="text-center my-32 text-xl text-accent-3/50">There's no extracurriculars published yet</p>
+        @else
+            <div class="max-w-screen-lg mx-auto bg-white">
+                <div class="grid grid-cols-2 gap-x-8 gap-y-6 mx-8 py-8">
+                    @foreach ($extracurriculars as $item)
+                        <a href="{{ route('extracurriculars.show', ['id' => $item->id]) }}"
+                            class="group relative block transition-transform transform hover:scale-105">
+                            <img src="{{ asset('storage/extracurricularImages/' . $item->image) }}"
+                                class="w-full h-72 object-cover rounded-lg " alt="">
+                            <div
+                                class="absolute bottom-0 left-0 w-full bg-accent-1/70 text-center text-white p-2 font-semibold rounded-b-lg">
+                                {{ $item->name }}
+                            </div>
+                        </a>
+                    @endforeach
 
-
-                @endforeach
-
+                </div>
             </div>
-        </div>
+        @endif
     </div>
 @endsection
 

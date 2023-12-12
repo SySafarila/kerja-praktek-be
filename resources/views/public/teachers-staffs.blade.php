@@ -57,26 +57,33 @@
         </div>
     </div> --}}
 
-    <div class="max-w-screen-lg mx-auto">
-        <div
-            class="grid grid-cols-1 mx-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4 mt-4 mb-2 justify-center">
-            @foreach ($teachers as $teacher)
-                <div class="relative bg-gradient-to-t from-[#356f11bb] to-transparent overflow-hidden rounded-md">
-                    <img src="{{ asset('storage/teacherImages/' . $teacher->image) }}" class="w-full h-96 object-cover" />
-                    <div class="absolute inset-0 flex flex-col justify-end p-4">
-                        <h3 class="text-accent-2 text-xl font-light mb-1">{{ $teacher->name }}</h3>
-                        <div class="border-b-2 border-yellow-300 mb-1"></div>
-                        <span class="text-accent-2 text-sm">@if ($teacher->subjects->isNotEmpty())
-                            {{ $teacher->subjects->first()->name }}
-                        @else
-                            No subjects assigned
-                        @endif</span>
-                        <span class="text-accent-2 text-sm mb-2 block">NUPTK: {{ $teacher->nuptk }}</span>
+    @if ($teachers->isEmpty())
+        <p class="text-center my-28 text-xl text-accent-3/50">There's no information published yet</p>
+    @else
+        <div class="max-w-screen-lg mx-auto">
+            <div
+                class="grid grid-cols-1 mx-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4 mt-4 mb-2 justify-center">
+                @foreach ($teachers as $teacher)
+                    <div class="relative bg-gradient-to-t from-[#356f11bb] to-transparent overflow-hidden rounded-md">
+                        <img src="{{ asset('storage/teacherImages/' . $teacher->image) }}"
+                            class="w-full h-96 object-cover" />
+                        <div class="absolute inset-0 flex flex-col justify-end p-4">
+                            <h3 class="text-accent-2 text-xl font-light mb-1">{{ $teacher->name }}</h3>
+                            <div class="border-b-2 border-yellow-300 mb-1"></div>
+                            <span class="text-accent-2 text-sm">
+                                @if ($teacher->subjects->isNotEmpty())
+                                    {{ $teacher->subjects->first()->name }}
+                                @else
+                                    No subjects assigned
+                                @endif
+                            </span>
+                            <span class="text-accent-2 text-sm mb-2 block">NUPTK: {{ $teacher->nuptk }}</span>
+                        </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
         </div>
-    </div>
+    @endif
 
     <h1 class="text-5xl border-b-2 border-accent-1 w-fit mx-auto my-8">Staffs</h1>
     {{-- <div class="max-w-screen-lg mx-auto">
@@ -97,26 +104,26 @@
         </div>
     </div> --}}
 
-    <div class="max-w-screen-lg mx-auto">
-        <div
-            class="grid grid-cols-1 mx-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4 mt-4 mb-2 justify-center">
-            @foreach ($staffs as $staff)
-                <div class="relative bg-gradient-to-t from-[#356f11bb] to-transparent overflow-hidden rounded-md">
-                    <img src="{{ asset('storage/staffImages/' . $staff->image) }}" class="w-full h-96 object-cover" />
-                    <div class="absolute inset-0 flex flex-col justify-end p-4">
-                        <h3 class="text-accent-2 text-xl font-light mb-1">{{ $staff->name }}</h3>
-                        <div class="border-b-2 border-yellow-300 mb-1"></div>
-                        <span class="text-accent-2 text-sm">{{ $staff->position }}</span>
-                        <span class="text-accent-2 text-sm mb-2 block">NIP: {{ $staff->nip }}</span>
+    @if ($staffs->isEmpty())
+        <p class="text-center my-28 text-xl text-accent-3/50">There's no information published yet</p>
+    @else
+        <div class="max-w-screen-lg mx-auto">
+            <div
+                class="grid grid-cols-1 mx-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4 mt-4 mb-2 justify-center">
+                @foreach ($staffs as $staff)
+                    <div class="relative bg-gradient-to-t from-[#356f11bb] to-transparent overflow-hidden rounded-md">
+                        <img src="{{ asset('storage/staffImages/' . $staff->image) }}" class="w-full h-96 object-cover" />
+                        <div class="absolute inset-0 flex flex-col justify-end p-4">
+                            <h3 class="text-accent-2 text-xl font-light mb-1">{{ $staff->name }}</h3>
+                            <div class="border-b-2 border-yellow-300 mb-1"></div>
+                            <span class="text-accent-2 text-sm">{{ $staff->position }}</span>
+                            <span class="text-accent-2 text-sm mb-2 block">NIP: {{ $staff->nip }}</span>
+                        </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
         </div>
-    </div>
-
-
-
-
+    @endif
 @endsection
 
 @section('script')
