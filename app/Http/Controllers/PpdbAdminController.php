@@ -17,7 +17,7 @@ class PpdbAdminController extends Controller
     public function __construct()
     {
         $this->middleware('can:ppdb-create')->only(['create', 'store']);
-        $this->middleware('can:ppdb-read')->only('index');
+        $this->middleware('can:ppdb-read')->only(['index', 'download_private_file']);
         $this->middleware('can:ppdb-update')->only(['edit', 'update', 'confirm_offline_payment']);
         $this->middleware('can:ppdb-delete')->only(['destroy', 'massDestroy']);
     }
@@ -29,7 +29,7 @@ class PpdbAdminController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $model = Student::with(['parent', 'transaction']);
+            $model = Student::with(['parent', 'transaction', 'files']);
 
             if (request()->payment == 'pending') {
                 $model->whereRelation('transaction', 'transaction_status', '=', 'pending');
@@ -499,5 +499,15 @@ class PpdbAdminController extends Controller
             return back()->with('success', "Pembayaran PPDB untuk $student->full_name berhasil dikonfirmasi");
         }
         return back()->with('warning', 'Pembayaran tidak dapat dikonfirmasi');
+    }
+
+    public function download_private_file(Request $request)
+    {
+        $file_path = $request->file_path;
+        if (Storage::exists($file_path)) {
+            $path = Storage::download($file_path);
+            return $path;
+        }
+        return abort(404);
     }
 }

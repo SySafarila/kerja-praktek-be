@@ -100,6 +100,7 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
 
     // ppdb
     Route::patch('/ppdb/confirm-offline-payment/{student_id}', [PpdbAdminController::class, 'confirm_offline_payment'])->name('ppdb.confirm-offline-payment');
+    Route::get('/ppdb/private-files', [PpdbAdminController::class, 'download_private_file'])->name('ppdb.download-private-files');
     Route::resource('/ppdb', PpdbAdminController::class);
 
     // bulk delete
