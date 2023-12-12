@@ -25,17 +25,31 @@ class PpdbSettingController extends Controller
             ]);
         }
 
-        return view('ppdb-settings.index', compact('ppdb_price'));
+        $ppdb_accept_student = PpdbSetting::where('key', 'accept_students')->first();
+        if (!$ppdb_accept_student) {
+            $ppdb_accept_student = PpdbSetting::create([
+                'key' => 'accept_students',
+                'value' => 'false'
+            ]);
+        }
+
+        return view('ppdb-settings.index', compact('ppdb_price', 'ppdb_accept_student'));
     }
 
     public function update(Request $request) {
         $request->validate([
-            'ppdb_price' => ['required', 'numeric', 'min:1']
+            'ppdb_price' => ['required', 'numeric', 'min:1'],
+            'accept_students' => ['required', 'string', 'in:true,false']
         ]);
 
         $ppdb_price = PpdbSetting::where('key', 'price')->first();
         $ppdb_price->update([
             'value' => $request->ppdb_price
+        ]);
+
+        $ppdb_accept_student = PpdbSetting::where('key', 'accept_students')->first();
+        $ppdb_accept_student->update([
+            'value' => $request->accept_students
         ]);
 
         return back()->with('success', 'Settings updated!');

@@ -17,5 +17,9 @@ class PpdbSettingsSeeder extends Seeder
             'key' => 'price',
             'value' => '150000'
         ]);
+        PpdbSetting::create([
+            'key' => 'accept_students',
+            'value' => 'true'
+        ]);
     }
 }

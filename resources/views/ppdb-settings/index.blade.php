@@ -26,27 +26,22 @@
                     @csrf
                     @method('PATCH')
                     <div class="form-group">
-                        <label for="ppdb_price" class="text-capitalize">PPDB Price</label>
-                        <input type="number" class="form-control" id="ppdb_price" name="ppdb_price" value="{{ $ppdb_price->value }}">
+                        <label for="ppdb_price" class="text-capitalize">Biaya PPDB</label>
+                        <input type="number" class="form-control" id="ppdb_price" name="ppdb_price" value="{{ $ppdb_price->value }}" required>
                         @error('ppdb_price')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
-                    {{-- <div class="form-group">
-                        <label for="" class="text-capitalize d-block">Environment</label>
-                        <div class="align-items-center d-flex" style="gap: 14px;">
-                            <div class="align-items-center d-flex" style="gap: 5px;">
-                                <input type="radio" name="is_prod" id="is_prod" value="1" {{ $isProd->isProd == true ?
-                                'checked' : '' }}>
-                                <label class="font-weight-normal m-0" for="is_prod">Production</label>
-                            </div>
-                            <div class="align-items-center d-flex" style="gap: 5px;">
-                                <input type="radio" name="is_prod" id="is_dev" value="0" {{ $isProd->isProd == false ?
-                                'checked' : '' }}>
-                                <label class="font-weight-normal m-0" for="is_dev">Development</label>
-                            </div>
-                        </div>
-                    </div> --}}
+                    <div class="form-group">
+                        <label for="accept_students" class="text-capitalize d-block">Penerimaan PPDB</label>
+                        <select name="accept_students" id="accept_students" class="custom-select" required>
+                            <option value="true" {{ $ppdb_accept_student->value == 'true' ? 'selected': '' }}>YES</option>
+                            <option value="false" {{ $ppdb_accept_student->value == 'false' ? 'selected': '' }}>NO</option>
+                        </select>
+                        @error('accept_students')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
                     <button type="submit" class="btn btn-primary btn-sm">Save</button>
                 </form>
             </div>
