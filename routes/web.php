@@ -19,6 +19,7 @@ use App\Http\Controllers\MidtransSetting;
 use App\Http\Controllers\PpdbAdminController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\PpdbControler;
+use App\Http\Controllers\PpdbSettingController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -102,6 +103,8 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     Route::patch('/ppdb/confirm-offline-payment/{student_id}', [PpdbAdminController::class, 'confirm_offline_payment'])->name('ppdb.confirm-offline-payment');
     Route::get('/ppdb/private-files', [PpdbAdminController::class, 'download_private_file'])->name('ppdb.download-private-files');
     Route::resource('/ppdb', PpdbAdminController::class);
+    Route::get('/ppdb-settings', [PpdbSettingController::class, 'index'])->name('ppdb-settings.index');
+    Route::patch('/ppdb-settings', [PpdbSettingController::class, 'update'])->name('ppdb-settings.update');
 
     // bulk delete
     Route::delete('/bulk-delete/permissions', [PermissionController::class, 'massDestroy'])->name('permissions.massDestroy');

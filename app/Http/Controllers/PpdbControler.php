@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PpdbSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -23,10 +24,11 @@ class PpdbControler extends Controller
     public function index()
     {
         $user = Auth::user();
+        $gross_amount = PpdbSetting::where('key', 'price')->first()->value;
         if ($user->student) {
             return redirect()->route('ppdb.payment');
         }
-        return view('ppdb');
+        return view('ppdb', compact('gross_amount'));
     }
 
     /**
@@ -363,6 +365,7 @@ class PpdbControler extends Controller
 
     function charge_transaction($payment_method, $order_id, $student, $user)
     {
+        $gross_amount = PpdbSetting::where('key', 'price')->first()->value;
         if ($payment_method == 'offline') {
             // bayar di sekolah
             $user->transaction()->create([
@@ -376,7 +379,7 @@ class PpdbControler extends Controller
                 'bank' => null,
                 'status_message' => null,
                 'status_code' => null,
-                'gross_amount' => 150000,
+                'gross_amount' => $gross_amount,
                 'link_qr_code' => null,
                 'link_deeplink' => null,
                 'link_get_status' => null,
@@ -390,14 +393,14 @@ class PpdbControler extends Controller
             $params = [
                 'transaction_details' => [
                     'order_id' => $order_id,
-                    'gross_amount' => 150000,
+                    'gross_amount' => $gross_amount,
                 ],
                 'item_details' => [
                     [
                         'id' => "$order_id-$student->full_name",
                         'name' => "PPDB untuk $student->full_name",
                         'quantity' => 1,
-                        'price' => 150000
+                        'price' => $gross_amount
                     ]
                 ],
                 'customer_details' => [

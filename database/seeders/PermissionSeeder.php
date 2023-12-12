@@ -379,6 +379,34 @@ class PermissionSeeder extends Seeder
             ],
 
         );
+        // ppdb settings
+        array_push(
+            $arr,
+            [
+                'guard_name' => 'web',
+                'name' => 'ppdb-settings-create',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'ppdb-settings-read',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'ppdb-settings-update',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'ppdb-settings-delete',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+        );
 
         // midtrans
         array_push(
