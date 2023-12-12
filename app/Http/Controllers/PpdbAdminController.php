@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -42,10 +44,10 @@ class PpdbAdminController extends Controller
                     return $model->created_at->diffForHumans();
                 })
                 ->addColumn('options', 'ppdb.datatables.options')
-                ->editColumn('gender', function($model) {
+                ->editColumn('gender', function ($model) {
                     return $model->gender == 'male' ? 'L' : 'P';
                 })
-                ->editColumn('transaction.transaction_status', function($model) {
+                ->editColumn('transaction.transaction_status', function ($model) {
                     switch (@$model->transaction->transaction_status) {
                         case 'pending':
                             return 'Pending';
@@ -64,11 +66,11 @@ class PpdbAdminController extends Controller
                             break;
                     }
                 })
-                ->editColumn('birth', function($model) {
+                ->editColumn('birth', function ($model) {
                     return "$model->birth_place - " . Carbon::parse($model->birth_date)->format('d-m-Y');
                 })
                 ->editColumn('created_at', function ($model) {
-                    return $model->created_at->format('H:i/d-m-Y');
+                    return $model->created_at->tz('Asia/Jakarta')->format('H:i/d-m-Y');
                 })
                 ->setRowAttr([
                     'data-model-id' => function ($model) {
@@ -130,10 +132,10 @@ class PpdbAdminController extends Controller
      */
     public function edit($id)
     {
-        return 'in progress';
-        $permission = Student::findById($id);
+        $student = Student::with('parent', 'files')->findOrFail($id);
+        // return $student;
 
-        return view('ppdb.edit', compact('permission'));
+        return view('ppdb.edit', compact('student'));
     }
 
     /**
@@ -145,17 +147,70 @@ class PpdbAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return 'in progress';
         $request->validate([
-            'name' => ['required', 'string', Rule::unique('permissions')->ignore($id), 'max:255']
+            'student.nisn' => ['required', 'string', 'max:255'],
+            'student.full_name' => ['required', 'string', 'max:255'],
+            'student.gender' => ['required', 'string', 'in:male,female'],
+            'student.birth_place' => ['required', 'string', 'max:255'],
+            'student.birth_date' => ['required', 'date'],
+            'student.religion' => ['required', 'string', 'max:255', 'in:islam,kristen_protestan,kristen_katolik,hindu,buddha,khonghucu'],
+            'student.address' => ['required', 'string'],
+            'student.whatsapp' => ['required', 'string', 'max:255'],
+            'student.email' => ['required', 'email', 'max:255'],
+            'student.last_school' => ['required', 'string', 'max:255'],
+            'student.org_experience' => ['string', 'nullable'],
+            'student.height' => ['required', 'numeric'],
+            'student.weight' => ['required', 'numeric'],
+            'student.history_illness' => ['string', 'nullable'],
+            'parent.full_name' => ['required', 'string', 'max:255'],
+            'parent.gender' => ['required', 'string', 'in:male,female'],
+            'parent.job' => ['required', 'string'],
+            'parent.income_per_month' => ['required', 'numeric'],
+            'parent.whatsapp' => ['required', 'string', 'max:255'],
+            'parent.email' => ['required', 'email', 'max:255']
         ]);
 
-        $permission = Student::findById($id);
-        $permission->update([
-            'name' => $request->name
-        ]);
+        $user = Student::findOrFail($id)->user;
+        $student = $request->student;
+        $parent = $request->parent;
+        $current_student = $user->student;
+        $current_parent = $current_student->parent;
 
-        return redirect()->route('ppdb.index')->with('status', 'Permission updated !');
+        DB::beginTransaction();
+        try {
+            $current_student->update([
+                'nisn' => $student['nisn'],
+                'full_name' => $student['full_name'],
+                'gender' => $student['gender'],
+                'birth_place' => $student['birth_place'],
+                'birth_date' => $student['birth_date'],
+                'religion' => $student['religion'],
+                'address' => $student['address'],
+                'email' => $student['email'],
+                'whatsapp' => $student['whatsapp'],
+                'last_school' => $student['last_school'],
+                'org_experience' => $student['org_experience'],
+                'height' => $student['height'],
+                'weight' => $student['weight'],
+                'history_illness' => $student['history_illness']
+            ]);
+            $current_parent->update([
+                'full_name' => $parent['full_name'],
+                'gender' => $parent['gender'],
+                'job' => $parent['job'],
+                'income_per_month' => $parent['income_per_month'],
+                'whatsapp' => $parent['whatsapp'],
+                'email' => $parent['email'],
+            ]);
+            DB::commit();
+        } catch (\Throwable $th) {
+            // throw $th;
+            Log::error($th->getMessage());
+            DB::rollBack();
+            return redirect()->route('admin.ppdb.index')->with('error', 'Tidak dapat memperbarui data PPDB');
+        }
+
+        return redirect()->route('admin.ppdb.index')->with('success', 'Data PPDB berhasil diperbarui !');
     }
 
     /**
@@ -192,7 +247,8 @@ class PpdbAdminController extends Controller
         return redirect()->route('ppdb.index')->with('status', 'Bulk delete success');
     }
 
-    function confirm_offline_payment($student_id) {
+    function confirm_offline_payment($student_id)
+    {
         $student = Student::with('user.transaction')->findOrFail($student_id);
         $transaction = $student->user->transaction;
 
