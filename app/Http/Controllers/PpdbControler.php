@@ -16,6 +16,10 @@ class PpdbControler extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $accept_students = PpdbSetting::where('key', 'accept_students')->first()->value;
+        if ($accept_students != 'true') {
+            return abort(503, 'PPDB Closed');
+        }
     }
 
     /**
