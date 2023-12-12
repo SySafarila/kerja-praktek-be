@@ -173,6 +173,20 @@
                         </li>
                     @endcan
                 @endif
+                @if (Route::has('admin.ppdb-settings.index'))
+                    @can('ppdb-settings-read')
+                        <li class="nav-item">
+                            <a href="{{ route('admin.ppdb-settings.index') }}"
+                                class="nav-link {{ request()->routeIs('admin.ppdb-settings.*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-users-cog"></i>
+                                <p class="text-capitalize">
+                                    PPDB Settings
+                                    {{-- <span class="right badge badge-danger">New</span> --}}
+                                </p>
+                            </a>
+                        </li>
+                    @endcan
+                @endif
                 <x-adminlte.sidebar-system />
                 <li class="nav-item mt-2 pt-2" style="border-top: 1px solid #4f5962;">
                     <a href="{{ route('logout') }}" class="nav-link"

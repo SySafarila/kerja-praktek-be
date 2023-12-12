@@ -239,7 +239,7 @@
                     <label for="price" class="font-semibold capitalize">Jumlah yang harus dibayar <span
                             class="text-red-500">*</span></label>
                     <input type="text" class="w-full border-gray-500 border outline-none rounded-lg cursor-default"
-                        id="price" value="Rp 150,000" readonly>
+                        id="price" value="Rp {{ number_format($gross_amount, 0) }}" readonly>
                 </div>
                 <div class="grid grid-cols-1 gap-1.5">
                     <label for="paymentmethod" class="font-semibold capitalize">Metode Pembayaran <span

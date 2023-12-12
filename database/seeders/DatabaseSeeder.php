@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
-            MidtransKeySeeder::class
+            MidtransKeySeeder::class,
+            PpdbSettingsSeeder::class
         ]);
     }
 }

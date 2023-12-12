@@ -93,6 +93,49 @@
                             <td>Rp {{ @number_format($model->transaction->gross_amount) }}</td>
                         </tr>
                         <tr>
+                            <th colspan="2">Files</th>
+                        </tr>
+                        <tr>
+                            <td>Kartu Keluarga</td>
+                            <td>
+                                @if ($model->files->where('file_type', 'kk')->first())
+                                    <a target="__blank" href="{{ route('admin.ppdb.download-private-files', ['file_path' => $model->files->where('file_type', 'kk')->first()->file_name]) }}">Download</a>
+                                @else
+                                    -
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Akta Kelahiran</td>
+                            <td>
+                                @if ($model->files->where('file_type', 'akta')->first())
+                                    <a target="__blank" href="{{ route('admin.ppdb.download-private-files', ['file_path' => $model->files->where('file_type', 'akta')->first()->file_name]) }}">Download</a>
+                                @else
+                                    -
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>KIP</td>
+                            <td>
+                                @if ($model->files->where('file_type', 'kip')->first())
+                                    <a target="__blank" href="{{ route('admin.ppdb.download-private-files', ['file_path' => $model->files->where('file_type', 'kip')->first()->file_name]) }}">Download</a>
+                                @else
+                                    -
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>PKH</td>
+                            <td>
+                                @if ($model->files->where('file_type', 'pkh')->first())
+                                    <a target="__blank" href="{{ route('admin.ppdb.download-private-files', ['file_path' => $model->files->where('file_type', 'pkh')->first()->file_name]) }}">Download</a>
+                                @else
+                                    -
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
                             <th colspan="2">Student</th>
                         </tr>
                         <tr>
