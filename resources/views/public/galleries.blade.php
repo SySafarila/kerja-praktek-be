@@ -93,18 +93,25 @@
     </div>
 
     <div class="max-w-screen-lg mx-auto my-8">
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-4">
-            @foreach ($galleries as $item)
-            <a href="{{route('galleries.show', ['id' => $item->id])}}" class="block transition-transform transform hover:scale-105 ">
-                <div class="relative">
-                    <img class="w-full h-58 object-cover z-0" src="{{ asset('storage/galleryThumbnails/' . $item->thumbnail) }}" alt="">
-                    <div class="absolute bottom-0 left-0 right-0 bg-accent-1/50 z-10 text-accent-2 text-center py-1 ">
-                        {{$item->title}}
-                    </div>
-                </div>
-            </a>
-            @endforeach
-        </div>
+        @if ($galleries->isEmpty())
+            <p class="text-center my-32 text-xl text-accent-3/50">There's no galleries or activities published yet</p>
+        @else
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-2 gap-y-4">
+                @foreach ($galleries as $item)
+                    <a href="{{ route('galleries.show', ['id' => $item->id]) }}"
+                        class="block transition-transform transform hover:scale-105 ">
+                        <div class="relative">
+                            <img class="w-full h-58 object-cover z-0"
+                                src="{{ asset('storage/galleryThumbnails/' . $item->thumbnail) }}" alt="">
+                            <div
+                                class="absolute bottom-0 left-0 right-0 bg-accent-1/50 z-10 text-accent-2 text-center py-1 ">
+                                {{ $item->title }}
+                            </div>
+                        </div>
+                    </a>
+                @endforeach
+            </div>
+        @endif
     </div>
 @endsection
 

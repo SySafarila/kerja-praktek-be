@@ -1,7 +1,8 @@
 <footer class="bg-accent-5 text-accent-2">
     <div class="max-w-screen-lg mx-auto grid lg:grid-cols-3 p-5 gap-5 lg:gap-8">
         <div>
-            <h3 class="font-semibold text-lg mb-2 text-accent-2 uppercase">SMA Ma'arif Pacet Cianjur</h3>
+            <h2 class="text-sm text-accent-2 uppercase">Lembaga Pendidikan Nahdatul Ulama</h2>
+            <h3 class="font-semibold text-4xl mb-4 text-accent-2 uppercase">SMA Ma'arif Pacet Cianjur</h3>
             <p class="text-accent-2"><b class="text-accent-2">Alamat : </b>Cipendawa, Pacet, Cianjur Regency, West Java
                 43253</p>
             <div class="flex flex-col gap-2 mt-2">
