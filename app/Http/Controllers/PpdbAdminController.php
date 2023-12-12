@@ -25,16 +25,16 @@ class PpdbAdminController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $model = Student::with(['user.transaction', 'parent']);
+            $model = Student::with(['parent', 'transaction']);
 
             if (request()->payment == 'pending') {
-                $model->whereRelation('user.transaction', 'transaction_status', '=', 'pending');
+                $model->whereRelation('transaction', 'transaction_status', '=', 'pending');
             }
             if (request()->payment == 'settlement') {
-                $model->whereRelation('user.transaction', 'transaction_status', '=', 'settlement');
+                $model->whereRelation('transaction', 'transaction_status', '=', 'settlement');
             }
             if (request()->payment == 'expire') {
-                $model->whereRelation('user.transaction', 'transaction_status', '=', 'expire');
+                $model->whereRelation('transaction', 'transaction_status', '=', 'expire');
             }
 
             return DataTables::of($model)
@@ -45,8 +45,8 @@ class PpdbAdminController extends Controller
                 ->editColumn('gender', function($model) {
                     return $model->gender == 'male' ? 'L' : 'P';
                 })
-                ->editColumn('payment', function($model) {
-                    switch (@$model->user->transaction->transaction_status) {
+                ->editColumn('transaction.transaction_status', function($model) {
+                    switch (@$model->transaction->transaction_status) {
                         case 'pending':
                             return 'Pending';
                             break;

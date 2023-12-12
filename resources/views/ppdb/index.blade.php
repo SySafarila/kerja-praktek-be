@@ -176,8 +176,8 @@
                     data: 'whatsapp',
                     name: 'whatsapp'
                 }, {
-                    data: 'payment',
-                    name: 'user.transaction.transaction_status'
+                    data: 'transaction.transaction_status',
+                    name: 'transaction.transaction_status'
                 }, {
                     data: 'created_at',
                     name: 'created_at'
