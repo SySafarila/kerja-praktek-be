@@ -100,7 +100,14 @@
             @endif
             @if ($transaction->transaction_status == 'settlement')
                 <div class="bg-accent-1/25 p-3 border border-accent-1" id="settlement">
-                    <p>Pembayaran telah diterima, langkah selanjutnya:</p>
+                    @if ($files->where('file_type', 'kk')->first() && $files->where('file_type', 'akta')->first())
+                        <p><b>Pembayaran</b> dan <b>Berkas</b> kamu telah kami terima.</p>
+                        @if (!$files->where('file_type', 'kip')->first() || !$files->where('file_type', 'pkh')->first())
+                            <p>Silahkan tambahkan <b>Berkas</b> KIP/PKH jika ada.</p>
+                        @endif
+                    @else
+                        <p><b>Pembayaran</b> telah diterima, langkah selanjutnya:</p>
+                    @endif
                     <ul class="list-disc list-inside">
                         @if (!$files->where('file_type', 'kk')->first())
                             <li>
@@ -394,19 +401,4 @@
             }, 500);
         </script>
     @endif
-    {{-- @isset($transaction)
-        @if (in_array($transaction->payment_method, ['va_bca', 'va_bni', 'va_bri', 'va_permata', 'va_cimb']) && $transaction->transaction_status == 'pending')
-            <script>
-                const copy_va = document.getElementById('copy_va')
-                const va = document.getElementById('va')
-
-                copy_va.addEventListener('click', (e) => {
-                    e.preventDefault()
-                    navigator.clipboard.writeText(va.innerText)
-
-                    alert('Virtual Account berhasil di copy!')
-                })
-            </script>
-        @endif
-    @endisset --}}
 @endsection

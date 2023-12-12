@@ -591,12 +591,20 @@ class PpdbControler extends Controller
             $request->validate([
                 'kk' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
             ]);
-            $kk_upload = Storage::putFile('/student-files/kk', new File($request->file('kk')));
-            $student->files()->create([
-                'file_name' => $kk_upload,
-                'file_type' => 'kk',
-                'original_file_name' => $request->file('kk')->getClientOriginalName()
-            ]);
+            DB::beginTransaction();
+            try {
+                $kk_upload = Storage::putFile('/student-files/kk', new File($request->file('kk')));
+                $student->files()->create([
+                    'file_name' => $kk_upload,
+                    'file_type' => 'kk',
+                    'original_file_name' => $request->file('kk')->getClientOriginalName()
+                ]);
+                DB::commit();
+            } catch (\Throwable $th) {
+                //throw $th;
+                Log::error($th->getMessage());
+                DB::rollBack();
+            }
         } else {
             if ($request->hasFile('kk')) {
                 $request->validate([
@@ -611,14 +619,24 @@ class PpdbControler extends Controller
                     DB::commit();
                 } catch (\Throwable $th) {
                     //throw $th;
+                    Log::error($th->getMessage());
                     DB::rollBack();
                 }
-                $kk_upload = Storage::putFile('/student-files/kk', new File($request->file('kk')));
-                $student->files()->create([
-                    'file_name' => $kk_upload,
-                    'file_type' => 'kk',
-                    'original_file_name' => $request->file('kk')->getClientOriginalName()
-                ]);
+
+                DB::beginTransaction();
+                try {
+                    $kk_upload = Storage::putFile('/student-files/kk', new File($request->file('kk')));
+                    $student->files()->create([
+                        'file_name' => $kk_upload,
+                        'file_type' => 'kk',
+                        'original_file_name' => $request->file('kk')->getClientOriginalName()
+                    ]);
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    Log::error($th->getMessage());
+                    DB::rollBack();
+                }
             }
         }
 
@@ -627,12 +645,20 @@ class PpdbControler extends Controller
             $request->validate([
                 'akta' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
             ]);
-            $akta_upload = Storage::putFile('/student-files/akta', new File($request->file('akta')));
-            $student->files()->create([
-                'file_name' => $akta_upload,
-                'file_type' => 'akta',
-                'original_file_name' => $request->file('akta')->getClientOriginalName()
-            ]);
+            DB::beginTransaction();
+            try {
+                $akta_upload = Storage::putFile('/student-files/akta', new File($request->file('akta')));
+                $student->files()->create([
+                    'file_name' => $akta_upload,
+                    'file_type' => 'akta',
+                    'original_file_name' => $request->file('akta')->getClientOriginalName()
+                ]);
+                DB::commit();
+            } catch (\Throwable $th) {
+                //throw $th;
+                Log::error($th->getMessage());
+                DB::rollBack();
+            }
         } else {
             if ($request->hasFile('akta')) {
                 $request->validate([
@@ -647,14 +673,24 @@ class PpdbControler extends Controller
                     DB::commit();
                 } catch (\Throwable $th) {
                     //throw $th;
+                    Log::error($th->getMessage());
                     DB::rollBack();
                 }
-                $akta_upload = Storage::putFile('/student-files/akta', new File($request->file('akta')));
-                $student->files()->create([
-                    'file_name' => $akta_upload,
-                    'file_type' => 'akta',
-                    'original_file_name' => $request->file('akta')->getClientOriginalName()
-                ]);
+
+                DB::beginTransaction();
+                try {
+                    $akta_upload = Storage::putFile('/student-files/akta', new File($request->file('akta')));
+                    $student->files()->create([
+                        'file_name' => $akta_upload,
+                        'file_type' => 'akta',
+                        'original_file_name' => $request->file('akta')->getClientOriginalName()
+                    ]);
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    Log::error($th->getMessage());
+                    DB::rollBack();
+                }
             }
         }
 
@@ -664,12 +700,20 @@ class PpdbControler extends Controller
                 $request->validate([
                     'kip' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
                 ]);
-                $kip_upload = Storage::putFile('/student-files/kip', new File($request->file('kip')));
-                $student->files()->create([
-                    'file_name' => $kip_upload,
-                    'file_type' => 'kip',
-                    'original_file_name' => $request->file('kip')->getClientOriginalName()
-                ]);
+                DB::beginTransaction();
+                try {
+                    $kip_upload = Storage::putFile('/student-files/kip', new File($request->file('kip')));
+                    $student->files()->create([
+                        'file_name' => $kip_upload,
+                        'file_type' => 'kip',
+                        'original_file_name' => $request->file('kip')->getClientOriginalName()
+                    ]);
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    Log::error($th->getMessage());
+                    DB::rollBack();
+                }
             }
         } else {
             if ($request->hasFile('kip')) {
@@ -685,15 +729,24 @@ class PpdbControler extends Controller
                     DB::commit();
                 } catch (\Throwable $th) {
                     //throw $th;
+                    Log::error($th->getMessage());
                     DB::rollBack();
                 }
 
-                $kip_upload = Storage::putFile('/student-files/kip', new File($request->file('kip')));
-                $student->files()->create([
-                    'file_name' => $kip_upload,
-                    'file_type' => 'kip',
-                    'original_file_name' => $request->file('kip')->getClientOriginalName()
-                ]);
+                DB::beginTransaction();
+                try {
+                    $kip_upload = Storage::putFile('/student-files/kip', new File($request->file('kip')));
+                    $student->files()->create([
+                        'file_name' => $kip_upload,
+                        'file_type' => 'kip',
+                        'original_file_name' => $request->file('kip')->getClientOriginalName()
+                    ]);
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    Log::error($th->getMessage());
+                    DB::rollBack();
+                }
             }
         }
 
@@ -703,12 +756,20 @@ class PpdbControler extends Controller
                 $request->validate([
                     'pkh' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
                 ]);
-                $pkh_upload = Storage::putFile('/student-files/pkh', new File($request->file('pkh')));
-                $student->files()->create([
-                    'file_name' => $pkh_upload,
-                    'file_type' => 'pkh',
-                    'original_file_name' => $request->file('pkh')->getClientOriginalName()
-                ]);
+                DB::beginTransaction();
+                try {
+                    $pkh_upload = Storage::putFile('/student-files/pkh', new File($request->file('pkh')));
+                    $student->files()->create([
+                        'file_name' => $pkh_upload,
+                        'file_type' => 'pkh',
+                        'original_file_name' => $request->file('pkh')->getClientOriginalName()
+                    ]);
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    Log::error($th->getMessage());
+                    DB::rollBack();
+                }
             }
         } else {
             if ($request->hasFile('pkh')) {
@@ -724,15 +785,24 @@ class PpdbControler extends Controller
                     DB::commit();
                 } catch (\Throwable $th) {
                     //throw $th;
+                    Log::error($th->getMessage());
                     DB::rollBack();
                 }
 
-                $pkh_upload = Storage::putFile('/student-files/pkh', new File($request->file('pkh')));
-                $student->files()->create([
-                    'file_name' => $pkh_upload,
-                    'file_type' => 'pkh',
-                    'original_file_name' => $request->file('pkh')->getClientOriginalName()
-                ]);
+                DB::beginTransaction();
+                try {
+                    $pkh_upload = Storage::putFile('/student-files/pkh', new File($request->file('pkh')));
+                    $student->files()->create([
+                        'file_name' => $pkh_upload,
+                        'file_type' => 'pkh',
+                        'original_file_name' => $request->file('pkh')->getClientOriginalName()
+                    ]);
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    Log::error($th->getMessage());
+                    DB::rollBack();
+                }
             }
         }
 
