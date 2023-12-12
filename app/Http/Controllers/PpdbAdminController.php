@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use Carbon\Carbon;
+use Illuminate\Http\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -25,16 +29,16 @@ class PpdbAdminController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $model = Student::with(['user.transaction', 'parent']);
+            $model = Student::with(['parent', 'transaction']);
 
             if (request()->payment == 'pending') {
-                $model->whereRelation('user.transaction', 'transaction_status', '=', 'pending');
+                $model->whereRelation('transaction', 'transaction_status', '=', 'pending');
             }
             if (request()->payment == 'settlement') {
-                $model->whereRelation('user.transaction', 'transaction_status', '=', 'settlement');
+                $model->whereRelation('transaction', 'transaction_status', '=', 'settlement');
             }
             if (request()->payment == 'expire') {
-                $model->whereRelation('user.transaction', 'transaction_status', '=', 'expire');
+                $model->whereRelation('transaction', 'transaction_status', '=', 'expire');
             }
 
             return DataTables::of($model)
@@ -42,11 +46,11 @@ class PpdbAdminController extends Controller
                     return $model->created_at->diffForHumans();
                 })
                 ->addColumn('options', 'ppdb.datatables.options')
-                ->editColumn('gender', function($model) {
+                ->editColumn('gender', function ($model) {
                     return $model->gender == 'male' ? 'L' : 'P';
                 })
-                ->editColumn('payment', function($model) {
-                    switch (@$model->user->transaction->transaction_status) {
+                ->editColumn('transaction.transaction_status', function ($model) {
+                    switch (@$model->transaction->transaction_status) {
                         case 'pending':
                             return 'Pending';
                             break;
@@ -64,11 +68,11 @@ class PpdbAdminController extends Controller
                             break;
                     }
                 })
-                ->editColumn('birth', function($model) {
+                ->editColumn('birth', function ($model) {
                     return "$model->birth_place - " . Carbon::parse($model->birth_date)->format('d-m-Y');
                 })
                 ->editColumn('created_at', function ($model) {
-                    return $model->created_at->format('H:i/d-m-Y');
+                    return $model->created_at->tz('Asia/Jakarta')->format('H:i/d-m-Y');
                 })
                 ->setRowAttr([
                     'data-model-id' => function ($model) {
@@ -130,10 +134,10 @@ class PpdbAdminController extends Controller
      */
     public function edit($id)
     {
-        return 'in progress';
-        $permission = Student::findById($id);
+        $student = Student::with('parent', 'files')->findOrFail($id);
+        // return $student;
 
-        return view('ppdb.edit', compact('permission'));
+        return view('ppdb.edit', compact('student'));
     }
 
     /**
@@ -145,17 +149,306 @@ class PpdbAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return 'in progress';
         $request->validate([
-            'name' => ['required', 'string', Rule::unique('permissions')->ignore($id), 'max:255']
+            'student.nisn' => ['required', 'string', 'max:255'],
+            'student.full_name' => ['required', 'string', 'max:255'],
+            'student.gender' => ['required', 'string', 'in:male,female'],
+            'student.birth_place' => ['required', 'string', 'max:255'],
+            'student.birth_date' => ['required', 'date'],
+            'student.religion' => ['required', 'string', 'max:255', 'in:islam,kristen_protestan,kristen_katolik,hindu,buddha,khonghucu'],
+            'student.address' => ['required', 'string'],
+            'student.whatsapp' => ['required', 'string', 'max:255'],
+            'student.email' => ['required', 'email', 'max:255'],
+            'student.last_school' => ['required', 'string', 'max:255'],
+            'student.org_experience' => ['string', 'nullable'],
+            'student.height' => ['required', 'numeric'],
+            'student.weight' => ['required', 'numeric'],
+            'student.history_illness' => ['string', 'nullable'],
+            'parent.full_name' => ['required', 'string', 'max:255'],
+            'parent.gender' => ['required', 'string', 'in:male,female'],
+            'parent.job' => ['required', 'string'],
+            'parent.income_per_month' => ['required', 'numeric'],
+            'parent.whatsapp' => ['required', 'string', 'max:255'],
+            'parent.email' => ['required', 'email', 'max:255']
         ]);
 
-        $permission = Student::findById($id);
-        $permission->update([
-            'name' => $request->name
+        $user = Student::findOrFail($id)->user;
+        $student = $request->student;
+        $parent = $request->parent;
+        $current_student = $user->student;
+        $current_parent = $current_student->parent;
+
+        DB::beginTransaction();
+        try {
+            $current_student->update([
+                'nisn' => $student['nisn'],
+                'full_name' => $student['full_name'],
+                'gender' => $student['gender'],
+                'birth_place' => $student['birth_place'],
+                'birth_date' => $student['birth_date'],
+                'religion' => $student['religion'],
+                'address' => $student['address'],
+                'email' => $student['email'],
+                'whatsapp' => $student['whatsapp'],
+                'last_school' => $student['last_school'],
+                'org_experience' => $student['org_experience'],
+                'height' => $student['height'],
+                'weight' => $student['weight'],
+                'history_illness' => $student['history_illness']
+            ]);
+            $current_parent->update([
+                'full_name' => $parent['full_name'],
+                'gender' => $parent['gender'],
+                'job' => $parent['job'],
+                'income_per_month' => $parent['income_per_month'],
+                'whatsapp' => $parent['whatsapp'],
+                'email' => $parent['email'],
+            ]);
+            DB::commit();
+        } catch (\Throwable $th) {
+            // throw $th;
+            Log::error($th->getMessage());
+            DB::rollBack();
+            return redirect()->route('admin.ppdb.index')->with('error', 'Tidak dapat memperbarui data PPDB');
+        }
+
+        // update/upload files
+        $request->validate([
+            'kk' => ['file', 'max:10240'],
+            'akta' => ['file', 'max:10240'],
+            'kip' => ['file', 'max:10240', 'nullable'],
+            'pkh' => ['file', 'max:10240', 'nullable'],
         ]);
 
-        return redirect()->route('ppdb.index')->with('status', 'Permission updated !');
+        // $user = Auth::user();
+        $student = $current_student;
+
+        $kk = $student->files()->where('file_type', 'kk')->first();
+        $akta = $student->files()->where('file_type', 'akta')->first();
+        $kip = $student->files()->where('file_type', 'kip')->first();
+        $pkh = $student->files()->where('file_type', 'pkh')->first();
+
+        // kartu keluarga
+        if (!$kk) {
+            $request->validate([
+                'kk' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
+            ]);
+            DB::beginTransaction();
+            try {
+                $kk_upload = Storage::putFile('/student-files/kk', new File($request->file('kk')));
+                $student->files()->create([
+                    'file_name' => $kk_upload,
+                    'file_type' => 'kk',
+                    'original_file_name' => $request->file('kk')->getClientOriginalName()
+                ]);
+                DB::commit();
+            } catch (\Throwable $th) {
+                //throw $th;
+                Log::error($th->getMessage());
+                DB::rollBack();
+            }
+        } else {
+            if ($request->hasFile('kk')) {
+                $request->validate([
+                    'kk' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
+                ]);
+                if (Storage::exists($kk->file_name)) {
+                    Storage::delete($kk->file_name);
+                }
+                DB::beginTransaction();
+                try {
+                    $kk->delete();
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    Log::error($th->getMessage());
+                    DB::rollBack();
+                }
+
+                DB::beginTransaction();
+                try {
+                    $kk_upload = Storage::putFile('/student-files/kk', new File($request->file('kk')));
+                    $student->files()->create([
+                        'file_name' => $kk_upload,
+                        'file_type' => 'kk',
+                        'original_file_name' => $request->file('kk')->getClientOriginalName()
+                    ]);
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    Log::error($th->getMessage());
+                    DB::rollBack();
+                }
+            }
+        }
+
+        // akta kelahiran
+        if (!$akta) {
+            $request->validate([
+                'akta' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
+            ]);
+            DB::beginTransaction();
+            try {
+                $akta_upload = Storage::putFile('/student-files/akta', new File($request->file('akta')));
+                $student->files()->create([
+                    'file_name' => $akta_upload,
+                    'file_type' => 'akta',
+                    'original_file_name' => $request->file('akta')->getClientOriginalName()
+                ]);
+                DB::commit();
+            } catch (\Throwable $th) {
+                //throw $th;
+                Log::error($th->getMessage());
+                DB::rollBack();
+            }
+        } else {
+            if ($request->hasFile('akta')) {
+                $request->validate([
+                    'akta' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
+                ]);
+                if (Storage::exists($akta->file_name)) {
+                    Storage::delete($akta->file_name);
+                }
+                DB::beginTransaction();
+                try {
+                    $akta->delete();
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    Log::error($th->getMessage());
+                    DB::rollBack();
+                }
+
+                DB::beginTransaction();
+                try {
+                    $akta_upload = Storage::putFile('/student-files/akta', new File($request->file('akta')));
+                    $student->files()->create([
+                        'file_name' => $akta_upload,
+                        'file_type' => 'akta',
+                        'original_file_name' => $request->file('akta')->getClientOriginalName()
+                    ]);
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    Log::error($th->getMessage());
+                    DB::rollBack();
+                }
+            }
+        }
+
+        // kip
+        if (!$kip) {
+            if ($request->hasFile('kip')) {
+                $request->validate([
+                    'kip' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
+                ]);
+                DB::beginTransaction();
+                try {
+                    $kip_upload = Storage::putFile('/student-files/kip', new File($request->file('kip')));
+                    $student->files()->create([
+                        'file_name' => $kip_upload,
+                        'file_type' => 'kip',
+                        'original_file_name' => $request->file('kip')->getClientOriginalName()
+                    ]);
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    Log::error($th->getMessage());
+                    DB::rollBack();
+                }
+            }
+        } else {
+            if ($request->hasFile('kip')) {
+                $request->validate([
+                    'kip' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
+                ]);
+                if (Storage::exists($kip->file_name)) {
+                    Storage::delete($kip->file_name);
+                }
+                DB::beginTransaction();
+                try {
+                    $kip->delete();
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    Log::error($th->getMessage());
+                    DB::rollBack();
+                }
+
+                DB::beginTransaction();
+                try {
+                    $kip_upload = Storage::putFile('/student-files/kip', new File($request->file('kip')));
+                    $student->files()->create([
+                        'file_name' => $kip_upload,
+                        'file_type' => 'kip',
+                        'original_file_name' => $request->file('kip')->getClientOriginalName()
+                    ]);
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    Log::error($th->getMessage());
+                    DB::rollBack();
+                }
+            }
+        }
+
+        // pkh
+        if (!$pkh) {
+            if ($request->hasFile('pkh')) {
+                $request->validate([
+                    'pkh' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
+                ]);
+                DB::beginTransaction();
+                try {
+                    $pkh_upload = Storage::putFile('/student-files/pkh', new File($request->file('pkh')));
+                    $student->files()->create([
+                        'file_name' => $pkh_upload,
+                        'file_type' => 'pkh',
+                        'original_file_name' => $request->file('pkh')->getClientOriginalName()
+                    ]);
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    Log::error($th->getMessage());
+                    DB::rollBack();
+                }
+            }
+        } else {
+            if ($request->hasFile('pkh')) {
+                $request->validate([
+                    'pkh' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
+                ]);
+                if (Storage::exists($pkh->file_name)) {
+                    Storage::delete($pkh->file_name);
+                }
+                DB::beginTransaction();
+                try {
+                    $pkh->delete();
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    Log::error($th->getMessage());
+                    DB::rollBack();
+                }
+
+                DB::beginTransaction();
+                try {
+                    $pkh_upload = Storage::putFile('/student-files/pkh', new File($request->file('pkh')));
+                    $student->files()->create([
+                        'file_name' => $pkh_upload,
+                        'file_type' => 'pkh',
+                        'original_file_name' => $request->file('pkh')->getClientOriginalName()
+                    ]);
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    Log::error($th->getMessage());
+                    DB::rollBack();
+                }
+            }
+        }
+
+        return redirect()->route('admin.ppdb.index')->with('success', 'Data PPDB berhasil diperbarui !');
     }
 
     /**
@@ -192,7 +485,8 @@ class PpdbAdminController extends Controller
         return redirect()->route('ppdb.index')->with('status', 'Bulk delete success');
     }
 
-    function confirm_offline_payment($student_id) {
+    function confirm_offline_payment($student_id)
+    {
         $student = Student::with('user.transaction')->findOrFail($student_id);
         $transaction = $student->user->transaction;
 

@@ -28,17 +28,17 @@
                         </tr>
                         <tr>
                             <td>PPDB ID</td>
-                            <td>{{ $model->user->transaction->order_id ?? '-' }}</td>
+                            <td>{{ $model->transaction->order_id ?? '-' }}</td>
                         </tr>
                         <tr>
                             <td>Status</td>
-                            @if ($model->user->transaction)
-                                @switch(@$model->user->transaction->transaction_status)
+                            @if ($model->transaction)
+                                @switch(@$model->transaction->transaction_status)
                                     @case('pending')
                                         <th>Pending</th>
                                         @break
                                     @case('settlement')
-                                        <th>Lunas ({{ \Carbon\Carbon::parse($model->user->transaction->settlement_time)->format('d-m-Y') }})</th>
+                                        <th>Lunas ({{ \Carbon\Carbon::parse($model->transaction->settlement_time)->format('d-m-Y') }})</th>
                                         @break
                                     @case('expire')
                                         <th>Kadaluarsa</th>
@@ -52,8 +52,8 @@
                         </tr>
                         <tr>
                             <td>Payment Method</td>
-                            @if ($model->user->transaction)
-                                @switch(@$model->user->transaction->payment_method)
+                            @if ($model->transaction)
+                                @switch(@$model->transaction->payment_method)
                                     @case('qris')
                                         <th>QRIS</th>
                                         @break
@@ -90,7 +90,7 @@
                         </tr>
                         <tr>
                             <td>Amount</td>
-                            <td>Rp {{ @number_format($model->user->transaction->gross_amount) }}</td>
+                            <td>Rp {{ @number_format($model->transaction->gross_amount) }}</td>
                         </tr>
                         <tr>
                             <th colspan="2">Student</th>
@@ -169,12 +169,12 @@
                     </tbody>
                 </table>
             </div>
-            @if ($model->user->transaction)
-                @if ($model->user->transaction->payment_method == 'offline' && $model->user->transaction->transaction_status == 'pending')
+            @if ($model->transaction)
+                @if ($model->transaction->payment_method == 'offline' && $model->transaction->transaction_status == 'pending')
                     <form action="{{ route('admin.ppdb.confirm-offline-payment', $model->id) }}" method="POST" class="modal-footer" id="confirm-{{ $model->id }}">
                         @csrf
                         @method('PATCH')
-                        <button type="submit" class="btn btn-primary" id="confirm">Konfirmasi Pembayaran</button>
+                        <button type="submit" class="btn btn-primary" id="confirm" onclick="event.preventDefault()">Konfirmasi Pembayaran</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </form>
                 @endif
@@ -182,14 +182,14 @@
         </div>
     </div>
 </div>
-@if ($model->user->transaction)
-    @if ($model->user->transaction->payment_method == 'offline' && $model->user->transaction->transaction_status == 'pending')
+@if ($model->transaction)
+    @if ($model->transaction->payment_method == 'offline' && $model->transaction->transaction_status == 'pending')
         <script>
             const confirmOfflinePaymentForm = document.getElementById('confirm-{{ $model->id }}')
             confirmOfflinePaymentForm.querySelector('#confirm').addEventListener('click', (e) => {
                 e.preventDefault()
                 swal({
-                    title: "Are you sure?",
+                    title: "Konfirmasi Pembayaran?",
                     // text: "Once deleted, you will not be able to recover this data!",
                     icon: "warning",
                     buttons: true,
