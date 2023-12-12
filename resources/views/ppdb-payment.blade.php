@@ -209,11 +209,11 @@
                     Kartu Keluarga
                     {!! $files->where('file_type', 'kk')->first() ? '' : '<span class="text-red-500">*</span>' !!}
                 </label>
-                <input type="file" name="kk" id="kk"
+                <input type="file" name="kk" id="kk" accept="application/pdf,image/*"
                     class="file:bg-white file:border file:border-accent-1 file:rounded-md file:px-5 file:py-1.5 {{ $files->where('file_type', 'kk')->first() ? 'hidden' : '' }}" {{ $files->where('file_type', 'kk')->first() ? '' : 'required' }}>
                 @if ($files->where('file_type', 'kk')->first())
                     <p class="flex flex-col">
-                        <span class="flex items-center gap-1.5">{{ $files->where('file_type', 'kk')->first()->original_file_name }} {!! $files->where('file_type', 'kk')->first() ? '<span class="material-icons text-accent-1">check_circle</span>' : '' !!}</span> <small class="text-accent-1 cursor-pointer" id="reupload">Upload Ulang?</small>
+                        <span class="flex items-start break-all gap-1.5">{{ $files->where('file_type', 'kk')->first()->original_file_name }} {!! $files->where('file_type', 'kk')->first() ? '<span class="material-icons text-accent-1">check_circle</span>' : '' !!}</span> <small class="text-accent-1 cursor-pointer" id="reupload">Upload Ulang?</small>
                     </p>
                 @endif
                 @error('kk')
@@ -225,11 +225,11 @@
                     Akta Kelahiran
                     {!! $files->where('file_type', 'akta')->first() ? '' : '<span class="text-red-500">*</span>' !!}
                 </label>
-                <input type="file" name="akta" id="akta"
+                <input type="file" name="akta" id="akta" accept="application/pdf,image/*"
                     class="file:bg-white file:border file:border-accent-1 file:rounded-md file:px-5 file:py-1.5 {{ $files->where('file_type', 'akta')->first() ? 'hidden' : '' }}" {{ $files->where('file_type', 'akta')->first() ? '' : 'required' }}>
                 @if ($files->where('file_type', 'akta')->first())
                 <p class="flex flex-col">
-                    <span class="flex items-center gap-1.5">{{ $files->where('file_type', 'akta')->first()->original_file_name }} {!! $files->where('file_type', 'akta')->first() ? '<span class="material-icons text-accent-1">check_circle</span>' : '' !!}</span> <small class="text-accent-1 cursor-pointer" id="reupload">Upload Ulang?</small>
+                    <span class="flex items-start break-all gap-1.5">{{ $files->where('file_type', 'akta')->first()->original_file_name }} {!! $files->where('file_type', 'akta')->first() ? '<span class="material-icons text-accent-1">check_circle</span>' : '' !!}</span> <small class="text-accent-1 cursor-pointer" id="reupload">Upload Ulang?</small>
                 </p>
                 @endif
                 @error('akta')
@@ -240,11 +240,11 @@
                 <label id="kip" class="font-semibold capitalize flex items-center gap-2">
                     KIP
                 </label>
-                <input type="file" name="kip" id="kip"
+                <input type="file" name="kip" id="kip" accept="application/pdf,image/*"
                     class="file:bg-white file:border file:border-accent-1 file:rounded-md file:px-5 file:py-1.5 {{ $files->where('file_type', 'kip')->first() ? 'hidden' : '' }}">
                 @if ($files->where('file_type', 'kip')->first())
                 <p class="flex flex-col">
-                    <span class="flex items-center gap-1.5">{{ $files->where('file_type', 'kip')->first()->original_file_name }} {!! $files->where('file_type', 'kip')->first() ? '<span class="material-icons text-accent-1">check_circle</span>' : '' !!}</span> <small class="text-accent-1 cursor-pointer" id="reupload">Upload Ulang?</small>
+                    <span class="flex items-start break-all gap-1.5">{{ $files->where('file_type', 'kip')->first()->original_file_name }} {!! $files->where('file_type', 'kip')->first() ? '<span class="material-icons text-accent-1">check_circle</span>' : '' !!}</span> <small class="text-accent-1 cursor-pointer" id="reupload">Upload Ulang?</small>
                 </p>
                 @endif
                 @error('kip')
@@ -255,11 +255,11 @@
                 <label id="pkh" class="font-semibold capitalize flex items-center gap-2">
                     PKH
                 </label>
-                <input type="file" name="pkh" id="pkh"
+                <input type="file" name="pkh" id="pkh" accept="application/pdf,image/*"
                     class="file:bg-white file:border file:border-accent-1 file:rounded-md file:px-5 file:py-1.5 {{ $files->where('file_type', 'pkh')->first() ? 'hidden' : '' }}">
                 @if ($files->where('file_type', 'pkh')->first())
                 <p class="flex flex-col">
-                    <span class="flex items-center gap-1.5">{{ $files->where('file_type', 'pkh')->first()->original_file_name }} {!! $files->where('file_type', 'pkh')->first() ? '<span class="material-icons text-accent-1">check_circle</span>' : '' !!}</span> <small class="text-accent-1 cursor-pointer" id="reupload">Upload Ulang?</small>
+                    <span class="flex items-start break-all gap-1.5">{{ $files->where('file_type', 'pkh')->first()->original_file_name }} {!! $files->where('file_type', 'pkh')->first() ? '<span class="material-icons text-accent-1">check_circle</span>' : '' !!}</span> <small class="text-accent-1 cursor-pointer" id="reupload">Upload Ulang?</small>
                 </p>
                 @endif
                 @error('pkh')
@@ -394,7 +394,7 @@
             }, 500);
         </script>
     @endif
-    @isset($transaction)
+    {{-- @isset($transaction)
         @if (in_array($transaction->payment_method, ['va_bca', 'va_bni', 'va_bri', 'va_permata', 'va_cimb']) && $transaction->transaction_status == 'pending')
             <script>
                 const copy_va = document.getElementById('copy_va')
@@ -408,5 +408,5 @@
                 })
             </script>
         @endif
-    @endisset
+    @endisset --}}
 @endsection

@@ -1,3 +1,4 @@
+// register ppdb
 const form = document.getElementById("register-ppdb");
 if (form) {
     const formButton = form.querySelector("button");
@@ -14,6 +15,7 @@ if (form) {
     });
 }
 
+// update payment method
 const updatePaymentMethods = document.querySelectorAll(
     "#update-payment-method"
 );
@@ -41,6 +43,7 @@ if (updatePaymentMethods.length > 0) {
     });
 }
 
+// student detail modal
 const studentDetailModal = document.getElementById("student_detail_modal");
 const studentDetailCloseToggle = document.getElementById("close-detail");
 const studentDetailToggle = document.getElementById("student-detail-toggle");
@@ -69,6 +72,7 @@ if (studentDetailModal && studentDetailToggle && studentDetailCloseToggle) {
     });
 }
 
+// editable student detail
 const editable = document.querySelectorAll("[data-name]");
 const editableToggle = document.querySelector(
     "#student_detail_modal #edit-ppdb"
@@ -108,6 +112,7 @@ if (editable.length > 0 && editableToggle) {
     });
 }
 
+// upload student files
 const formFiles = document.getElementById("upload-files");
 if (formFiles) {
     const formFilesSubmitButton = formFiles.querySelector(
@@ -168,4 +173,17 @@ if (formFiles) {
             });
         }
     }
+}
+
+// copy virtual account
+const copy_va = document.getElementById("copy_va");
+const va = document.getElementById("va");
+
+if (copy_va && va) {
+    copy_va.addEventListener("click", (e) => {
+        e.preventDefault();
+        navigator.clipboard.writeText(va.innerText);
+
+        alert("Virtual Account berhasil di copy!");
+    });
 }

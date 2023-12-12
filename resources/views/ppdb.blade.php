@@ -266,4 +266,5 @@
 @endsection
 
 @section('script')
+    @vite('resources/js/ppdb.js')
 @endsection

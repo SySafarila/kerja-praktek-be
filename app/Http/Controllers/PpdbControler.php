@@ -589,7 +589,7 @@ class PpdbControler extends Controller
         // kartu keluarga
         if (!$kk) {
             $request->validate([
-                'kk' => ['file', 'max:10240', 'required']
+                'kk' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
             ]);
             $kk_upload = Storage::putFile('/student-files/kk', new File($request->file('kk')));
             $student->files()->create([
@@ -600,7 +600,7 @@ class PpdbControler extends Controller
         } else {
             if ($request->hasFile('kk')) {
                 $request->validate([
-                    'kk' => ['file', 'max:10240', 'required']
+                    'kk' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
                 ]);
                 if (Storage::exists($kk->file_name)) {
                     Storage::delete($kk->file_name);
@@ -625,7 +625,7 @@ class PpdbControler extends Controller
         // akta kelahiran
         if (!$akta) {
             $request->validate([
-                'akta' => ['file', 'max:10240', 'required']
+                'akta' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
             ]);
             $akta_upload = Storage::putFile('/student-files/akta', new File($request->file('akta')));
             $student->files()->create([
@@ -636,7 +636,7 @@ class PpdbControler extends Controller
         } else {
             if ($request->hasFile('akta')) {
                 $request->validate([
-                    'akta' => ['file', 'max:10240', 'required']
+                    'akta' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
                 ]);
                 if (Storage::exists($akta->file_name)) {
                     Storage::delete($akta->file_name);
@@ -662,7 +662,7 @@ class PpdbControler extends Controller
         if (!$kip) {
             if ($request->hasFile('kip')) {
                 $request->validate([
-                    'kip' => ['file', 'max:10240', 'required']
+                    'kip' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
                 ]);
                 $kip_upload = Storage::putFile('/student-files/kip', new File($request->file('kip')));
                 $student->files()->create([
@@ -674,7 +674,7 @@ class PpdbControler extends Controller
         } else {
             if ($request->hasFile('kip')) {
                 $request->validate([
-                    'kip' => ['file', 'max:10240', 'required']
+                    'kip' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
                 ]);
                 if (Storage::exists($kip->file_name)) {
                     Storage::delete($kip->file_name);
@@ -701,7 +701,7 @@ class PpdbControler extends Controller
         if (!$pkh) {
             if ($request->hasFile('pkh')) {
                 $request->validate([
-                    'pkh' => ['file', 'max:10240', 'required']
+                    'pkh' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
                 ]);
                 $pkh_upload = Storage::putFile('/student-files/pkh', new File($request->file('pkh')));
                 $student->files()->create([
@@ -713,7 +713,7 @@ class PpdbControler extends Controller
         } else {
             if ($request->hasFile('pkh')) {
                 $request->validate([
-                    'pkh' => ['file', 'max:10240', 'required']
+                    'pkh' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
                 ]);
                 if (Storage::exists($pkh->file_name)) {
                     Storage::delete($pkh->file_name);
