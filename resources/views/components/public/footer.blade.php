@@ -30,8 +30,8 @@
         <div>
             <h3 class="font-semibold text-lg mb-2 text-accent-2">Profile</h3>
             <div class="flex flex-col gap-2">
-                <a href="#" class="text-accent-2">About Us</a>
-                <a href="#" class="text-accent-2">Contact Us</a>
+                <a href="{{route('about-us')}}" class="text-accent-2">About Us</a>
+                <a href="{{route('contact-us')}}" class="text-accent-2">Contact Us</a>
                 <a href="{{route('teachers-staffs')}}" class="text-accent-2">Teachers & Staffs</a>
                 <a href="{{route('subjects')}}" class="text-accent-2">Subjetcs</a>
             </div>

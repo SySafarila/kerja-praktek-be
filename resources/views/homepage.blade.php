@@ -113,7 +113,7 @@
                 <p class="text-center">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos quisquam ut possimus
                     nulla, cupiditate odio illum. Quam voluptatibus unde, praesentium quisquam cupiditate doloremque.
                     Impedit reiciendis suscipit facere. Distinctio, aspernatur suscipit.</p>
-                <a href="#" class="block text-center underline">Info Detail</a>
+                <a href="#" class="block text-center my-4 hover:text-accent-1">Info Detail</a>
             </div>
             <div class="flex flex-col justify-center gap-3 p-5">
                 <img src="{{ asset('icons/boarding school.svg') }}" alt="" class="w-[100px] mx-auto">
@@ -121,7 +121,7 @@
                 <p class="text-center">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos quisquam ut possimus
                     nulla, cupiditate odio illum. Quam voluptatibus unde, praesentium quisquam cupiditate doloremque.
                     Impedit reiciendis suscipit facere. Distinctio, aspernatur suscipit.</p>
-                <a href="#" class="block text-center underline">Info Detail</a>
+                <a href="#" class="block text-center my-4 hover:text-accent-1">Info Detail</a>
             </div>
             {{-- <div class="flex flex-col justify-center gap-3 p-5 lg:p-2 bg-accent-1 text-white rounded-lg">
                 <img src="{{ asset('icons/takhasus.svg') }}" alt="" class="w-[100px] mx-auto">
@@ -130,7 +130,7 @@
                     ut possimus
                     nulla, cupiditate odio illum. Quam voluptatibus unde, praesentium quisquam cupiditate doloremque.
                     Impedit reiciendis suscipit facere. Distinctio, aspernatur suscipit.</p>
-                <a href="#" class="block text-center underline">Info Detail</a>
+                <a href="#" class="block text-center my-4">Info Detail</a>
             </div> --}}
             <div class="flex flex-col justify-center gap-3 p-5">
                 <img src="{{ asset('icons/boarding school.svg') }}" alt="" class="w-[100px] mx-auto">
@@ -138,7 +138,7 @@
                 <p class="text-center">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos quisquam ut possimus
                     nulla, cupiditate odio illum. Quam voluptatibus unde, praesentium quisquam cupiditate doloremque.
                     Impedit reiciendis suscipit facere. Distinctio, aspernatur suscipit.</p>
-                <a href="#" class="block text-center underline">Info Detail</a>
+                <a href="#" class="block text-center my-4 hover:text-accent-1">Info Detail</a>
             </div>
         </div>
     </div>
