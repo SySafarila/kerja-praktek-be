@@ -22,4 +22,8 @@ class Student extends Model
     function transaction() {
         return $this->hasOne(Transaction::class);
     }
+
+    function files() {
+        return $this->hasMany(StudentFile::class);
+    }
 }

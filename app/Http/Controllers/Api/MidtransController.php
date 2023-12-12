@@ -52,27 +52,27 @@ class MidtransController extends Controller
             return $this->midtrans_settlement(Transaction::where('transaction_id', $transaction_id), $response);
         } else if ($transaction == 'pending') {
             // return $this->orderPending($order_id, $response);
-            Log::debug('pending');
+            Log::info('pending');
             return true;
         } else if ($transaction == 'deny') {
             // return $this->orderDeny($order_id, $response);
-            Log::debug('deny');
+            Log::info('deny');
             return true;
         } else if ($transaction == 'expire') {
             return $this->midtrans_expire(Transaction::where('transaction_id', $transaction_id), $response);
-            Log::debug('expire');
+            Log::info('expire');
             return true;
         } else if ($transaction == 'cancel') {
             // return $this->orderCancel($order_id, $response);
-            Log::debug('cancel');
+            Log::info('cancel');
             return true;
         } elseif ($transaction == 'refund') {
             // return $this->orderRefund($order_id, $response);
-            Log::debug('refund');
+            Log::info('refund');
             return true;
         } elseif ($transaction = 'partial_refund') {
             // return $this->orderPartialRefund($order_id, $response);
-            Log::debug('partial_refund');
+            Log::info('partial_refund');
             return true;
         }
     }

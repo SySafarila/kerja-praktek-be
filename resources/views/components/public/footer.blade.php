@@ -1,4 +1,4 @@
-<footer class="bg-accent-5 text-accent-2">
+<footer class="bg-accent-1 text-accent-2">
     <div class="max-w-screen-lg mx-auto grid lg:grid-cols-3 p-5 gap-5 lg:gap-8">
         <div>
             <h2 class="text-sm text-accent-2 uppercase">Lembaga Pendidikan Nahdatul Ulama</h2>

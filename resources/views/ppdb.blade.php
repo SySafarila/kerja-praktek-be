@@ -79,10 +79,12 @@
                 </label>
                 <select type="text" name="student[religion]" class="w-full border-gray-500 border outline-none rounded-lg" id="agama" required>
                     <option value="0" selected disabled> Pilih</option>
-                    <option value="islam" @if(old('student.religion') == 'islam') selected @endif>islam</option>
-                    <option value="hindu" @if(old('student.religion') == 'hindu') selected @endif>Hindu</option>
-                    <option value="kristen" @if(old('student.religion') == 'kristen') selected @endif>Kristen</option>
-                    <option value="Etc" @if(old('student.religion') == 'etc') selected @endif>Etc</option>
+                    <option class="capitalize" value="islam" @if(old('student.religion') == 'islam') selected @endif>islam</option>
+                    <option class="capitalize" value="kristen_protestan" @if(old('student.religion') == 'kristen_protestan') selected @endif>kristen_protestan</option>
+                    <option class="capitalize" value="kristen_katolik" @if(old('student.religion') == 'kristen_katolik') selected @endif>kristen_katolik</option>
+                    <option class="capitalize" value="hindu" @if(old('student.religion') == 'hindu') selected @endif>hindu</option>
+                    <option class="capitalize" value="buddha" @if(old('student.religion') == 'buddha') selected @endif>buddha</option>
+                    <option class="capitalize" value="khonghucu" @if(old('student.religion') == 'khonghucu') selected @endif>khonghucu</option>
                 </select>
                 @error('student.birth_date')
                     <small class="text-red-500">{{ $message }}</small>
@@ -103,7 +105,7 @@
                     whatsapp
                     <span class="text-red-500">*</span>
                 </label>
-                <input type="text" name="student[whatsapp]" class="w-full border-gray-500 border outline-none rounded-lg" id="whatsapp" value="{{ old('student.whatsapp') }}" required>
+                <input type="number" name="student[whatsapp]" class="w-full border-gray-500 border outline-none rounded-lg" id="whatsapp" value="{{ old('student.whatsapp') }}" required>
                 @error('student.whatsapp')
                     <small class="text-red-500">{{ $message }}</small>
                 @enderror
@@ -205,7 +207,7 @@
                         penghasilan perbulan
                         <span class="text-red-500">*</span>
                     </label>
-                    <input type="text" name="parent[income_per_month]" class="w-full border-gray-500 border outline-none rounded-lg" id="penghasilanperbulan" value="{{ old('parent.income_per_month') }}" required>
+                    <input type="number" name="parent[income_per_month]" class="w-full border-gray-500 border outline-none rounded-lg" id="penghasilanperbulan" value="{{ old('parent.income_per_month') }}" required>
                     @error('parent.income_per_month')
                         <small class="text-red-500">{{ $message }}</small>
                     @enderror
@@ -215,7 +217,7 @@
                         whatsapp
                         <span class="text-red-500">*</span>
                     </label>
-                    <input type="text" name="parent[whatsapp]" class="w-full border-gray-500 border outline-none rounded-lg" id="whatsapp2" value="{{ old('parent.whatsapp') }}" required>
+                    <input type="number" name="parent[whatsapp]" class="w-full border-gray-500 border outline-none rounded-lg" id="whatsapp2" value="{{ old('parent.whatsapp') }}" required>
                     @error('parent.whatsapp')
                         <small class="text-red-500">{{ $message }}</small>
                     @enderror
@@ -264,4 +266,5 @@
 @endsection
 
 @section('script')
+    @vite('resources/js/ppdb.js')
 @endsection

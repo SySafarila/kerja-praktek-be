@@ -50,10 +50,11 @@ Route::get('/teachers-staffs', [PublicController::class, 'teachersStaffs'])->nam
 Route::view('/contact-us', 'public.contact-us')->name('contact-us');
 Route::view('/about-us', 'public.about-us')->name('about-us');
 
-// Route::view('/authentication', 'authentication');
-Route::resource('/ppdb', PpdbControler::class)->only(['index', 'store']);
+// ppdb
+Route::resource('/ppdb', PpdbControler::class)->only(['index', 'store', 'update']);
 Route::get('/ppdb-payment', [PpdbControler::class, 'payment'])->name('ppdb.payment');
 Route::patch('/ppdb-payment', [PpdbControler::class, 'update_payment'])->name('ppdb.payment-update');
+Route::post('/ppdb-files', [PpdbControler::class, 'upload_files'])->name('ppdb.upload-files');
 
 Route::get('/dashboard', function () {
     return redirect()->route('admin.index');

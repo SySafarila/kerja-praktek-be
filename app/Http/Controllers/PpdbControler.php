@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\File;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class PpdbControler extends Controller
 {
@@ -45,7 +48,7 @@ class PpdbControler extends Controller
             'student.gender' => ['required', 'string', 'in:male,female'],
             'student.birth_place' => ['required', 'string', 'max:255'],
             'student.birth_date' => ['required', 'date'],
-            'student.religion' => ['required', 'string', 'max:255'],
+            'student.religion' => ['required', 'string', 'max:255', 'in:islam,kristen_protestan,kristen_katolik,hindu,buddha,khonghucu'],
             'student.address' => ['required', 'string'],
             'student.whatsapp' => ['required', 'string', 'max:255'],
             'student.email' => ['required', 'email', 'max:255'],
@@ -153,7 +156,76 @@ class PpdbControler extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'student.nisn' => ['required', 'string', 'max:255'],
+            'student.full_name' => ['required', 'string', 'max:255'],
+            'student.gender' => ['required', 'string', 'in:male,female'],
+            'student.birth_place' => ['required', 'string', 'max:255'],
+            'student.birth_date' => ['required', 'date'],
+            'student.religion' => ['required', 'string', 'max:255', 'in:islam,kristen_protestan,kristen_katolik,hindu,buddha,khonghucu'],
+            'student.address' => ['required', 'string'],
+            'student.whatsapp' => ['required', 'string', 'max:255'],
+            'student.email' => ['required', 'email', 'max:255'],
+            'student.last_school' => ['required', 'string', 'max:255'],
+            'student.org_experience' => ['string', 'nullable'],
+            'student.height' => ['required', 'numeric'],
+            'student.weight' => ['required', 'numeric'],
+            'student.history_illness' => ['string', 'nullable'],
+            'parent.full_name' => ['required', 'string', 'max:255'],
+            'parent.gender' => ['required', 'string', 'in:male,female'],
+            'parent.job' => ['required', 'string'],
+            'parent.income_per_month' => ['required', 'numeric'],
+            'parent.whatsapp' => ['required', 'string', 'max:255'],
+            'parent.email' => ['required', 'email', 'max:255']
+        ]);
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('update-error', 'true');
+        }
+
+        $user = Auth::user();
+        $student = $request->student;
+        $parent = $request->parent;
+        $current_student = $user->student;
+        $current_parent = $current_student->parent;
+
+        DB::beginTransaction();
+        try {
+            $current_student->update([
+                'nisn' => $student['nisn'],
+                'full_name' => $student['full_name'],
+                'gender' => $student['gender'],
+                'birth_place' => $student['birth_place'],
+                'birth_date' => $student['birth_date'],
+                'religion' => $student['religion'],
+                'address' => $student['address'],
+                'email' => $student['email'],
+                'whatsapp' => $student['whatsapp'],
+                'last_school' => $student['last_school'],
+                'org_experience' => $student['org_experience'],
+                'height' => $student['height'],
+                'weight' => $student['weight'],
+                'history_illness' => $student['history_illness']
+            ]);
+            $current_parent->update([
+                'full_name' => $parent['full_name'],
+                'gender' => $parent['gender'],
+                'job' => $parent['job'],
+                'income_per_month' => $parent['income_per_month'],
+                'whatsapp' => $parent['whatsapp'],
+                'email' => $parent['email'],
+            ]);
+            DB::commit();
+        } catch (\Throwable $th) {
+            // throw $th;
+            Log::error($th->getMessage());
+            DB::rollBack();
+            return back()->with('error', 'Tidak dapat memperbarui data PPDB');
+        }
+        return back()->with('success', 'Data PPDB berhasil diperbarui');
     }
 
     /**
@@ -239,6 +311,7 @@ class PpdbControler extends Controller
         }
         $student = $user->student;
         $transaction = $user->transaction;
+        $files = $student->files;
 
         if (!$transaction) {
             // if transaction not found
@@ -284,7 +357,8 @@ class PpdbControler extends Controller
             }
         }
 
-        return view('ppdb-payment', compact('student', 'transaction'));
+        // return $files->where('file_type', 'kk')->first();
+        return view('ppdb-payment', compact('student', 'transaction', 'files'));
     }
 
     function charge_transaction($payment_method, $order_id, $student, $user)
@@ -493,5 +567,245 @@ class PpdbControler extends Controller
                 throw $th;
             }
         }
+    }
+
+    public function upload_files(Request $request)
+    {
+        $request->validate([
+            'kk' => ['file', 'max:10240'],
+            'akta' => ['file', 'max:10240'],
+            'kip' => ['file', 'max:10240', 'nullable'],
+            'pkh' => ['file', 'max:10240', 'nullable'],
+        ]);
+
+        $user = Auth::user();
+        $student = $user->student;
+
+        $kk = $student->files()->where('file_type', 'kk')->first();
+        $akta = $student->files()->where('file_type', 'akta')->first();
+        $kip = $student->files()->where('file_type', 'kip')->first();
+        $pkh = $student->files()->where('file_type', 'pkh')->first();
+
+        // kartu keluarga
+        if (!$kk) {
+            $request->validate([
+                'kk' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
+            ]);
+            DB::beginTransaction();
+            try {
+                $kk_upload = Storage::putFile('/student-files/kk', new File($request->file('kk')));
+                $student->files()->create([
+                    'file_name' => $kk_upload,
+                    'file_type' => 'kk',
+                    'original_file_name' => $request->file('kk')->getClientOriginalName()
+                ]);
+                DB::commit();
+            } catch (\Throwable $th) {
+                //throw $th;
+                Log::error($th->getMessage());
+                DB::rollBack();
+            }
+        } else {
+            if ($request->hasFile('kk')) {
+                $request->validate([
+                    'kk' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
+                ]);
+                if (Storage::exists($kk->file_name)) {
+                    Storage::delete($kk->file_name);
+                }
+                DB::beginTransaction();
+                try {
+                    $kk->delete();
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    Log::error($th->getMessage());
+                    DB::rollBack();
+                }
+
+                DB::beginTransaction();
+                try {
+                    $kk_upload = Storage::putFile('/student-files/kk', new File($request->file('kk')));
+                    $student->files()->create([
+                        'file_name' => $kk_upload,
+                        'file_type' => 'kk',
+                        'original_file_name' => $request->file('kk')->getClientOriginalName()
+                    ]);
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    Log::error($th->getMessage());
+                    DB::rollBack();
+                }
+            }
+        }
+
+        // akta kelahiran
+        if (!$akta) {
+            $request->validate([
+                'akta' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
+            ]);
+            DB::beginTransaction();
+            try {
+                $akta_upload = Storage::putFile('/student-files/akta', new File($request->file('akta')));
+                $student->files()->create([
+                    'file_name' => $akta_upload,
+                    'file_type' => 'akta',
+                    'original_file_name' => $request->file('akta')->getClientOriginalName()
+                ]);
+                DB::commit();
+            } catch (\Throwable $th) {
+                //throw $th;
+                Log::error($th->getMessage());
+                DB::rollBack();
+            }
+        } else {
+            if ($request->hasFile('akta')) {
+                $request->validate([
+                    'akta' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
+                ]);
+                if (Storage::exists($akta->file_name)) {
+                    Storage::delete($akta->file_name);
+                }
+                DB::beginTransaction();
+                try {
+                    $akta->delete();
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    Log::error($th->getMessage());
+                    DB::rollBack();
+                }
+
+                DB::beginTransaction();
+                try {
+                    $akta_upload = Storage::putFile('/student-files/akta', new File($request->file('akta')));
+                    $student->files()->create([
+                        'file_name' => $akta_upload,
+                        'file_type' => 'akta',
+                        'original_file_name' => $request->file('akta')->getClientOriginalName()
+                    ]);
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    Log::error($th->getMessage());
+                    DB::rollBack();
+                }
+            }
+        }
+
+        // kip
+        if (!$kip) {
+            if ($request->hasFile('kip')) {
+                $request->validate([
+                    'kip' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
+                ]);
+                DB::beginTransaction();
+                try {
+                    $kip_upload = Storage::putFile('/student-files/kip', new File($request->file('kip')));
+                    $student->files()->create([
+                        'file_name' => $kip_upload,
+                        'file_type' => 'kip',
+                        'original_file_name' => $request->file('kip')->getClientOriginalName()
+                    ]);
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    Log::error($th->getMessage());
+                    DB::rollBack();
+                }
+            }
+        } else {
+            if ($request->hasFile('kip')) {
+                $request->validate([
+                    'kip' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
+                ]);
+                if (Storage::exists($kip->file_name)) {
+                    Storage::delete($kip->file_name);
+                }
+                DB::beginTransaction();
+                try {
+                    $kip->delete();
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    Log::error($th->getMessage());
+                    DB::rollBack();
+                }
+
+                DB::beginTransaction();
+                try {
+                    $kip_upload = Storage::putFile('/student-files/kip', new File($request->file('kip')));
+                    $student->files()->create([
+                        'file_name' => $kip_upload,
+                        'file_type' => 'kip',
+                        'original_file_name' => $request->file('kip')->getClientOriginalName()
+                    ]);
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    Log::error($th->getMessage());
+                    DB::rollBack();
+                }
+            }
+        }
+
+        // pkh
+        if (!$pkh) {
+            if ($request->hasFile('pkh')) {
+                $request->validate([
+                    'pkh' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
+                ]);
+                DB::beginTransaction();
+                try {
+                    $pkh_upload = Storage::putFile('/student-files/pkh', new File($request->file('pkh')));
+                    $student->files()->create([
+                        'file_name' => $pkh_upload,
+                        'file_type' => 'pkh',
+                        'original_file_name' => $request->file('pkh')->getClientOriginalName()
+                    ]);
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    Log::error($th->getMessage());
+                    DB::rollBack();
+                }
+            }
+        } else {
+            if ($request->hasFile('pkh')) {
+                $request->validate([
+                    'pkh' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
+                ]);
+                if (Storage::exists($pkh->file_name)) {
+                    Storage::delete($pkh->file_name);
+                }
+                DB::beginTransaction();
+                try {
+                    $pkh->delete();
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    Log::error($th->getMessage());
+                    DB::rollBack();
+                }
+
+                DB::beginTransaction();
+                try {
+                    $pkh_upload = Storage::putFile('/student-files/pkh', new File($request->file('pkh')));
+                    $student->files()->create([
+                        'file_name' => $pkh_upload,
+                        'file_type' => 'pkh',
+                        'original_file_name' => $request->file('pkh')->getClientOriginalName()
+                    ]);
+                    DB::commit();
+                } catch (\Throwable $th) {
+                    //throw $th;
+                    Log::error($th->getMessage());
+                    DB::rollBack();
+                }
+            }
+        }
+
+        return back()->with('success', 'Berkas berhasil ter-upload!');
     }
 }
