@@ -152,7 +152,7 @@
                         </tr>
                         <tr>
                             <td>Religion</td>
-                            <td>{{ $model->religion }}</td>
+                            <td style="text-transform: capitalize;">{{ Str::replace('_', ' ', $model->religion) }}</td>
                         </tr>
                         <tr>
                             <td>Address</td>

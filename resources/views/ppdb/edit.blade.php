@@ -34,7 +34,7 @@
                         <div class="col-12 col-lg-6">
                             <h2 class="text-xl font-semibold">Data Pribadi Calon Siswa</h2>
                             <div class="form-group">
-                                <label for="NISN" class="font-semibold capitalize">
+                                <label for="NISN" class="font-semibold capitalize" style="text-transform: capitalize;">
                                     Nomor induk siswa nasional (NISN)
                                     <span class="text-danger">*</span>
                                 </label>
@@ -45,7 +45,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="fullname" class="font-semibold capitalize">
+                                <label for="fullname" class="font-semibold capitalize" style="text-transform: capitalize;">
                                     Nama lengkap
                                     <span class="text-danger">*</span>
                                 </label>
@@ -56,7 +56,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="gender" class="font-semibold capitalize">
+                                <label for="gender" class="font-semibold capitalize" style="text-transform: capitalize;">
                                     Jenis kelamin
                                     <span class="text-danger">*</span>
                                 </label>
@@ -74,7 +74,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="tempatlahir" class="font-semibold capitalize">
+                                <label for="tempatlahir" class="font-semibold capitalize" style="text-transform: capitalize;">
                                     Tempat lahir
                                     <span class="text-danger">*</span>
                                 </label>
@@ -86,7 +86,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="tanggallahir" class="font-semibold capitalize">
+                                <label for="tanggallahir" class="font-semibold capitalize" style="text-transform: capitalize;">
                                     Tanggal lahir
                                     <span class="text-danger">*</span>
                                 </label>
@@ -98,7 +98,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="agama" class="font-semibold capitalize">
+                                <label for="agama" class="font-semibold capitalize" style="text-transform: capitalize;">
                                     Agama
                                     <span class="text-danger">*</span>
                                 </label>
@@ -109,25 +109,25 @@
                                         selected @endif>islam</option>
                                     <option class="capitalize" value="kristen_protestan" @if(old('student.religion') ??
                                         $student->religion =='kristen_protestan' ) selected @endif>
-                                        kristen_protestan</option>
+                                        Kristen Protestan</option>
                                     <option class="capitalize" value="kristen_katolik" @if(old('student.religion') ??
-                                        $student->religion =='kristen_katolik' ) selected @endif>kristen_katolik
+                                        $student->religion =='kristen_katolik' ) selected @endif>Kristen Katolik
                                     </option>
                                     <option class="capitalize" value="hindu" @if(old('student.religion') ?? $student->
                                         religion =='hindu' )
-                                        selected @endif>hindu</option>
+                                        selected @endif>Hindu</option>
                                     <option class="capitalize" value="buddha" @if(old('student.religion') ?? $student->
                                         religion =='buddha' )
-                                        selected @endif>buddha</option>
+                                        selected @endif>Buddha</option>
                                     <option class="capitalize" value="khonghucu" @if(old('student.religion') ??
-                                        $student->religion =='khonghucu' ) selected @endif>khonghucu</option>
+                                        $student->religion =='khonghucu' ) selected @endif>Khonghucu</option>
                                 </select>
                                 @error('student.birth_date')
                                 <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="alamat" class="font-semibold capitalize">
+                                <label for="alamat" class="font-semibold capitalize" style="text-transform: capitalize;">
                                     alamat
                                     <span class="text-danger">*</span>
                                 </label>
@@ -138,7 +138,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="whatsapp" class="font-semibold capitalize">
+                                <label for="whatsapp" class="font-semibold capitalize" style="text-transform: capitalize;">
                                     whatsapp
                                     <span class="text-danger">*</span>
                                 </label>
@@ -149,7 +149,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="email" class="font-semibold capitalize">
+                                <label for="email" class="font-semibold capitalize" style="text-transform: capitalize;">
                                     email
                                     <span class="text-danger">*</span>
                                 </label>
@@ -160,7 +160,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="asalsekolah" class="font-semibold capitalize">
+                                <label for="asalsekolah" class="font-semibold capitalize" style="text-transform: capitalize;">
                                     asal sekolah
                                     <span class="text-danger">*</span>
                                 </label>
@@ -172,7 +172,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="PengalamanBeroganisasi" class="font-semibold capitalize">Pengalaman
+                                <label for="PengalamanBeroganisasi" class="font-semibold capitalize" style="text-transform: capitalize;">Pengalaman
                                     Beroganisasi</label>
                                 <textarea type="text" name="student[org_experience]" class="form-control"
                                     id="PengalamanBeroganisasi">{{ old('student.org_experience') ?? $student->org_experience }}</textarea>
@@ -181,7 +181,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="tinggibadan" class="font-semibold capitalize">
+                                <label for="tinggibadan" class="font-semibold capitalize" style="text-transform: capitalize;">
                                     tinggi badan (CM)
                                     <span class="text-danger">*</span>
                                 </label>
@@ -192,7 +192,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="beratbadan" class="font-semibold capitalize">
+                                <label for="beratbadan" class="font-semibold capitalize" style="text-transform: capitalize;">
                                     berat badan (KG)
                                     <span class="text-danger">*</span>
                                 </label>
@@ -203,7 +203,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="RiwayatPenyakit" class="font-semibold capitalize">Riwayat Penyakit</label>
+                                <label for="RiwayatPenyakit" class="font-semibold capitalize" style="text-transform: capitalize;">Riwayat Penyakit</label>
                                 <textarea type="text" name="student[history_illness]" class="form-control"
                                     id="RiwayatPenyakit">{{ old('student.history_illness') ?? $student->history_illness }}</textarea>
                                 @error('student.history_illness')
@@ -214,7 +214,7 @@
                         <div class="col-12 col-lg-6">
                             <h2 class="text-xl font-semibold">Data Pribadi Wali Calon Siswa</h2>
                             <div class="form-group">
-                                <label for="fullname2" class="font-semibold capitalize">
+                                <label for="fullname2" class="font-semibold capitalize" style="text-transform: capitalize;">
                                     Nama lengkap
                                     <span class="text-danger">*</span>
                                 </label>
@@ -225,7 +225,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="gender2" class="font-semibold capitalize">
+                                <label for="gender2" class="font-semibold capitalize" style="text-transform: capitalize;">
                                     Jenis kelamin
                                     <span class="text-danger">*</span>
                                 </label>
@@ -243,7 +243,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="pekerjaan" class="font-semibold capitalize">
+                                <label for="pekerjaan" class="font-semibold capitalize" style="text-transform: capitalize;">
                                     Pekerjaan
                                     <span class="text-danger">*</span>
                                 </label>
@@ -254,7 +254,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="penghasilanperbulan" class="font-semibold capitalize">
+                                <label for="penghasilanperbulan" class="font-semibold capitalize" style="text-transform: capitalize;">
                                     penghasilan perbulan
                                     <span class="text-danger">*</span>
                                 </label>
@@ -267,7 +267,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="whatsapp2" class="font-semibold capitalize">
+                                <label for="whatsapp2" class="font-semibold capitalize" style="text-transform: capitalize;">
                                     whatsapp
                                     <span class="text-danger">*</span>
                                 </label>
@@ -278,7 +278,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="email2" class="font-semibold capitalize">
+                                <label for="email2" class="font-semibold capitalize" style="text-transform: capitalize;">
                                     email
                                     <span class="text-danger">*</span>
                                 </label>
