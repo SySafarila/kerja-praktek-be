@@ -182,15 +182,15 @@
                             @method('PATCH')
                             <input type="hidden" name="update_payment_method" value="" required>
                         </form>
-                        <button type="submit" data-payment="qris" class="bg-white text-accent-1 btn border border-accent-1 text-center" id="update-payment-method">QRIS</button>
-                        <button type="submit" data-payment="va_bca" class="bg-white text-accent-1 btn border border-accent-1 text-center" id="update-payment-method">BCA Virtual Account</button>
-                        <button type="submit" data-payment="va_bni" class="bg-white text-accent-1 btn border border-accent-1 text-center" id="update-payment-method">BNI Virtual Account</button>
-                        <button type="submit" data-payment="va_bri" class="bg-white text-accent-1 btn border border-accent-1 text-center" id="update-payment-method">BRI Virtual Account</button>
-                        <button type="submit" data-payment="va_permata" class="bg-white text-accent-1 btn border border-accent-1 text-center" id="update-payment-method">Permata Virtual Account</button>
-                        <button type="submit" data-payment="va_cimb" class="bg-white text-accent-1 btn border border-accent-1 text-center" id="update-payment-method">CIMB Virtual Account</button>
-                        <button type="submit" data-payment="gopay" class="bg-white text-accent-1 btn border border-accent-1 text-center" id="update-payment-method">GoPay</button>
-                        <button type="submit" data-payment="shopeepay" class="bg-white text-accent-1 btn border border-accent-1 text-center" id="update-payment-method">ShopeePay</button>
-                        <button type="submit" data-payment="offline" class="bg-white text-accent-1 btn border border-accent-1 text-center" id="update-payment-method">Bayar Di Sekolah</button>
+                        <button type="{{ $transaction->payment_method == 'offline' ? 'button' : 'submit' }}" data-payment="offline" class="{{ $transaction->payment_method == 'offline' ? 'hidden' : '' }} bg-white text-accent-1 btn border border-accent-1 text-center" id="update-payment-method">Bayar Di Sekolah</button>
+                        <button type="{{ $transaction->payment_method == 'qris' ? 'button' : 'submit' }}" data-payment="qris" class="{{ $transaction->payment_method == 'qris' ? 'hidden' : '' }} bg-white text-accent-1 btn border border-accent-1 text-center" id="update-payment-method">QRIS</button>
+                        <button type="{{ $transaction->payment_method == 'gopay' ? 'button' : 'submit' }}" data-payment="gopay" class="{{ $transaction->payment_method == 'gopay' ? 'hidden' : '' }} bg-white text-accent-1 btn border border-accent-1 text-center" id="update-payment-method">GoPay</button>
+                        <button type="{{ $transaction->payment_method == 'shopeepay' ? 'button' : 'submit' }}" data-payment="shopeepay" class="{{ $transaction->payment_method == 'shopeepay' ? 'hidden' : '' }} bg-white text-accent-1 btn border border-accent-1 text-center" id="update-payment-method">ShopeePay</button>
+                        <button type="{{ $transaction->payment_method == 'va_bca' ? 'button' : 'submit' }}" data-payment="va_bca" class="{{ $transaction->payment_method == 'va_bca' ? 'hidden' : '' }} bg-white text-accent-1 btn border border-accent-1 text-center" id="update-payment-method">BCA Virtual Account</button>
+                        <button type="{{ $transaction->payment_method == 'va_bni' ? 'button' : 'submit' }}" data-payment="va_bni" class="{{ $transaction->payment_method == 'va_bni' ? 'hidden' : '' }} bg-white text-accent-1 btn border border-accent-1 text-center" id="update-payment-method">BNI Virtual Account</button>
+                        <button type="{{ $transaction->payment_method == 'va_bri' ? 'button' : 'submit' }}" data-payment="va_bri" class="{{ $transaction->payment_method == 'va_bri' ? 'hidden' : '' }} bg-white text-accent-1 btn border border-accent-1 text-center" id="update-payment-method">BRI Virtual Account</button>
+                        <button type="{{ $transaction->payment_method == 'va_permata' ? 'button' : 'submit' }}" data-payment="va_permata" class="{{ $transaction->payment_method == 'va_permata' ? 'hidden' : '' }} bg-white text-accent-1 btn border border-accent-1 text-center" id="update-payment-method">Permata Virtual Account</button>
+                        <button type="{{ $transaction->payment_method == 'va_cimb' ? 'button' : 'submit' }}" data-payment="va_cimb" class="{{ $transaction->payment_method == 'va_cimb' ? 'hidden' : '' }} bg-white text-accent-1 btn border border-accent-1 text-center" id="update-payment-method">CIMB Virtual Account</button>
                     </div>
                 </div>
             @endif

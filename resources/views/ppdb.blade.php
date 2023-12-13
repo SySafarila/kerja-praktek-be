@@ -246,15 +246,15 @@
                             class="text-red-500">*</span></label>
                     <select class="w-full border-gray-500 border outline-none rounded-lg" name="payment_method" id="paymentmethod">
                         <option value="" selected disabled>Pilih</option>
+                        <option value="offline" @if(old('payment_method') == 'offline') selected @endif>Bayar Di Sekolah</option>
                         <option value="qris" @if(old('payment_method') == 'qris') selected @endif>QRIS</option>
+                        <option value="gopay" @if(old('payment_method') == 'gopay') selected @endif>GoPay</option>
+                        <option value="shopeepay" @if(old('payment_method') == 'shopeepay') selected @endif>ShopeePay</option>
                         <option value="va_bca" @if(old('payment_method') == 'va_bca') selected @endif>BCA Virtual Account</option>
                         <option value="va_bni" @if(old('payment_method') == 'va_bni') selected @endif>BNI Virtual Account</option>
                         <option value="va_bri" @if(old('payment_method') == 'va_bri') selected @endif>BRI Virtual Account</option>
                         <option value="va_permata" @if(old('payment_method') == 'va_permata') selected @endif>Permata Virtual Account</option>
                         <option value="va_cimb" @if(old('payment_method') == 'va_cimb') selected @endif>CIMB Virtual Account</option>
-                        <option value="gopay" @if(old('payment_method') == 'gopay') selected @endif>GoPay</option>
-                        <option value="shopeepay" @if(old('payment_method') == 'shopeepay') selected @endif>ShopeePay</option>
-                        <option value="offline" @if(old('payment_method') == 'offline') selected @endif>Bayar Di Sekolah</option>
                     </select>
                     <p>*Gratis batik untuk 50 pendaftar pertama</p>
                 </div>
