@@ -49,7 +49,7 @@ class PpdbControler extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'student.nisn' => ['required', 'numeric', 'max_digits:10', 'min_digits:10'],
+            'student.nisn' => ['required', 'numeric', 'digits:10'],
             'student.full_name' => ['required', 'string', 'max:255'],
             'student.gender' => ['required', 'string', 'in:male,female'],
             'student.birth_place' => ['required', 'string', 'max:255'],
@@ -163,7 +163,7 @@ class PpdbControler extends Controller
     public function update(Request $request, string $id)
     {
         $validator = Validator::make($request->all(), [
-            'student.nisn' => ['required', 'numeric', 'max_digits:10', 'min_digits:10'],
+            'student.nisn' => ['required', 'numeric', 'digits:10'],
             'student.full_name' => ['required', 'string', 'max:255'],
             'student.gender' => ['required', 'string', 'in:male,female'],
             'student.birth_place' => ['required', 'string', 'max:255'],
