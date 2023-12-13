@@ -89,21 +89,9 @@ if (editable.length > 0 && editableToggle) {
 
             if (element.dataset.typeinput == 'select') {
                 if (element.dataset.selecttype == 'gender') {
-                    element.innerHTML = `<select name="${element.dataset.name}" required="${element.dataset.required == 1 ? true : false}" style="border: none; width:100%;">
-                        <option value="0" selected disabled>Pilih</option>
-                        <option value="male" ${element.dataset.value == 'male' ? 'selected' : ''}>Laki-Laki</option>
-                        <option value="female" ${element.dataset.value == 'female' ? 'selected' : ''}>Perempuan</option>
-                    </select>`;
+                    element.innerHTML = `<select name="${element.dataset.name}" required="${element.dataset.required == 1 ? true : false}" style="border: none; width:100%;"><option value="0" selected disabled>Pilih</option><option value="male" ${element.dataset.value == 'male' ? 'selected' : ''}>Laki-Laki</option><option value="female" ${element.dataset.value == 'female' ? 'selected' : ''}>Perempuan</option></select>`;
                 } else if (element.dataset.selecttype == 'religion') {
-                    element.innerHTML = `<select name="${element.dataset.name}" required="${element.dataset.required == 1 ? true : false}" style="border: none; width:100%;">
-                        <option value="0" selected disabled>Pilih</option>
-                        <option class="capitalize" value="islam" ${element.dataset.value == 'islam' ? 'selected' : ''}>Islam</option>
-                        <option class="capitalize" value="kristen_protestan" ${element.dataset.value == 'kristen_protestan' ? 'selected' : ''}>Kristen Protestan</option>
-                        <option class="capitalize" value="kristen_katolik" ${element.dataset.value == 'kristen_katolik' ? 'selected' : ''}>Kristen Katolik</option>
-                        <option class="capitalize" value="hindu" ${element.dataset.value == 'hindu' ? 'selected' : ''}>Hindu</option>
-                        <option class="capitalize" value="buddha" ${element.dataset.value == 'buddha' ? 'selected' : ''}>Buddha</option>
-                        <option class="capitalize" value="khonghucu" ${element.dataset.value == 'khonghucu' ? 'selected' : ''}>Khonghucu</option>
-                    </select>`;
+                    element.innerHTML = `<select name="${element.dataset.name}" required="${element.dataset.required == 1 ? true : false}" style="border: none; width:100%;"><option value="0" selected disabled>Pilih</option><option class="capitalize" value="islam" ${element.dataset.value == 'islam' ? 'selected' : ''}>Islam</option><option class="capitalize" value="kristen_protestan" ${element.dataset.value == 'kristen_protestan' ? 'selected' : ''}>Kristen Protestan</option><option class="capitalize" value="kristen_katolik" ${element.dataset.value == 'kristen_katolik' ? 'selected' : ''}>Kristen Katolik</option><option class="capitalize" value="hindu" ${element.dataset.value == 'hindu' ? 'selected' : ''}>Hindu</option><option class="capitalize" value="buddha" ${element.dataset.value == 'buddha' ? 'selected' : ''}>Buddha</option><option class="capitalize" value="khonghucu" ${element.dataset.value == 'khonghucu' ? 'selected' : ''}>Khonghucu</option></select>`;
                 }
             } else {
                 element.innerHTML = `<input name="${element.dataset.name}" type="${element.dataset.typeinput}" value="${element.dataset.value}" style="border: none; width:100%; text-overflow: ellipsis;" required="${element.dataset.required == 1 ? true : false}" />`;

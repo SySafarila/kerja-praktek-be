@@ -9,8 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
+// use Illuminate\Validation\Rule;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Str;
 
 class PpdbAdminController extends Controller
 {
@@ -67,6 +68,9 @@ class PpdbAdminController extends Controller
                             return '-';
                             break;
                     }
+                })
+                ->editColumn('religion', function($model) {
+                    return Str::headline($model->religion);
                 })
                 ->editColumn('birth', function ($model) {
                     return "$model->birth_place - " . Carbon::parse($model->birth_date)->format('d-m-Y');

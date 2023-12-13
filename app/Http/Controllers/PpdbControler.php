@@ -229,7 +229,7 @@ class PpdbControler extends Controller
         } catch (\Throwable $th) {
             //throw $th;
             DB::rollBack();
-
+            $student->delete();
             $this->midtrans_error_logger($th);
             return $this->midtrans_error_redirect($th);
         }
@@ -777,9 +777,29 @@ class PpdbControler extends Controller
             'akta' => ['file', 'max:10240'],
             'kip' => ['file', 'max:10240', 'nullable'],
             'pkh' => ['file', 'max:10240', 'nullable'],
+        ], [
+            'kk' => [
+                'file' => 'Data yang diupload harus berupa file.',
+                'max' => 'Ukuran data maksimal 10MB.'
+            ],
+            'akta' => [
+                'file' => 'Data yang diupload harus berupa file.',
+                'max' => 'Ukuran data maksimal 10MB.'
+            ],
+            'kip' => [
+                'file' => 'Data yang diupload harus berupa file.',
+                'max' => 'Ukuran data maksimal 10MB.'
+            ],
+            'pkh' => [
+                'file' => 'Data yang diupload harus berupa file.',
+                'max' => 'Ukuran data maksimal 10MB.'
+            ],
         ]);
 
         $user = Auth::user();
+        if ($user->transaction->transaction_status != 'settlement') {
+            return back()->with('error', 'Kamu bisa mengirim berkas jika pembayaran telah diselesaikan');
+        }
         $student = $user->student;
 
         $kk = $student->files()->where('file_type', 'kk')->first();
@@ -791,6 +811,13 @@ class PpdbControler extends Controller
         if (!$kk) {
             $request->validate([
                 'kk' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
+            ], [
+                'kk' => [
+                    'file' => 'Data yang diupload harus berupa file.',
+                    'max' => 'Ukuran data maksimal 10MB.',
+                    'required' => 'Diperlukan.',
+                    'mimetypes' => 'Data yang di upload harus berupa Gambar/PDF'
+                ]
             ]);
             DB::beginTransaction();
             try {
@@ -810,6 +837,13 @@ class PpdbControler extends Controller
             if ($request->hasFile('kk')) {
                 $request->validate([
                     'kk' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
+                ], [
+                    'kk' => [
+                        'file' => 'Data yang diupload harus berupa file.',
+                        'max' => 'Ukuran data maksimal 10MB.',
+                        'required' => 'Diperlukan.',
+                        'mimetypes' => 'Data yang di upload harus berupa Gambar/PDF'
+                    ]
                 ]);
                 if (Storage::exists($kk->file_name)) {
                     Storage::delete($kk->file_name);
@@ -845,6 +879,13 @@ class PpdbControler extends Controller
         if (!$akta) {
             $request->validate([
                 'akta' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
+            ], [
+                'akta' => [
+                    'file' => 'Data yang diupload harus berupa file.',
+                    'max' => 'Ukuran data maksimal 10MB.',
+                    'required' => 'Diperlukan.',
+                    'mimetypes' => 'Data yang di upload harus berupa Gambar/PDF'
+                ]
             ]);
             DB::beginTransaction();
             try {
@@ -864,6 +905,13 @@ class PpdbControler extends Controller
             if ($request->hasFile('akta')) {
                 $request->validate([
                     'akta' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
+                ], [
+                    'akta' => [
+                        'file' => 'Data yang diupload harus berupa file.',
+                        'max' => 'Ukuran data maksimal 10MB.',
+                        'required' => 'Diperlukan.',
+                        'mimetypes' => 'Data yang di upload harus berupa Gambar/PDF'
+                    ]
                 ]);
                 if (Storage::exists($akta->file_name)) {
                     Storage::delete($akta->file_name);
@@ -900,6 +948,13 @@ class PpdbControler extends Controller
             if ($request->hasFile('kip')) {
                 $request->validate([
                     'kip' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
+                ], [
+                    'kip' => [
+                        'file' => 'Data yang diupload harus berupa file.',
+                        'max' => 'Ukuran data maksimal 10MB.',
+                        'required' => 'Diperlukan.',
+                        'mimetypes' => 'Data yang di upload harus berupa Gambar/PDF'
+                    ]
                 ]);
                 DB::beginTransaction();
                 try {
@@ -920,6 +975,13 @@ class PpdbControler extends Controller
             if ($request->hasFile('kip')) {
                 $request->validate([
                     'kip' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
+                ], [
+                    'kip' => [
+                        'file' => 'Data yang diupload harus berupa file.',
+                        'max' => 'Ukuran data maksimal 10MB.',
+                        'required' => 'Diperlukan.',
+                        'mimetypes' => 'Data yang di upload harus berupa Gambar/PDF'
+                    ]
                 ]);
                 if (Storage::exists($kip->file_name)) {
                     Storage::delete($kip->file_name);
@@ -956,6 +1018,13 @@ class PpdbControler extends Controller
             if ($request->hasFile('pkh')) {
                 $request->validate([
                     'pkh' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
+                ], [
+                    'pkh' => [
+                        'file' => 'Data yang diupload harus berupa file.',
+                        'max' => 'Ukuran data maksimal 10MB.',
+                        'required' => 'Diperlukan.',
+                        'mimetypes' => 'Data yang di upload harus berupa Gambar/PDF'
+                    ]
                 ]);
                 DB::beginTransaction();
                 try {
@@ -976,6 +1045,13 @@ class PpdbControler extends Controller
             if ($request->hasFile('pkh')) {
                 $request->validate([
                     'pkh' => ['file', 'max:10240', 'required', 'mimetypes:application/pdf,image/*']
+                ], [
+                    'pkh' => [
+                        'file' => 'Data yang diupload harus berupa file.',
+                        'max' => 'Ukuran data maksimal 10MB.',
+                        'required' => 'Diperlukan.',
+                        'mimetypes' => 'Data yang di upload harus berupa Gambar/PDF'
+                    ]
                 ]);
                 if (Storage::exists($pkh->file_name)) {
                     Storage::delete($pkh->file_name);

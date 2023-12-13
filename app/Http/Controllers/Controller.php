@@ -92,7 +92,7 @@ class Controller extends BaseController
                 break;
 
             case 402:
-                return redirect()->back()->with('error', 'Metode pembayaran yang dipilih sedang tidak tersedia, silahkan coba beberapa saat lagi.')->withInput();
+                return redirect()->back()->with('error', 'Metode pembayaran yang dipilih sedang tidak tersedia, silahkan coba beberapa saat lagi atau coba metode pembayaran yang lain.')->withInput();
                 break;
 
             case 403:
@@ -144,7 +144,7 @@ class Controller extends BaseController
                 break;
 
             case 502:
-                return redirect()->back()->with('error', 'Koneksi dengan Bank terkait sedang bermasalah, silahkan coba beberapa saat lagi.')->withInput();
+                return redirect()->back()->with('error', 'Koneksi dengan Bank terkait sedang bermasalah, silahkan coba beberapa saat lagi atau coba metode pembayaran yang lain.')->withInput();
                 break;
 
             case 503:
@@ -156,7 +156,7 @@ class Controller extends BaseController
                 break;
 
             case 505:
-                return redirect()->back()->with('error', 'Tidak dapat membuat virtual account untuk transaksi ini, silahkan coba beberapa saat lagi.')->withInput();
+                return redirect()->back()->with('error', 'Tidak dapat membuat virtual account untuk transaksi ini, silahkan coba beberapa saat lagi atau coba metode pembayaran yang lain.')->withInput();
                 break;
 
             default:
