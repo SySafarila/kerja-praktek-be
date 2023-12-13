@@ -561,6 +561,7 @@ class PpdbControler extends Controller
     }
 
     /**
+     * Charge a transaction to Midtrans Core API
      * @param string $payment_method
      * @param model $student
      * @param model $user
