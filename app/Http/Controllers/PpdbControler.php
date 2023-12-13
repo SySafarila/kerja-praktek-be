@@ -229,7 +229,7 @@ class PpdbControler extends Controller
         } catch (\Throwable $th) {
             //throw $th;
             DB::rollBack();
-
+            $student->delete();
             $this->midtrans_error_logger($th);
             return $this->midtrans_error_redirect($th);
         }
