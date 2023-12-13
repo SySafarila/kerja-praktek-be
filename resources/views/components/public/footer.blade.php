@@ -2,27 +2,27 @@
     <div class="max-w-screen-lg mx-auto grid lg:grid-cols-3 p-5 gap-5 lg:gap-8">
         <div>
             <h2 class="text-sm text-accent-2 uppercase">Lembaga Pendidikan Nahdatul Ulama</h2>
-            <h3 class="font-semibold text-4xl mb-4 text-accent-2 uppercase">SMA Ma'arif Pacet Cianjur</h3>
+            <h3 class="font-semibold text-xl mb-4 text-accent-2 uppercase">SMA Ma'arif Pacet Cianjur</h3>
             <p class="text-accent-2"><b class="text-accent-2">Alamat : </b>Cipendawa, Pacet, Cianjur Regency, West Java
                 43253</p>
             <div class="flex flex-col gap-2 mt-2">
                 <div class="flex items-center gap-2.5">
                     <span class="material-icons text-accent-2">email</span>
-                    <span class="text-accent-2">emailsmamaarif@gmail.com</span>
+                    <span class="text-accent-2">sma.maarif.pacet@gmail.com</span>
                 </div>
                 <div class="flex items-center gap-2.5">
                     <span class="material-icons text-accent-2">phone</span>
-                    <span class="text-accent-2">+62 877-2027-11111</span>
+                    <span class="text-accent-2">+62 856-2485-7093</span>
                 </div>
                 <div class="flex items-center gap-3">
-                    <a href="#">
-                        <i class="fa-brands fa-square-facebook text-white text-2xl"></i>
+                    <a href="https://id-id.facebook.com/smarter83/">
+                        <i class="fa-brands fa-square-facebook text-white hover:text-yellow-200 text-2xl"></i>
+                    </a>
+                    <a href="https://www.instagram.com/smamaarifpacet/">
+                        <i class="fa-brands fa-instagram text-white text-2xl hover:text-yellow-200"></i>
                     </a>
                     <a href="#">
-                        <i class="fa-brands fa-instagram text-white text-2xl"></i>
-                    </a>
-                    <a href="#">
-                        <i class="fa-brands fa-youtube text-white text-2xl"></i>
+                        <i class="fa-brands fa-youtube text-white text-2xl hover:text-yellow-200"></i>
                     </a>
                 </div>
             </div>
