@@ -11,8 +11,9 @@
         </div>
         <div class="flex max-w-screen-lg mx-auto">
             <div class="flex flex-col gap-y-4 px-4">
-                <div>
-                    <p class="text-center">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos quisquam ut possimus nulla,
+                <div class="mb-4">
+                    <p class="text-center">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos quisquam ut
+                        possimus nulla,
                         cupiditate
                         odioLorem, ipsum dolor sit amet consectetur adipisicing elit. Quos quisquam ut possimus nulla,
                         cupiditate
@@ -20,8 +21,9 @@
                         cupiditate</p>
                 </div>
                 <div>
-                    <h2 class="font-bold text-accent-1">VISI</h2>
-                    <p>
+                    <h2 class="font-bold text-accent-1 text-xl">VISI</h2>
+                    <div class="border-b-4 border-accent-1 mb-2"></div>
+                    <p class="text-justify">
                         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos quisquam ut possimus nulla,
                         cupiditate
                         odioLorem, ipsum dolor sit amet consectetur adipisicing elit. Quos quisquam ut possimus nulla,
@@ -44,8 +46,9 @@
                     </p>
                 </div>
                 <div>
-                    <h2 class="font-bold text-accent-1">MISI</h2>
-                    <p>
+                    <h2 class="font-bold text-accent-1 text-xl">MISI</h2>
+                    <div class="border-b-4 border-accent-1 mb-2"></div>
+                    <p class="text-justify">
                         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos quisquam ut possimus nulla,
                         cupiditate
                         odioLorem, ipsum dolor sit amet consectetur adipisicing elit. Quos quisquam ut possimus nulla,
@@ -69,10 +72,11 @@
                 </div>
             </div>
         </div>
-
         <div class="flex max-w-screen-lg mx-auto">
             <div class="max-w-screen-sm px-4">
-                <p>
+                <h2 class="font-bold text-accent-1 text-xl">SEJARAH</h2>
+                <div class="border-b-4 border-accent-1 mb-2"></div>
+                <p class="text-justify">
                     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos quisquam ut possimus nulla, cupiditate
                     odio
                     illum. Quam voluptatibus unde, praesentium quisquam cupiditate doloremque. Impedit reiciendis suscipit
@@ -98,7 +102,7 @@
                 </p>
             </div>
             <div class="flex flex-col px-4">
-                <img src="{{ asset('images/profile.png') }}" class="h-90 w-90 object-cover mx-auto border rounded-lg mb-4">
+                <img src="{{ asset('images/photos/Kepala Sekolah.png') }}" class="h-90 w-90 object-cover mx-auto border rounded-lg mb-4">
                 <p class="text-center">"
                     Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos quisquam ut possimus nulla, cupiditate
                     odio
@@ -106,16 +110,11 @@
                     facere. Distinctio, aspernatur suscipit.
                     "</p>
                 <div class="flex flex-col text-center mt-4">
-                    <span>Irfan M. Silawane</span>
+                    <span class="font-semibold">Irfan M. Silawane, S.H., MM.Pd.</span>
+                    <div class="border-b my-1 mx-12"></div>
                     <span>Kepala Sekolah</span>
                 </div>
             </div>
-        </div>
-
-
-
-        <div class="flex max-w-screen-lg mx-auto">
-
         </div>
     </div>
 @endsection
