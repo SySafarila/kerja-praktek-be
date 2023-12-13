@@ -294,12 +294,14 @@
             </div>
             <button type="button" class="material-icons" id="close-detail">close</button>
         </div>
-        @if ($errors->any())
-            <ul class="list-disc list-inside">
-                @foreach ($errors->all() as $error)
-                    <li class="text-red-500">{{ $error }}</li>
-                @endforeach
-            </ul>
+        @if (session('update-error'))
+            @if ($errors->any())
+                <ul class="list-disc list-inside">
+                    @foreach ($errors->all() as $error)
+                        <li class="text-red-500">{{ $error }}</li>
+                    @endforeach
+                </ul>
+            @endif
         @endif
         <form action="{{ route('ppdb.update', 'update') }}" method="post">
             @csrf
