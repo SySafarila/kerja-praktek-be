@@ -780,6 +780,9 @@ class PpdbControler extends Controller
         ]);
 
         $user = Auth::user();
+        if ($user->transaction->transaction_status != 'settlement') {
+            return back()->with('error', 'Kamu bisa mengirim berkas jika pembayaran telah diselesaikan');
+        }
         $student = $user->student;
 
         $kk = $student->files()->where('file_type', 'kk')->first();
