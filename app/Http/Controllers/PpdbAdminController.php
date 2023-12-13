@@ -150,7 +150,7 @@ class PpdbAdminController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'student.nisn' => ['required', 'string', 'max:255'],
+            'student.nisn' => ['required', 'numeric', 'max_digits:10', 'min_digits:10'],
             'student.full_name' => ['required', 'string', 'max:255'],
             'student.gender' => ['required', 'string', 'in:male,female'],
             'student.birth_place' => ['required', 'string', 'max:255'],
