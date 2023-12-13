@@ -777,6 +777,23 @@ class PpdbControler extends Controller
             'akta' => ['file', 'max:10240'],
             'kip' => ['file', 'max:10240', 'nullable'],
             'pkh' => ['file', 'max:10240', 'nullable'],
+        ], [
+            'kk' => [
+                'file' => 'Data yang diupload harus berupa file.',
+                'max' => 'Ukuran data maksimal 10MB.'
+            ],
+            'akta' => [
+                'file' => 'Data yang diupload harus berupa file.',
+                'max' => 'Ukuran data maksimal 10MB.'
+            ],
+            'kip' => [
+                'file' => 'Data yang diupload harus berupa file.',
+                'max' => 'Ukuran data maksimal 10MB.'
+            ],
+            'pkh' => [
+                'file' => 'Data yang diupload harus berupa file.',
+                'max' => 'Ukuran data maksimal 10MB.'
+            ],
         ]);
 
         $user = Auth::user();
