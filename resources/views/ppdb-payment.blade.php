@@ -137,6 +137,12 @@
                     <p>Pembayaran telah kadaluarsa, mohon perbarui metode pembayaranmu untuk melanjutkan pendaftaran.</p>
                 </div>
             @endif
+            <div>
+                <span>Nomor Pendaftaran</span>
+                <div class="flex justify-between items-center">
+                    <span class="text-xl font-semibold">{{ $transaction->order_id ?? '-' }}</span>
+                </div>
+            </div>
             <div class="flex justify-between">
                 <div>
                     <span>Total Pembayaran</span>

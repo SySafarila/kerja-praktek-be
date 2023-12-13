@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('payment_method');
             $table->string('virtual_account')->nullable();
             $table->string('bank')->nullable();
+            $table->string('issuer')->nullable();
             $table->string('status_message')->nullable();
             $table->string('status_code')->nullable();
             $table->double('gross_amount');
@@ -33,7 +34,7 @@ return new class extends Migration
             $table->text('link_cancel')->nullable();
             $table->text('minimarket')->nullable();
             $table->text('minimarket_payment_code')->nullable();
-            $table->date('settlement_time')->nullable();
+            $table->dateTime('settlement_time')->nullable();
             $table->timestamps();
         });
     }

@@ -38,7 +38,7 @@
                                         <th>Pending</th>
                                         @break
                                     @case('settlement')
-                                        <th>Lunas ({{ \Carbon\Carbon::parse($model->transaction->settlement_time)->format('d-m-Y') }})</th>
+                                        <th>Lunas ({{ \Carbon\Carbon::parse($model->transaction->settlement_time)->format('H:i/d-m-Y') }})</th>
                                         @break
                                     @case('expire')
                                         <th>Kadaluarsa</th>
@@ -55,7 +55,7 @@
                             @if ($model->transaction)
                                 @switch(@$model->transaction->payment_method)
                                     @case('qris')
-                                        <th>QRIS</th>
+                                        <th>QRIS {{ $model->transaction->issuer ? '/' . Str::upper($model->transaction->issuer) : '' }}</th>
                                         @break
                                     @case('va_bca')
                                         <th>BCA Virtual Account</th>

@@ -254,7 +254,8 @@ class Controller extends BaseController
     {
         $transaction->update([
             'transaction_status' => $response->transaction_status,
-            'settlement_time' => $response->settlement_time
+            'settlement_time' => $response->settlement_time,
+            'issuer' => $response->issuer ?? null
         ]);
     }
 
