@@ -56,7 +56,7 @@ class PpdbControler extends Controller
             'student.birth_date' => ['required', 'date'],
             'student.religion' => ['required', 'string', 'max:255', 'in:islam,kristen_protestan,kristen_katolik,hindu,buddha,khonghucu'],
             'student.address' => ['required', 'string'],
-            'student.whatsapp' => ['required', 'string', 'max:255'],
+            'student.whatsapp' => ['required', 'numeric', 'max_digits:255'],
             'student.email' => ['required', 'email', 'max:255'],
             'student.last_school' => ['required', 'string', 'max:255'],
             'student.org_experience' => ['string', 'nullable'],
@@ -67,9 +67,106 @@ class PpdbControler extends Controller
             'parent.gender' => ['required', 'string', 'in:male,female'],
             'parent.job' => ['required', 'string'],
             'parent.income_per_month' => ['required', 'numeric'],
-            'parent.whatsapp' => ['required', 'string', 'max:255'],
+            'parent.whatsapp' => ['required', 'numeric', 'max_digits:255'],
             'parent.email' => ['required', 'email', 'max:255'],
             'payment_method' => ['required', 'string', 'in:qris,va_bca,va_bni,va_bri,va_permata,va_cimb,gopay,shopeepay,offline']
+        ], [
+            'student.nisn' => [
+                'required' => 'Diperlukan.',
+                'numeric' => 'Harus berupa angka.',
+                'digits' => 'NISN harus 10 digit.'
+            ],
+            'student.full_name' => [
+                'required' => 'Diperlukan.',
+                'string' => 'Harus berupa huruf.',
+                'max' => 'Maksimal 255 huruf.'
+            ],
+            'student.gender' => [
+                'required' => 'Diperlukan.',
+                'string' => 'Harus berupa huruf.',
+                'in' => 'Pilihan diantara Laki-Laki/Perempuan.'
+            ],
+            'student.birth_place' => [
+                'required' => 'Diperlukan.',
+                'string' => 'Harus berupa huruf.',
+                'max' => 'Maksimal 255 huruf.'
+            ],
+            'student.birth_date' => [
+                'required' => 'Diperlukan.',
+                'date' => 'Harus berupa tanggal.',
+            ],
+            'student.religion' => [
+                'required' => 'Diperlukan.',
+                'string' => 'Harus berupa huruf.',
+                'max' => 'Maksimal 255 huruf.',
+                'in' => 'Pilihan diantara Islam/Kristen Protestan/Kristen Katolik/Hindu/Buddha/Khonghucu.'
+            ],
+            'student.address' => [
+                'required' => 'Diperlukan.',
+                'string' => 'Harus berupa huruf.'
+            ],
+            'student.whatsapp' => [
+                'required' => 'Diperlukan.',
+                'numeric' => 'Harus berupa angka.',
+                'max_digits' => 'Maksimal 255 digit'
+            ],
+            'student.email' => [
+                'required' => 'Diperlukan.',
+                'email' => 'Harus berupa email yang valid.',
+                'max' => 'Maksimal 255 huruf.'
+            ],
+            'student.last_school' => [
+                'required' => 'Diperlukan.',
+                'string' => 'Harus berupa huruf.',
+                'max' => 'Maksimal 255 huruf.'
+            ],
+            'student.org_experience' => [
+                'string' => 'Harus berupa huruf.'
+            ],
+            'student.height' => [
+                'required' => 'Diperlukan.',
+                'numeric' => 'Harus berupa angka.',
+            ],
+            'student.weight' => [
+                'required' => 'Diperlukan.',
+                'numeric' => 'Harus berupa angka.',
+            ],
+            'student.history_illness' => [
+                'string' => 'Harus berupa huruf.'
+            ],
+            'parent.full_name' => [
+                'required' => 'Diperlukan.',
+                'string' => 'Harus berupa huruf.',
+                'max' => 'Maksimal 255 huruf.'
+            ],
+            'parent.gender' => [
+                'required' => 'Diperlukan.',
+                'string' => 'Harus berupa huruf.',
+                'in' => 'Pilihan diantara Laki-Laki/Perempuan.'
+            ],
+            'parent.job' => [
+                'required' => 'Diperlukan.',
+                'string' => 'Harus berupa huruf.'
+            ],
+            'parent.income_per_month' => [
+                'required' => 'Diperlukan.',
+                'numeric' => 'Harus berupa angka.',
+            ],
+            'parent.whatsapp' => [
+                'required' => 'Diperlukan.',
+                'numeric' => 'Harus berupa angka.',
+                'max_digits' => 'Maksimal 255 digit'
+            ],
+            'parent.email' => [
+                'required' => 'Diperlukan.',
+                'email' => 'Harus berupa email yang valid.',
+                'max' => 'Maksimal 255 huruf.'
+            ],
+            'payment_method' => [
+                'required' => 'Diperlukan.',
+                'string' => 'Harus berupa huruf.',
+                'in' => 'Pilihan diantara QRIS/BCA Virtual Account/BNI Virtual Account/BRI Virtual Account/Permata Virtual Account/CIMB Virtual Account/GoPay/ShopeePay/Bayar Di Sekolah.'
+            ]
         ]);
 
         $student = $request->student;
@@ -170,7 +267,7 @@ class PpdbControler extends Controller
             'student.birth_date' => ['required', 'date'],
             'student.religion' => ['required', 'string', 'max:255', 'in:islam,kristen_protestan,kristen_katolik,hindu,buddha,khonghucu'],
             'student.address' => ['required', 'string'],
-            'student.whatsapp' => ['required', 'string', 'max:255'],
+            'student.whatsapp' => ['required', 'numeric', 'max_digits:255'],
             'student.email' => ['required', 'email', 'max:255'],
             'student.last_school' => ['required', 'string', 'max:255'],
             'student.org_experience' => ['string', 'nullable'],
@@ -181,8 +278,100 @@ class PpdbControler extends Controller
             'parent.gender' => ['required', 'string', 'in:male,female'],
             'parent.job' => ['required', 'string'],
             'parent.income_per_month' => ['required', 'numeric'],
-            'parent.whatsapp' => ['required', 'string', 'max:255'],
+            'parent.whatsapp' => ['required', 'numeric', 'max_digits:255'],
             'parent.email' => ['required', 'email', 'max:255']
+        ], [
+            'student.nisn' => [
+                'required' => 'Diperlukan.',
+                'numeric' => 'Harus berupa angka.',
+                'digits' => 'NISN harus 10 digit.'
+            ],
+            'student.full_name' => [
+                'required' => 'Diperlukan.',
+                'string' => 'Harus berupa huruf.',
+                'max' => 'Maksimal 255 huruf.'
+            ],
+            'student.gender' => [
+                'required' => 'Diperlukan.',
+                'string' => 'Harus berupa huruf.',
+                'in' => 'Pilihan diantara Laki-Laki/Perempuan.'
+            ],
+            'student.birth_place' => [
+                'required' => 'Diperlukan.',
+                'string' => 'Harus berupa huruf.',
+                'max' => 'Maksimal 255 huruf.'
+            ],
+            'student.birth_date' => [
+                'required' => 'Diperlukan.',
+                'date' => 'Harus berupa tanggal.',
+            ],
+            'student.religion' => [
+                'required' => 'Diperlukan.',
+                'string' => 'Harus berupa huruf.',
+                'max' => 'Maksimal 255 huruf.',
+                'in' => 'Pilihan diantara Islam/Kristen Protestan/Kristen Katolik/Hindu/Buddha/Khonghucu.'
+            ],
+            'student.address' => [
+                'required' => 'Diperlukan.',
+                'string' => 'Harus berupa huruf.'
+            ],
+            'student.whatsapp' => [
+                'required' => 'Diperlukan.',
+                'numeric' => 'Harus berupa angka.',
+                'max_digits' => 'Maksimal 255 digit'
+            ],
+            'student.email' => [
+                'required' => 'Diperlukan.',
+                'email' => 'Harus berupa email yang valid.',
+                'max' => 'Maksimal 255 huruf.'
+            ],
+            'student.last_school' => [
+                'required' => 'Diperlukan.',
+                'string' => 'Harus berupa huruf.',
+                'max' => 'Maksimal 255 huruf.'
+            ],
+            'student.org_experience' => [
+                'string' => 'Harus berupa huruf.'
+            ],
+            'student.height' => [
+                'required' => 'Diperlukan.',
+                'numeric' => 'Harus berupa angka.',
+            ],
+            'student.weight' => [
+                'required' => 'Diperlukan.',
+                'numeric' => 'Harus berupa angka.',
+            ],
+            'student.history_illness' => [
+                'string' => 'Harus berupa huruf.'
+            ],
+            'parent.full_name' => [
+                'required' => 'Diperlukan.',
+                'string' => 'Harus berupa huruf.',
+                'max' => 'Maksimal 255 huruf.'
+            ],
+            'parent.gender' => [
+                'required' => 'Diperlukan.',
+                'string' => 'Harus berupa huruf.',
+                'in' => 'Pilihan diantara Laki-Laki/Perempuan.'
+            ],
+            'parent.job' => [
+                'required' => 'Diperlukan.',
+                'string' => 'Harus berupa huruf.'
+            ],
+            'parent.income_per_month' => [
+                'required' => 'Diperlukan.',
+                'numeric' => 'Harus berupa angka.',
+            ],
+            'parent.whatsapp' => [
+                'required' => 'Diperlukan.',
+                'numeric' => 'Harus berupa angka.',
+                'max_digits' => 'Maksimal 255 digit'
+            ],
+            'parent.email' => [
+                'required' => 'Diperlukan.',
+                'email' => 'Harus berupa email yang valid.',
+                'max' => 'Maksimal 255 huruf.'
+            ]
         ]);
 
         if ($validator->fails()) {
@@ -246,6 +435,12 @@ class PpdbControler extends Controller
     {
         $request->validate([
             'update_payment_method' => ['required', 'string', 'in:qris,va_bca,va_bni,va_bri,va_permata,va_cimb,gopay,shopeepay,offline']
+        ], [
+            'payment_method' => [
+                'required' => 'Diperlukan.',
+                'string' => 'Harus berupa huruf.',
+                'in' => 'Pilihan diantara QRIS/BCA Virtual Account/BNI Virtual Account/BRI Virtual Account/Permata Virtual Account/CIMB Virtual Account/GoPay/ShopeePay/Bayar Di Sekolah.'
+            ]
         ]);
 
         $user = Auth::user();
