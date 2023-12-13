@@ -304,86 +304,86 @@
                 </tr>
                 <tr>
                     <td class="border border-slate-500 p-2">NISN</td>
-                    <td class="border border-slate-500 p-2" data-value="{{ $student->nisn ?? '-' }}" data-required="1" data-typeinput="number" data-name="student[nisn]">{{ $student->nisn ?? '-' }}</td>
+                    <td class="border border-slate-500 p-2" style="word-break: break-all;" data-value="{{ $student->nisn ?? '-' }}" data-required="1" data-typeinput="number" data-name="student[nisn]">{{ $student->nisn ?? '-' }}</td>
                 </tr>
                 <tr>
                     <td class="border border-slate-500 p-2">Full Name</td>
-                    <td class="border border-slate-500 p-2" data-value="{{ $student->full_name ?? '-' }}" data-required="1" data-typeinput="text" data-name="student[full_name]">{{ $student->full_name ?? '-' }}</td>
+                    <td class="border border-slate-500 p-2" style="word-break: break-all;" data-value="{{ $student->full_name ?? '-' }}" data-required="1" data-typeinput="text" data-name="student[full_name]">{{ $student->full_name ?? '-' }}</td>
                 </tr>
                 <tr>
                     <td class="border border-slate-500 p-2">Gender</td>
-                    <td class="border border-slate-500 p-2" data-value="{{ $student->gender ?? '-' }}" data-required="1" data-typeinput="select" data-selecttype="gender" data-name="student[gender]">{{ $student->gender == 'male' ? 'L' : 'P' }}</td>
+                    <td class="border border-slate-500 p-2" style="word-break: break-all;" data-value="{{ $student->gender ?? '-' }}" data-required="1" data-typeinput="select" data-selecttype="gender" data-name="student[gender]">{{ $student->gender == 'male' ? 'L' : 'P' }}</td>
                 </tr>
                 <tr>
                     <td class="border border-slate-500 p-2">Birth Place</td>
-                    <td class="border border-slate-500 p-2" data-value="{{ $student->birth_place ?? '-' }}" data-required="1" data-typeinput="text" data-name="student[birth_place]">{{ $student->birth_place ?? '-' }}</td>
+                    <td class="border border-slate-500 p-2" style="word-break: break-all;" data-value="{{ $student->birth_place ?? '-' }}" data-required="1" data-typeinput="text" data-name="student[birth_place]">{{ $student->birth_place ?? '-' }}</td>
                 </tr>
                 <tr>
                     <td class="border border-slate-500 p-2">Birth Date</td>
-                    <td class="border border-slate-500 p-2" data-value="{{ \Carbon\Carbon::parse($student->birth_date)->format('Y-m-d') }}" data-required="1" data-typeinput="date" data-name="student[birth_date]">{{ \Carbon\Carbon::parse($student->birth_date)->format('d-m-Y') }}</td>
+                    <td class="border border-slate-500 p-2" style="word-break: break-all;" data-value="{{ \Carbon\Carbon::parse($student->birth_date)->format('Y-m-d') }}" data-required="1" data-typeinput="date" data-name="student[birth_date]">{{ \Carbon\Carbon::parse($student->birth_date)->format('d-m-Y') }}</td>
                 </tr>
                 <tr>
                     <td class="border border-slate-500 p-2">Religion</td>
-                    <td class="border border-slate-500 p-2" data-value="{{ $student->religion ?? '-' }}" data-required="1" data-typeinput="select" data-selecttype="religion" data-name="student[religion]">{{ $student->religion ?? '-' }}</td>
+                    <td class="border border-slate-500 p-2" style="word-break: break-all;" data-value="{{ $student->religion ?? '-' }}" data-required="1" data-typeinput="select" data-selecttype="religion" data-name="student[religion]">{{ $student->religion ?? '-' }}</td>
                 </tr>
                 <tr>
                     <td class="border border-slate-500 p-2">Address</td>
-                    <td class="border border-slate-500 p-2" data-value="{{ $student->address ?? '-' }}" data-required="1" data-typeinput="text" data-name="student[address]">{{ $student->address ?? '-' }}</td>
+                    <td class="border border-slate-500 p-2" style="word-break: break-all;" data-value="{{ $student->address ?? '-' }}" data-required="1" data-typeinput="text" data-name="student[address]">{{ $student->address ?? '-' }}</td>
                 </tr>
                 <tr>
                     <td class="border border-slate-500 p-2">Email</td>
-                    <td class="border border-slate-500 p-2" data-value="{{ $student->email ?? '-' }}" data-value="{{ $student->email ?? '-' }}" data-required="1" data-typeinput="email" data-name="student[email]">{{ $student->email ?? '-' }}</td>
+                    <td class="border border-slate-500 p-2" style="word-break: break-all;" data-value="{{ $student->email ?? '-' }}" data-value="{{ $student->email ?? '-' }}" data-required="1" data-typeinput="email" data-name="student[email]">{{ $student->email ?? '-' }}</td>
                 </tr>
                 <tr>
                     <td class="border border-slate-500 p-2">Whatsapp</td>
-                    <td class="border border-slate-500 p-2" data-value="{{ $student->whatsapp ?? '-' }}" data-required="1" data-typeinput="number" data-name="student[whatsapp]">{{ $student->whatsapp ?? '-' }}</td>
+                    <td class="border border-slate-500 p-2" style="word-break: break-all;" data-value="{{ $student->whatsapp ?? '-' }}" data-required="1" data-typeinput="number" data-name="student[whatsapp]">{{ $student->whatsapp ?? '-' }}</td>
                 </tr>
                 <tr>
                     <td class="border border-slate-500 p-2">Last School</td>
-                    <td class="border border-slate-500 p-2" data-value="{{ $student->last_school ?? '-' }}" data-required="1" data-typeinput="text" data-name="student[last_school]">{{ $student->last_school ?? '-' }}</td>
+                    <td class="border border-slate-500 p-2" style="word-break: break-all;" data-value="{{ $student->last_school ?? '-' }}" data-required="1" data-typeinput="text" data-name="student[last_school]">{{ $student->last_school ?? '-' }}</td>
                 </tr>
                 <tr>
                     <td class="border border-slate-500 p-2">Organitaion Experience</td>
-                    <td class="border border-slate-500 p-2" data-value="{{ $student->org_experience ?? '-' }}" data-required="0" data-typeinput="text" data-name="student[org_experience]">{{ $student->org_experience ?? '-' }}</td>
+                    <td class="border border-slate-500 p-2" style="word-break: break-all;" data-value="{{ $student->org_experience ?? '-' }}" data-required="0" data-typeinput="text" data-name="student[org_experience]">{{ $student->org_experience ?? '-' }}</td>
                 </tr>
                 <tr>
                     <td class="border border-slate-500 p-2">Height (CM)</td>
-                    <td class="border border-slate-500 p-2" data-value="{{ $student->height ?? '-' }}" data-required="1" data-typeinput="number" data-name="student[height]">{{ $student->height ?? '-' }}cm</td>
+                    <td class="border border-slate-500 p-2" style="word-break: break-all;" data-value="{{ $student->height ?? '-' }}" data-required="1" data-typeinput="number" data-name="student[height]">{{ $student->height ?? '-' }}cm</td>
                 </tr>
                 <tr>
                     <td class="border border-slate-500 p-2">Weight (KG)</td>
-                    <td class="border border-slate-500 p-2" data-value="{{ $student->weight ?? '-' }}" data-required="1" data-typeinput="number" data-name="student[weight]">{{ $student->weight ?? '-' }}kg</td>
+                    <td class="border border-slate-500 p-2" style="word-break: break-all;" data-value="{{ $student->weight ?? '-' }}" data-required="1" data-typeinput="number" data-name="student[weight]">{{ $student->weight ?? '-' }}kg</td>
                 </tr>
                 <tr>
                     <td class="border border-slate-500 p-2">History Illness</td>
-                    <td class="border border-slate-500 p-2" data-value="{{ $student->history_illness ?? '-' }}" data-required="0" data-typeinput="text" data-name="student[history_illness]">{{ $student->history_illness ?? '-' }}</td>
+                    <td class="border border-slate-500 p-2" style="word-break: break-all;" data-value="{{ $student->history_illness ?? '-' }}" data-required="0" data-typeinput="text" data-name="student[history_illness]">{{ $student->history_illness ?? '-' }}</td>
                 </tr>
                 <tr>
                     <th class="border border-slate-500 p-2" colspan="2">Parent</th>
                 </tr>
                 <tr>
                     <td class="border border-slate-500 p-2">Full Name</td>
-                    <td class="border border-slate-500 p-2" data-value="{{ $student->parent->full_name ?? '-' }}" data-required="1" data-typeinput="text" data-name="parent[full_name]">{{ $student->parent->full_name ?? '-' }}</td>
+                    <td class="border border-slate-500 p-2" style="word-break: break-all;" data-value="{{ $student->parent->full_name ?? '-' }}" data-required="1" data-typeinput="text" data-name="parent[full_name]">{{ $student->parent->full_name ?? '-' }}</td>
                 </tr>
                 <tr>
                     <td class="border border-slate-500 p-2">Gender</td>
-                    <td class="border border-slate-500 p-2" data-value="{{ $student->parent->gender ?? '-' }}" data-required="1" data-typeinput="select" data-selecttype="gender" data-name="parent[gender]">{{ $student->parent->gender == 'male' ? 'L' : 'P' }}</td>
+                    <td class="border border-slate-500 p-2" style="word-break: break-all;" data-value="{{ $student->parent->gender ?? '-' }}" data-required="1" data-typeinput="select" data-selecttype="gender" data-name="parent[gender]">{{ $student->parent->gender == 'male' ? 'L' : 'P' }}</td>
                 </tr>
                 <tr>
                     <td class="border border-slate-500 p-2">Job</td>
-                    <td class="border border-slate-500 p-2" data-value="{{ $student->parent->job ?? '-' }}" data-required="1" data-typeinput="text" data-name="parent[job]">{{ $student->parent->job ?? '-' }}</td>
+                    <td class="border border-slate-500 p-2" style="word-break: break-all;" data-value="{{ $student->parent->job ?? '-' }}" data-required="1" data-typeinput="text" data-name="parent[job]">{{ $student->parent->job ?? '-' }}</td>
                 </tr>
                 <tr>
                     <td class="border border-slate-500 p-2">Income Per Month</td>
-                    <td class="border border-slate-500 p-2" data-value="{{ $student->parent->income_per_month ?? '-' }}" data-required="1" data-typeinput="number" data-name="parent[income_per_month]">Rp {{ number_format($student->parent->income_per_month, 0) }}</td>
+                    <td class="border border-slate-500 p-2" style="word-break: break-all;" data-value="{{ $student->parent->income_per_month ?? '-' }}" data-required="1" data-typeinput="number" data-name="parent[income_per_month]">Rp {{ number_format($student->parent->income_per_month, 0) }}</td>
                 </tr>
                 <tr>
                     <td class="border border-slate-500 p-2">Whatsapp</td>
-                    <td class="border border-slate-500 p-2" data-value="{{ $student->parent->whatsapp ?? '-' }}" data-required="1" data-typeinput="number" data-name="parent[whatsapp]">{{ $student->parent->whatsapp ?? '-' }}</td>
+                    <td class="border border-slate-500 p-2" style="word-break: break-all;" data-value="{{ $student->parent->whatsapp ?? '-' }}" data-required="1" data-typeinput="number" data-name="parent[whatsapp]">{{ $student->parent->whatsapp ?? '-' }}</td>
                 </tr>
                 <tr>
                     <td class="border border-slate-500 p-2">Email</td>
-                    <td class="border border-slate-500 p-2" data-value="{{ $student->parent->email ?? '-' }}" data-required="1" data-typeinput="email" data-name="parent[email]">{{ $student->parent->email ?? '-' }}</td>
+                    <td class="border border-slate-500 p-2" style="word-break: break-all;" data-value="{{ $student->parent->email ?? '-' }}" data-required="1" data-typeinput="email" data-name="parent[email]">{{ $student->parent->email ?? '-' }}</td>
                 </tr>
             </table>
             <button type="submit" class="bg-accent-1 btn mt-4 text-accent-4 hidden" id="update-ppd-button" disabled>Update</button>

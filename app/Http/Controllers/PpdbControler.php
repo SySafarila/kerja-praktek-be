@@ -363,7 +363,6 @@ class PpdbControler extends Controller
             }
         }
 
-        // return $files->where('file_type', 'kk')->first();
         return view('ppdb-payment', compact('student', 'transaction', 'files'));
     }
 
