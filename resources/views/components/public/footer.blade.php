@@ -2,27 +2,27 @@
     <div class="max-w-screen-lg mx-auto grid lg:grid-cols-3 p-5 gap-5 lg:gap-8">
         <div>
             <h2 class="text-sm text-accent-2 uppercase">Lembaga Pendidikan Nahdatul Ulama</h2>
-            <h3 class="font-semibold text-4xl mb-4 text-accent-2 uppercase">SMA Ma'arif Pacet Cianjur</h3>
-            <p class="text-accent-2"><b class="text-accent-2">Alamat : </b>Cipendawa, Pacet, Cianjur Regency, West Java
-                43253</p>
+            <h3 class="font-semibold text-xl mb-2 text-accent-2 uppercase">SMA Ma'arif Pacet Cianjur</h3>
+            <p class="text-accent-2"><b class="text-accent-2">Alamat : </b>Jl.Raya Pacet No.30 RT/RW 04/04 Kp. Pasircina
+                Desa Cipendawa Kecamatan Pacet Kabupate Cianjur Jawa Barat 43253</p>
             <div class="flex flex-col gap-2 mt-2">
                 <div class="flex items-center gap-2.5">
                     <span class="material-icons text-accent-2">email</span>
-                    <span class="text-accent-2">emailsmamaarif@gmail.com</span>
+                    <span class="text-accent-2">sma.maarif.pacet@gmail.com</span>
                 </div>
                 <div class="flex items-center gap-2.5">
                     <span class="material-icons text-accent-2">phone</span>
-                    <span class="text-accent-2">+62 877-2027-11111</span>
+                    <span class="text-accent-2">+62 856-2485-7093</span>
                 </div>
                 <div class="flex items-center gap-3">
-                    <a href="#">
-                        <i class="fa-brands fa-square-facebook text-white text-2xl"></i>
+                    <a href="https://id-id.facebook.com/smarter83/">
+                        <i class="fa-brands fa-square-facebook text-white hover:text-yellow-200 text-2xl"></i>
+                    </a>
+                    <a href="https://www.instagram.com/smamaarifpacet/">
+                        <i class="fa-brands fa-instagram text-white text-2xl hover:text-yellow-200"></i>
                     </a>
                     <a href="#">
-                        <i class="fa-brands fa-instagram text-white text-2xl"></i>
-                    </a>
-                    <a href="#">
-                        <i class="fa-brands fa-youtube text-white text-2xl"></i>
+                        <i class="fa-brands fa-youtube text-white text-2xl hover:text-yellow-200"></i>
                     </a>
                 </div>
             </div>
@@ -30,10 +30,10 @@
         <div>
             <h3 class="font-semibold text-lg mb-2 text-accent-2">Profile</h3>
             <div class="flex flex-col gap-2">
-                <a href="{{route('about-us')}}" class="text-accent-2">About Us</a>
-                <a href="{{route('contact-us')}}" class="text-accent-2">Contact Us</a>
-                <a href="{{route('teachers-staffs')}}" class="text-accent-2">Teachers & Staffs</a>
-                <a href="{{route('subjects')}}" class="text-accent-2">Subjetcs</a>
+                <a href="{{ route('about-us') }}" class="text-accent-2">About Us</a>
+                <a href="{{ route('contact-us') }}" class="text-accent-2">Contact Us</a>
+                <a href="{{ route('teachers-staffs') }}" class="text-accent-2">Teachers & Staffs</a>
+                <a href="{{ route('subjects') }}" class="text-accent-2">Subjetcs</a>
             </div>
         </div>
         <div>
@@ -41,7 +41,7 @@
             <div class="flex flex-col gap-2">
                 <a href="#" class="text-accent-2">E-Library</a>
                 <a href="#" class="text-accent-2">PPDB</a>
-                <a href="{{route('extracurriculars')}}" class="text-accent-2">Extracurriculars</a>
+                <a href="{{ route('extracurriculars') }}" class="text-accent-2">Extracurriculars</a>
                 <a href="{{ route('galleries') }}" class="text-accent-2">Galleries</a>
             </div>
         </div>

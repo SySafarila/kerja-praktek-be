@@ -29,12 +29,16 @@
             </div>
         </div>
     </div>
-
     <div class="my-10">
         @if ($extracurriculars->isEmpty())
             <p class="text-center my-32 text-xl text-accent-3/50">There's no extracurriculars published yet</p>
         @else
             <div class="max-w-screen-lg mx-auto bg-white">
+                <div class="flex flex-col items-center">
+                    <h1 class="text-2xl mt-4 font-bold text-accent-1">EKSTRAKURIKULER</h1>
+                    <div class="border-b-4 border-accent-1 mb w-[400px] mb-1"></div>
+                    <div class="border-b-4 border-accent-1 mb w-[300px]"></div>
+                </div>
                 <div class="grid grid-cols-2 gap-x-8 gap-y-6 mx-8 py-8">
                     @foreach ($extracurriculars as $item)
                         <a href="{{ route('extracurriculars.show', ['id' => $item->id]) }}"

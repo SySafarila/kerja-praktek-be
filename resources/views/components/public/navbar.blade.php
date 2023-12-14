@@ -1,3 +1,4 @@
+</nav>
 <nav class="bg-accent-1 fixed w-full top-0 left-0 z-50 py-1">
     <div class="max-w-screen-lg mx-auto flex flex-col lg:flex-row justify-between px-5 py-2 lg:py-1.5">
         <div class="flex justify-between w-full">

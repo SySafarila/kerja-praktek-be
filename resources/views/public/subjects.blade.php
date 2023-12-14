@@ -31,7 +31,7 @@
     </div>
 
     <div class="max-w-screen-lg mx-auto">
-        <img src="{{ asset('images/photos/photo1.png') }}" class="w-full h-72 lg:h-96 object-cover mt-8" alt="">
+        <img src="{{ asset('images/photos/photo4.png') }}" class="w-full h-72 lg:h-96 object-cover mt-8" alt="">
         <div class="bg-white p-4 my-8 font-semibold">
             <h1 class="text-xl text-center">MATA PELAJARAN</h1>
             <div class="grid grid-cols-3 text-center px-8 py-4">
