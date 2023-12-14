@@ -37,7 +37,7 @@
         </li>
     @endcan
     @if (Route::has('admin.midtrans-settings.index'))
-        @can('articles-read')
+        @can('midtrans-settings')
             <li class="nav-item">
                 <a href="{{ route('admin.midtrans-settings.index') }}"
                     class="nav-link {{ request()->routeIs('admin.midtrans-settings.index') ? 'active' : '' }}">
