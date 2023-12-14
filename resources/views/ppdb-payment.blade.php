@@ -62,26 +62,18 @@
                         </div>
                     </div>
                 @endif
-                @if ($transaction->payment_method == 'offline')
-                    <div class="flex flex-col" id="payment_school_detail">
-                        <span>Nomor Pendaftaran</span>
-                        <div class="flex justify-between items-center">
-                            <span class="text-xl font-semibold">{{ $transaction->order_id }}</span>
-                        </div>
-                    </div>
-                @endif
                 @if ($transaction->payment_method == 'qris')
                     <div class="flex flex-col" id="payment_qris_detail">
                         <span class="block text-center">Scan QR Code</span>
                         <img src="{{ $transaction->link_qr_code }}" alt="" class="w-60 mx-auto">
-                        <p class="text-center">Dapat digunakan dengan GoPay, OVO, dan aplikasi sejenis yang mendukung QRIS</p>
+                        <p class="text-center">Dapat digunakan dengan GoPay, OVO, dan aplikasi lain yang memiliki fitur QRIS</p>
                     </div>
                 @endif
                 @if ($transaction->payment_method == 'gopay')
                     <div class="flex flex-col" id="payment_qris_detail">
                         <span class="block text-center">Scan QR Code</span>
                         <img src="{{ $transaction->link_qr_code }}" alt="" class="w-60 mx-auto">
-                        <p class="text-center">Dapat digunakan dengan GoPay, OVO, dan aplikasi sejenis yang mendukung QRIS</p>
+                        <p class="text-center">Dapat digunakan dengan GoPay, OVO, dan aplikasi lain yang memiliki fitur QRIS</p>
                         <p class="text-center py-2.5">Atau</p>
                         <a href="{{ $transaction->link_deeplink }}" class="bg-accent-1 btn mx-auto text-center flex items-center gap-1.5">
                             <span class="text-accent-4">Buka Aplikasi</span>

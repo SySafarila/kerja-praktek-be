@@ -80,6 +80,11 @@ class Controller extends BaseController
         ]);
     }
 
+    /**
+     * Redirect action if there is an error with Midtrans Core API
+     * @param Exception $th
+     * @return redirect
+     */
     public function midtrans_error_redirect($th)
     {
         switch ($th->getCode()) {
@@ -165,6 +170,10 @@ class Controller extends BaseController
         }
     }
 
+    /**
+     * Write a Logs if there is an error with Midtrans Core API
+     * @param Exception $th
+     */
     public function midtrans_error_logger($th)
     {
         switch ($th->getCode()) {
@@ -250,6 +259,11 @@ class Controller extends BaseController
         }
     }
 
+    /**
+     * Set the Transaction status to 'settlement' that mean paid or completed
+     * @param model $transaction
+     * @param midtrans_response $response
+     */
     public function midtrans_settlement($transaction, $response)
     {
         $transaction->update([
@@ -259,6 +273,11 @@ class Controller extends BaseController
         ]);
     }
 
+    /**
+     * Set the Transaction status to 'expire'
+     * @param model $transaction
+     * @param midtrans_response $response
+     */
     public function midtrans_expire($transaction, $response)
     {
         $transaction->update([
@@ -267,6 +286,11 @@ class Controller extends BaseController
         ]);
     }
 
+    /**
+     * Set the Transaction status to 'cancel'
+     * @param model $transaction
+     * @param midtrans_response $response
+     */
     public function midtrans_cancel($transaction, $response)
     {
         $transaction->delete();

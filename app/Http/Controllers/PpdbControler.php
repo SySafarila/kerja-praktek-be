@@ -212,7 +212,6 @@ class PpdbControler extends Controller
             // create transaction
             $order_id = 'PPDB-' . uniqid();
 
-            // $this->charge_transaction($payment_method, $order_id, $student['full_name'], $user);
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -224,7 +223,7 @@ class PpdbControler extends Controller
         // charge transaction
         DB::beginTransaction();
         try {
-            $this->charge_transaction($payment_method, $order_id, $student, $user);
+            $this->charge_transaction($payment_method, $student, $user);
             DB::commit();
         } catch (\Throwable $th) {
             //throw $th;
@@ -461,7 +460,7 @@ class PpdbControler extends Controller
                     // change payment method to offline
                     DB::beginTransaction();
                     try {
-                        $this->charge_transaction($request->update_payment_method, $order_id, $user->student, $user);
+                        $this->charge_transaction($request->update_payment_method, $user->student, $user);
                         $transaction->delete();
                         DB::commit();
                     } catch (\Throwable $th) {
@@ -475,7 +474,7 @@ class PpdbControler extends Controller
                     // charge new transaction
                     DB::beginTransaction();
                     try {
-                        $this->charge_transaction($request->update_payment_method, $order_id, $user->student, $user);
+                        $this->charge_transaction($request->update_payment_method, $user->student, $user);
                         DB::commit();
                     } catch (\Throwable $th) {
                         //throw $th;
@@ -519,7 +518,7 @@ class PpdbControler extends Controller
             $order_id = 'PPDB-' . uniqid();
             DB::beginTransaction();
             try {
-                $this->charge_transaction('qris', $order_id, $user->student, $user);
+                $this->charge_transaction('qris', $user->student, $user);
                 DB::commit();
                 return redirect()->route('ppdb.payment')->with('error', 'Kami tidak dapat menemukan transaksi pembayaran kamu. Sebagai gantinya, kami telah membuatkan transaksi yang baru.');
             } catch (\Throwable $th) {
@@ -561,8 +560,17 @@ class PpdbControler extends Controller
         return view('ppdb-payment', compact('student', 'transaction', 'files'));
     }
 
-    function charge_transaction($payment_method, $order_id, $student, $user)
+    /**
+     * Charge a transaction to Midtrans Core API
+     * @param string $payment_method
+     * @param model $student
+     * @param model $user
+     * @return object
+     * @throws Exception
+     */
+    function charge_transaction($payment_method, $student, $user)
     {
+        $order_id = 'PPDB-' . uniqid();
         $gross_amount = PpdbSetting::where('key', 'price')->first()->value;
         if ($payment_method == 'offline') {
             // bayar di sekolah
@@ -743,7 +751,7 @@ class PpdbControler extends Controller
                     $link_deeplink = $response->actions[0]->url;
                 }
 
-                $user->transaction()->create([
+                return $user->transaction()->create([
                     'student_id' => $student->id,
                     'order_id' => $response->order_id,
                     'fraud_status' => $response->fraud_status,
