@@ -20,7 +20,7 @@ class MidtransKeySeeder extends Seeder
         ]);
         MidtransKey::create([
             'type' => 'server key dev',
-            'key' => 'SB-Mid-server-U0LNlNf5EoS7-46FK7hbFsOQ',
+            'key' => 'SB-Mid-server-xZEIGnr58CAXaUADCIsH25bK',
             'isProd' => false
         ]);
 
@@ -31,7 +31,7 @@ class MidtransKeySeeder extends Seeder
         ]);
         MidtransKey::create([
             'type' => 'client key dev',
-            'key' => 'SB-Mid-client-CU8cYh2JeI8H-I8s',
+            'key' => 'SB-Mid-client-sNsp8afAJaJKnHhe',
             'isProd' => false
         ]);
 
