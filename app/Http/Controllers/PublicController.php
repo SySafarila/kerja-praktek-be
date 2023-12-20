@@ -11,6 +11,7 @@ use App\Models\Extracurricular;
 use App\Models\Gallery;
 use App\Models\GalleryImage;
 use Carbon\Carbon;
+use App\Models\Elibrary;
 
 class PublicController extends Controller
 {
