@@ -1,4 +1,57 @@
+@php
+    function exchange($payment_method) {
+        switch ($payment_method) {
+            case 'va_bca':
+                return 'BCA Virtual Account';
+                break;
+
+            case 'va_bni':
+                return 'BNI Virtual Account';
+                break;
+
+            case 'va_bri':
+                return 'BRI Virtual Account';
+                break;
+
+            case 'va_permata':
+                return 'Permata Virtual Account';
+                break;
+
+            case 'va_cimb':
+                return 'CIMB Virtual Account';
+                break;
+
+            case 'gopay':
+                return 'GoPay';
+                break;
+
+            case 'shopeepay':
+                return 'ShopeePay';
+                break;
+
+            case 'qris':
+                return 'QRIS';
+                break;
+
+            case 'offline':
+                return 'Bayar di sekolah';
+                break;
+
+            default:
+                return '-';
+                break;
+        }
+    }
+@endphp
 @extends('layouts.adminlte')
+
+@section('head')
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp">
+
+    {{-- Select2 --}}
+    <link rel="stylesheet" href="{{ asset('adminlte-3.2.0/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('adminlte-3.2.0/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+@endsection
 
 @section('content')
 <div class="content-header">
@@ -42,10 +95,44 @@
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
+                    <div class="form-group">
+                        <label for="payment_methods" class="text-capitalize">Metode Pembayaran</label>
+                        <select class="select2 form-control" multiple="multiple" name="payment_methods[]"
+                            data-placeholder="Select payments" style="width: 100%;">
+                            @foreach (explode(',', $payment_method_list) as $payment_method)
+                                <option value="{{ $payment_method }}" {{ in_array($payment_method, explode(',', $payment_methods->value)) ? 'selected' : '' }}>{{ exchange($payment_method) }}</option>
+                            @endforeach
+                        </select>
+                        @error('payment_methods')
+                        <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
+                        @enderror
+                    </div>
                     <button type="submit" class="btn btn-primary btn-sm">Save</button>
                 </form>
+                {{-- @foreach (explode(',', $payment_method_list) as $payment_method)
+                    <p>{{ $payment_method }}</p>
+                @endforeach
+                <p>=========================</p>
+                @foreach (explode(',', $payment_methods) as $payment_method)
+                    <p>{{ $payment_method }}</p>
+                @endforeach --}}
             </div>
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+    {{-- jQuery --}}
+    <script src="{{ asset('adminlte-3.2.0/plugins/jquery/jquery.min.js') }}"></script>
+    {{-- Bootstrap 4 --}}
+    <script src="{{ asset('adminlte-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    {{-- Select2 --}}
+    <script src="{{ asset('adminlte-3.2.0/plugins/select2/js/select2.full.min.js') }}"></script>
+    <script>
+        $('.select2').select2({
+                theme: 'bootstrap4',
+                closeOnSelect: false
+            })
+    </script>
 @endsection
