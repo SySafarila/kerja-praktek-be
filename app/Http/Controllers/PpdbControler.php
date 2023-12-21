@@ -29,10 +29,11 @@ class PpdbControler extends Controller
     {
         $user = Auth::user();
         $gross_amount = PpdbSetting::where('key', 'price')->first()->value;
+        $payment_methods = PpdbSetting::where('key', 'payment_methods')->first();
         if ($user->student) {
             return redirect()->route('ppdb.payment');
         }
-        return view('ppdb', compact('gross_amount'));
+        return view('ppdb', compact('gross_amount', 'payment_methods'));
     }
 
     /**
@@ -48,6 +49,7 @@ class PpdbControler extends Controller
      */
     public function store(Request $request)
     {
+        $payment_methods = PpdbSetting::where('key', 'payment_methods')->first()->value;
         $request->validate([
             'student.nisn' => ['required', 'numeric', 'digits:10'],
             'student.full_name' => ['required', 'string', 'max:255'],
@@ -69,7 +71,7 @@ class PpdbControler extends Controller
             'parent.income_per_month' => ['required', 'numeric'],
             'parent.whatsapp' => ['required', 'numeric', 'max_digits:255'],
             'parent.email' => ['required', 'email', 'max:255'],
-            'payment_method' => ['required', 'string', 'in:qris,va_bca,va_bni,va_bri,va_permata,va_cimb,gopay,shopeepay,offline']
+            'payment_method' => ['required', 'string', "in:$payment_methods"]
         ], [
             'student.nisn' => [
                 'required' => 'Diperlukan.',
@@ -432,8 +434,9 @@ class PpdbControler extends Controller
 
     public function update_payment(Request $request)
     {
+        $payment_methods = PpdbSetting::where('key', 'payment_methods')->first()->value;
         $request->validate([
-            'update_payment_method' => ['required', 'string', 'in:qris,va_bca,va_bni,va_bri,va_permata,va_cimb,gopay,shopeepay,offline']
+            'update_payment_method' => ['required', 'string', "in:$payment_methods"]
         ], [
             'payment_method' => [
                 'required' => 'Diperlukan.',
@@ -506,6 +509,7 @@ class PpdbControler extends Controller
     public function payment()
     {
         $user = Auth::user();
+        $payment_methods = PpdbSetting::where('key', 'payment_methods')->first();
         if (!$user->student) {
             return redirect()->route('ppdb.index');
         }
@@ -557,7 +561,7 @@ class PpdbControler extends Controller
             }
         }
 
-        return view('ppdb-payment', compact('student', 'transaction', 'files'));
+        return view('ppdb-payment', compact('student', 'transaction', 'files', 'payment_methods'));
     }
 
     /**

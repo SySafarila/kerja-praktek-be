@@ -1,3 +1,49 @@
+@php
+    function exchange($payment_method) {
+        switch ($payment_method) {
+            case 'va_bca':
+                return 'BCA Virtual Account';
+                break;
+
+            case 'va_bni':
+                return 'BNI Virtual Account';
+                break;
+
+            case 'va_bri':
+                return 'BRI Virtual Account';
+                break;
+
+            case 'va_permata':
+                return 'Permata Virtual Account';
+                break;
+
+            case 'va_cimb':
+                return 'CIMB Virtual Account';
+                break;
+
+            case 'gopay':
+                return 'GoPay';
+                break;
+
+            case 'shopeepay':
+                return 'ShopeePay';
+                break;
+
+            case 'qris':
+                return 'QRIS';
+                break;
+
+            case 'offline':
+                return 'Bayar di sekolah';
+                break;
+
+            default:
+                return '-';
+                break;
+        }
+    }
+@endphp
+
 @extends('layouts.public')
 
 @section('head')
@@ -245,16 +291,10 @@
                     <label for="paymentmethod" class="font-semibold capitalize">Metode Pembayaran <span
                             class="text-red-500">*</span></label>
                     <select class="w-full border-gray-500 border outline-none rounded-lg" name="payment_method" id="paymentmethod">
-                        <option value="" selected disabled>Pilih</option>
-                        <option value="offline" @if(old('payment_method') == 'offline') selected @endif>Bayar Di Sekolah</option>
-                        <option value="qris" @if(old('payment_method') == 'qris') selected @endif>QRIS</option>
-                        <option value="gopay" @if(old('payment_method') == 'gopay') selected @endif>GoPay</option>
-                        <option value="shopeepay" @if(old('payment_method') == 'shopeepay') selected @endif>ShopeePay</option>
-                        <option value="va_bca" @if(old('payment_method') == 'va_bca') selected @endif>BCA Virtual Account</option>
-                        <option value="va_bni" @if(old('payment_method') == 'va_bni') selected @endif>BNI Virtual Account</option>
-                        <option value="va_bri" @if(old('payment_method') == 'va_bri') selected @endif>BRI Virtual Account</option>
-                        <option value="va_permata" @if(old('payment_method') == 'va_permata') selected @endif>Permata Virtual Account</option>
-                        <option value="va_cimb" @if(old('payment_method') == 'va_cimb') selected @endif>CIMB Virtual Account</option>
+                        <option selected disabled>Pilih</option>
+                        @foreach (explode(',', $payment_methods->value) as $payment_method)
+                            <option value="{{ $payment_method }}" @if(old('payment_method') == $payment_method) selected @endif>{{ exchange($payment_method) }}</option>
+                        @endforeach
                     </select>
                     <p>*Gratis batik untuk 50 pendaftar pertama</p>
                 </div>

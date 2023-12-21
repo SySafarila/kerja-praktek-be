@@ -33,13 +33,25 @@ class PpdbSettingController extends Controller
             ]);
         }
 
-        return view('ppdb-settings.index', compact('ppdb_price', 'ppdb_accept_student'));
+        $payment_methods = PpdbSetting::where('key', 'payment_methods')->first();
+        if (!$payment_methods) {
+            $payment_methods = PpdbSetting::create([
+                'key' => 'payment_methods',
+                'value' => 'qris,va_bca,va_bni,va_bri,va_permata,va_cimb,gopay,shopeepay,offline'
+            ]);
+        }
+
+        $payment_method_list = 'qris,va_bca,va_bni,va_bri,va_permata,va_cimb,gopay,shopeepay,offline';
+
+        return view('ppdb-settings.index', compact('ppdb_price', 'ppdb_accept_student', 'payment_methods', 'payment_method_list'));
     }
 
     public function update(Request $request) {
         $request->validate([
             'ppdb_price' => ['required', 'numeric', 'min:1'],
-            'accept_students' => ['required', 'string', 'in:true,false']
+            'accept_students' => ['required', 'string', 'in:true,false'],
+            'payment_methods' => ['required'],
+            'payment_methods.*' => ['required', 'string','in:qris,va_bca,va_bni,va_bri,va_permata,va_cimb,gopay,shopeepay,offline']
         ]);
 
         $ppdb_price = PpdbSetting::where('key', 'price')->first();
@@ -50,6 +62,11 @@ class PpdbSettingController extends Controller
         $ppdb_accept_student = PpdbSetting::where('key', 'accept_students')->first();
         $ppdb_accept_student->update([
             'value' => $request->accept_students
+        ]);
+
+        $payment_methods = PpdbSetting::where('key', 'payment_methods')->first();
+        $payment_methods->update([
+            'value' => implode(',', $request->payment_methods)
         ]);
 
         return back()->with('success', 'Settings updated!');

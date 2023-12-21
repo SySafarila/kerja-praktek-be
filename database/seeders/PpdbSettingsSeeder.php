@@ -21,5 +21,9 @@ class PpdbSettingsSeeder extends Seeder
             'key' => 'accept_students',
             'value' => 'true'
         ]);
+        PpdbSetting::create([
+            'key' => 'payment_methods',
+            'value' => 'qris,va_bca,va_bni,va_bri,va_permata,va_cimb,gopay,shopeepay,offline'
+        ]);
     }
 }
