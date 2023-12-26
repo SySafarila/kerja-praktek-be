@@ -320,6 +320,66 @@ class PermissionSeeder extends Seeder
 
         );
 
+        // elibrary
+         array_push(
+            $arr,
+            [
+                'guard_name' => 'web',
+                'name' => 'elibrary-create',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'elibrary-read',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'elibrary-update',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'elibrary-delete',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+
+        );
+
+         // peminjaman
+         array_push(
+            $arr,
+            [
+                'guard_name' => 'web',
+                'name' => 'peminjaman-create',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'peminjaman-read',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'peminjaman-update',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'guard_name' => 'web',
+                'name' => 'peminjaman-delete',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+
+        );
+
         // articles
         array_push(
             $arr,
