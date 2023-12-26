@@ -4,15 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Elibrary;
+use DOMDocument;
+use Illuminate\Http\File;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Yajra\DataTables\Facades\DataTables;
 
 class ElibraryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        return view('elibrary.index');
+        $elibraries = Elibrary::all();
+        return view('elibrary.index', compact('elibraries'));
     }
 
     /**
@@ -35,13 +39,22 @@ class ElibraryController extends Controller
      * Display the specified resource.
      */
     public function show(string $id)
+
     {
-        return view('elibrary.show');
+        // Mendapatkan buku sesuai dengan ID yang diberikan
+    $elibrary = Elibrary::findOrFail($id);
+
+    // Mendapatkan beberapa buku terbaru (kecuali buku yang sedang ditampilkan)
+    $latestBooks = Elibrary::where('id', '!=', $id)->orderBy('created_at', 'desc')->take(6)->get();
+
+    return view('elibrary.show', compact('elibrary', 'latestBooks'));
     }
 
     public function list(string $jenis_buku)
     {
-        return view('elibrary.list');
+        $elibraries = Elibrary::where('jenis_buku', $jenis_buku)->get();
+
+        return view('elibrary.list', compact('elibraries'));
     }
 
     /**

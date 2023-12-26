@@ -38,7 +38,7 @@ class ElibraryAdminController extends Controller
                 ->toJson();
         }
 
-        return view('elibraryadmin.index');
+        return view('elibraryadmin.index',);
     }
 
     /**

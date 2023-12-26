@@ -96,9 +96,10 @@ class ElibraryAdminPeminjamanController extends Controller
      */
     public function edit(string $id)
     {
-        $books = Peminjaman::findOrFail($id);
+        $peminjaman = Peminjaman::findOrFail($id);
+        $books = Elibrary::all();
 
-        return view('elibraryadminpeminjaman.edit', compact('books'));
+        return view('elibraryadminpeminjaman.edit', compact('peminjaman','books'));
     }
 
     /**
@@ -115,6 +116,7 @@ class ElibraryAdminPeminjamanController extends Controller
             'tanggal_peminjaman' => 'required|date|max:255',
         ]);
 
+        $peminjaman = Peminjaman::findOrFail($id);
         $peminjaman->update([
             'nama' => $request->nama,
             'book_id' => $request->book_id,

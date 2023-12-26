@@ -75,12 +75,15 @@
 
                         <div class="form-group">
                             <label for="jumlah" class="text-capitalize">Jumlah</label>
-                            <input type="text" class="form-control" id="jumlah" name="jumlah"
-                                placeholder="Masukan Jumlah Buku yang dipinjam" required>
-                            @error('penerbit')
+                            <input type="text" class="form-control" id="jumlah" name="jumlah" placeholder="Masukan Jumlah Buku yang dipinjam"
+                                   pattern="[0-9]+" title="Please enter only numeric values" required>
+                            @error('jumlah')
                                 <div class="text-sm text-danger">{{ $message }}</div>
                             @enderror
                         </div>
+
+
+
 
                         <div class="form-group">
                             <label for="tanggal_peminjaman" class="text-capitalize">Tanggal Peminjaman</label>

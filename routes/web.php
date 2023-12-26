@@ -56,8 +56,8 @@ Route::view('/about-us', 'public.about-us')->name('about-us');
 
 //elibrary
 Route::get('/elibrary', [ElibraryController::class, 'index'])->name('elibrary'); //halaman utama
-//Route::get('/elibrary/{id}', [ElibraryController::class, 'show'])->name('elibrary.show'); //detail
-Route::get('/elibrary/{id}', [ElibraryController::class, 'list'])->name('elibrary.list'); //list buku
+Route::get('/elibrary/{id}', [ElibraryController::class, 'show'])->name('elibrary.show'); //detail
+Route::get('/elibrary/list/{jenis_buku}', [ElibraryController::class, 'list'])->name('elibrary.list'); //list buku
 
 // ppdb
 Route::resource('/ppdb', PpdbControler::class)->only(['index', 'store', 'update']);

@@ -81,9 +81,9 @@
 
                         <div class="form-group">
                             <label for="jumlah_buku" class="text-capitalize">Jumlah Buku</label>
-                            <input type="text" class="form-control" id="jumlah_buku" name="jumlah_buku" placeholder="Masukan Jumlah Buku">
+                            <input type="number" class="form-control" id="jumlah_buku" name="jumlah_buku" placeholder="Masukan Jumlah Buku" min="0">
                             @error('jumlah_buku')
-                            <div class="text-sm text-danger">{{ $message }}</div>
+                                <div class="text-sm text-danger">{{ $message }}</div>
                             @enderror
                         </div>
 
