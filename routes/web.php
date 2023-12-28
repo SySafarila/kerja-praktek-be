@@ -21,6 +21,9 @@ use App\Http\Controllers\PublicController;
 use App\Http\Controllers\PpdbControler;
 use App\Http\Controllers\PpdbSettingController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ElibraryController;
+use App\Http\Controllers\ElibraryAdminController;
+use App\Http\Controllers\ElibraryAdminPeminjamanController;
 
 
 /*
@@ -50,6 +53,11 @@ Route::get('/teachers-staffs', [PublicController::class, 'teachersStaffs'])->nam
 
 Route::view('/contact-us', 'public.contact-us')->name('contact-us');
 Route::view('/about-us', 'public.about-us')->name('about-us');
+
+//elibrary
+Route::get('/elibrary', [ElibraryController::class, 'index'])->name('elibrary'); //halaman utama
+Route::get('/elibrary/{id}', [ElibraryController::class, 'show'])->name('elibrary.show'); //detail
+Route::get('/elibrary/list/{jenis_buku}', [ElibraryController::class, 'list'])->name('elibrary.list'); //list buku
 
 // ppdb
 Route::resource('/ppdb', PpdbControler::class)->only(['index', 'store', 'update']);
@@ -96,6 +104,15 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     // articles
     // Route::resource('/articles', ArticleController::class);
 
+    //elibrary Admin
+    Route::resource('/elibrary', ElibraryAdminController::class);
+
+    //elibrary peminjaman
+    Route::resource('/elibraryadminpeminjaman', ElibraryAdminPeminjamanController::class);
+
+    //elibrary peminjaman buku
+    // Route::resource('/elibrary-peminjaman', ElibraryAdminPeminjamanController::class)->except(['show']);
+
     // settings
     Route::resource('/midtrans-settings', MidtransSetting::class)->only(['index', 'update']);
 
@@ -118,7 +135,10 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     Route::delete('/bulk-delete/galleries', [GalleriesController::class, 'massDestroy'])->name('galleries.massDestroy');
     Route::delete('/bulk-delete/testimonials', [TestimonialController::class, 'massDestroy'])->name('testimonials.massDestroy');
     Route::delete('/bulk-delete/ppdb', [PpdbAdminController::class, 'massDestroy'])->name('ppdb.massDestroy');
+    Route::delete('/bulk-delete/elibrary', [ElibraryAdminController::class, 'massDestroy'])->name('elibrary.massDestroy');
     // Route::delete('/bulk-delete/articles', [ArticleController::class, 'massDestroy'])->name('articles.massDestroy');
+    Route::delete('/bulk-delete/elibraryadminpeminjaman', [ElibraryAdminPeminjamanController::class, 'massDestroy'])->name('elibraryadminpeminjaman.massDestroy');
+
 });
 
 // account re-verification

@@ -187,6 +187,41 @@
                         </li>
                     @endcan
                 @endif
+
+                @canany(['elibrary-read'])
+                    @if (Route::has('admin.elibrary.index'))
+                        @can('elibrary-read')
+                            <li class="nav-item">
+                                <a href="{{ route('admin.elibrary.index') }}"
+                                    class="nav-link {{ request()->routeIs('admin.elibrary.*') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-book"></i>
+                                    <p class="text-capitalize">
+                                        elibrary
+                                        {{-- <span class="right badge badge-danger">New</span> --}}
+                                    </p>
+                                </a>
+                            </li>
+                        @endcan
+                    @endif
+                @endcanany
+
+                @canany(['peminjaman-read'])
+                    @if (Route::has('admin.elibraryadminpeminjaman.index'))
+                        @can('peminjaman-read')
+                            <li class="nav-item">
+                                <a href="{{ route('admin.elibraryadminpeminjaman.index') }}"
+                                    class="nav-link {{ request()->routeIs('admin.elibraryadminpeminjaman.*') ? 'active' : '' }}">
+                                        <i class="nav-icon fas fa-book-open"></i>
+                                    <p class="text-capitalize">
+                                        Peminjaman Buku
+                                        {{-- <span class="right badge badge-danger">New</span> --}}
+                                    </p>
+                                </a>
+                            </li>
+                        @endcan
+                    @endif
+                @endcanany
+
                 <x-adminlte.sidebar-system />
                 <li class="nav-item mt-2 pt-2" style="border-top: 1px solid #4f5962;">
                     <a href="{{ route('logout') }}" class="nav-link"
