@@ -44,7 +44,7 @@
                                     <span style="display: none;">Selector</span>
                                 </th>
                                 <th>Peminjam</th>
-                                <th>Tanggal Meminjam</th>\
+                                <th>Tanggal Meminjam</th>
                                 <th>Status</th>
                                 <th class="d-print-none">Options</th>
                             </tr>

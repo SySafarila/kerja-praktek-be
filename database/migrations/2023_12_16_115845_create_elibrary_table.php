@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('penerbit')->nullable();
             $table->string('foto_buku');
             $table->enum('jenis_buku', ['Kelas 10', 'Kelas 11', 'Kelas 12', 'Makalah', 'Lainnya']);
+            $table->enum('rak',['Rak Buku Mapel', 'Rak Novel', 'Rak Majalah', 'Rak Bacaan Umum']);
             $table->string('jumlah_buku')->nullable();
             $table->string('deskripsi');
             $table->string('file')->nullable();
