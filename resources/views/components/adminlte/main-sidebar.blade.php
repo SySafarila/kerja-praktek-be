@@ -199,8 +199,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <small class="d-block text-capitalize text-center"
-                        style="color: #c2c7d0;">{{ config('app.version') }}</small>
+                    <small class="d-block text-capitalize text-center" style="color: #c2c7d0;">{{ config('app.version') }}</small>
+                    <small class="d-block text-capitalize text-center" style="color: #c2c7d0;">Admin Panel By <a href="https://www.instagram.com/sysafarila/" target="_blank" rel="noopener noreferrer">SySafarila</a></small>
                 </li>
             </ul>
         </nav>
