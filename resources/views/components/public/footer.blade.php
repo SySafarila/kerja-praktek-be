@@ -39,7 +39,7 @@
         <div>
             <h3 class="font-semibold text-lg mb-2 text-accent-2">Link Terkait</h3>
             <div class="flex flex-col gap-2">
-                <a href="#" class="text-accent-2">E-Library</a>
+                <a href="{{ route('elibrary') }}" class="text-accent-2">E-Library</a>
                 <a href="{{ route('ppdb.index') }}" class="text-accent-2">PPDB</a>
                 <a href="{{ route('extracurriculars') }}" class="text-accent-2">Extracurriculars</a>
                 <a href="{{ route('galleries') }}" class="text-accent-2">Galleries</a>

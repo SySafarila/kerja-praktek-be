@@ -52,10 +52,21 @@ class ElibraryController extends Controller
 
     public function list(string $jenis_buku)
     {
-        $elibraries = Elibrary::where('jenis_buku', $jenis_buku)->get();
+        $elibraries = Elibrary::where('jenis_buku', $jenis_buku)->orderBy('created_at', 'desc')->paginate(12);
 
         return view('elibrary.list', compact('elibraries'));
     }
+
+
+
+
+
+    // public function list(string $jenis_buku)
+    // {
+    //     $elibraries = Elibrary::where('jenis_buku', $jenis_buku)->get();
+
+    //     return view('elibrary.list', compact('elibraries'));
+    // }
 
     /**
      * Show the form for editing the specified resource.
