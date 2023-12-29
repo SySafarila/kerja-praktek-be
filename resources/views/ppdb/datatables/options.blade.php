@@ -1,4 +1,9 @@
 <div class="d-flex flex-column flex-md-row justify-content-center" style="gap: 0.5rem">
+    @isset($model->transaction)
+        @if (@$model->transaction->transaction_status == 'settlement')
+            <a href="{{ route('admin.ppdb.archive', $model->id) }}" target="__blank" class="border btn btn-light btn-sm">Print</a>
+        @endif
+    @endisset
     <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
         data-target="#detailModal-{{ $model->id }}">Detail</button>
     @can('ppdb-update')

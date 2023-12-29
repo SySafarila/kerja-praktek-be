@@ -121,6 +121,7 @@ Route::middleware(['auth', 'verified', 'can:admin-access'])->prefix('admin')->na
     // ppdb
     Route::patch('/ppdb/confirm-offline-payment/{student_id}', [PpdbAdminController::class, 'confirm_offline_payment'])->name('ppdb.confirm-offline-payment');
     Route::get('/ppdb/private-files', [PpdbAdminController::class, 'download_private_file'])->name('ppdb.download-private-files');
+    Route::get('/ppdb/archive/{student_id}', [PpdbAdminController::class, 'archive'])->name('ppdb.archive');
     Route::resource('/ppdb', PpdbAdminController::class);
     Route::get('/ppdb-settings', [PpdbSettingController::class, 'index'])->name('ppdb-settings.index');
     Route::patch('/ppdb-settings', [PpdbSettingController::class, 'update'])->name('ppdb-settings.update');
