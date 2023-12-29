@@ -10,7 +10,7 @@
 @endsection
 
 @section('content')
-    <div style="background-image: url({{ asset('images/photos/photo2.png') }})" class="w-full">
+    <div style="background-image: url({{ asset('images/photos/photo1-cropped.png') }})" class="w-full">
         <div class="bg-[#356F11]/70 backdrop-blur-[1px]">
             <div class="max-w-screen-lg mx-auto lg:px-5 relative h-40 lg:h-60">>
                 <div
