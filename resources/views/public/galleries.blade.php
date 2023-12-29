@@ -73,17 +73,22 @@
         <div class="splide" id="splide1" aria-label="Splide Basic HTML Example">
             <div class="splide__track">
                 <ul class="splide__list">
+
                     <li class="splide__slide">
-                        <img src="{{ asset('images/banners/Welcome 1.png') }}" alt=""
-                            class="aspect-video w-full h-[400px] object-cover">
+                        <img src="{{ asset('images/photos/Pasmart.jpg') }}" alt=""
+                            class="aspect-video w-full h-[400px] object-cover bg-center">
                     </li>
                     <li class="splide__slide">
-                        <img src="{{ asset('images/banners/Welcome 2.png') }}" alt=""
-                            class="aspect-video w-full h-[400px] object-cover">
+                        <img src="{{ asset('images/photos/Pramuka.jpg') }}" alt=""
+                            class="aspect-video w-full h-[400px] object-cover bg-center" >
                     </li>
                     <li class="splide__slide">
-                        <img src="{{ asset('images/banners/Welcome 3.png') }}" alt=""
-                            class="aspect-video w-full h-[400px] object-cover">
+                        <img src="{{ asset('images/photos/Teater.jpg') }}" alt=""
+                            class="aspect-video w-full h-[400px] object-cover bg-center">
+                    </li>
+                    <li class="splide__slide">
+                        <img src="{{ asset('images/photos/Voli.jpg') }}" alt=""
+                            class="aspect-video w-full h-[400px] object-cover bg-center">
                     </li>
                 </ul>
             </div>

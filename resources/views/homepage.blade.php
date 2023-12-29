@@ -108,7 +108,7 @@
         {{-- <h2 class="text-center text-3xl mb-4">Lorem, ipsum dolor sit amet </h2> --}}
         <div class="grid lg:grid-cols-3 text-accent-3 gap-5">
             <div class="flex flex-col justify-center gap-3 p-5">
-                <img src="{{ asset('icons/boarding school.svg') }}" alt="" class="w-[100px] mx-auto">
+                <img src="{{ asset('images/svgs/mosque.svg') }}" alt="" class="w-[100px] h-[100px] mx-auto">
                 <h3 class="font-bold text-xl text-center">Tahfidz Qur'an</h3>
                 <p class="text-center">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos quisquam ut possimus
                     nulla, cupiditate odio illum. Quam voluptatibus unde, praesentium quisquam cupiditate doloremque.
@@ -116,7 +116,7 @@
                 <a href="#" class="block text-center my-4 hover:text-accent-1 font-semibold">Info Detail</a>
             </div>
             <div class="flex flex-col justify-center gap-3 p-5">
-                <img src="{{ asset('icons/boarding school.svg') }}" alt="" class="w-[100px] mx-auto">
+                <img src="{{ asset('images/svgs/multimedia.svg') }}" alt="" class="w-[100px] h-[100px] mx-auto">
                 <h3 class="font-bold text-xl text-center">Multimedia</h3>
                 <p class="text-center">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos quisquam ut possimus
                     nulla, cupiditate odio illum. Quam voluptatibus unde, praesentium quisquam cupiditate doloremque.
@@ -124,7 +124,7 @@
                 <a href="#" class="block text-center my-4 hover:text-accent-1 font-semibold">Info Detail</a>
             </div>
             {{-- <div class="flex flex-col justify-center gap-3 p-5 lg:p-2 bg-accent-1 text-white rounded-lg">
-                <img src="{{ asset('icons/takhasus.svg') }}" alt="" class="w-[100px] mx-auto">
+                <img src="{{ asset('icons/takhasus.svg') }}" alt="" class="w-[100px] h-[100px] mx-auto">
                 <h3 class="font-bold text-xl text-center text-accent-2">Lorem ipsum</h3>
                 <p class="text-center text-accent-2">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos quisquam
                     ut possimus
@@ -133,7 +133,7 @@
                 <a href="#" class="block text-center my-4">Info Detail</a>
             </div> --}}
             <div class="flex flex-col justify-center gap-3 p-5">
-                <img src="{{ asset('icons/boarding school.svg') }}" alt="" class="w-[100px] mx-auto">
+                <img src="{{ asset('images/svgs/community.svg') }}" alt="" class="w-[100px] h-[100px] mx-auto">
                 <h3 class="font-bold text-xl text-center">English Community</h3>
                 <p class="text-center">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos quisquam ut possimus
                     nulla, cupiditate odio illum. Quam voluptatibus unde, praesentium quisquam cupiditate doloremque.
@@ -177,7 +177,7 @@
                         dolorem?</p>
                 </div>
                 <div>
-                    <iframe class="w-full aspect-video" src="https://www.youtube.com/embed/sTTiTTr12a8?si=5NSxvqRjwOtu_Ueg"
+                    <iframe class="w-full aspect-video" src=""
                         title="YouTube video player" frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         allowfullscreen></iframe>
@@ -191,58 +191,58 @@
         <h1 class="text-3xl text-center text-accent-1">Mengapa Memilih SMA Ma'arif Pacet?</h1>
         <div class="grid lg:grid-cols-3 text-accent-3 mt-5 lg:mt-10">
             <div class="flex flex-col justify-center gap-3 p-5">
-                <img src="{{ asset('icons/boarding school.svg') }}" alt="" class="w-[100px] mx-auto">
+                <img src="{{ asset('images/svgs/map.svg') }}" alt="" class="w-[100px] h-[100px] mx-auto">
                 <h3 class="font-bold text-xl text-center">Lokasi Strategis</h3>
                 <p class="text-center">
-                    Lokasi strategis SMA Ma'arif Pacet Cianjur memberikan akses mudah dan nyaman. Terletak di tempat yang
+                    Lokasi strategis Sekolah memberikan akses mudah dan nyaman. Terletak di tempat yang
                     strategis, sekolah ini memberikan kemudahan bagi siswa dan orang tua dalam mencapai pendidikan
-                    berkualitas. Aksesibilitas yang baik menjadi nilai tambah, menciptakan lingkungan belajar yang optimal
+                    berkualitas. Aksesibilitas yang baik menciptakan lingkungan belajar yang optimal
                     bagi pertumbuhan siswa.
                 </p>
             </div>
             <div class="flex flex-col justify-center gap-3 p-5">
-                <img src="{{ asset('icons/boarding school.svg') }}" alt="" class="w-[100px] mx-auto">
+                <img src="{{ asset('images/svgs/handshake.svg') }}" alt="" class="w-[100px] h-[100px] mx-auto">
                 <h3 class="font-bold text-xl text-center">Biaya Sekolah Terjangkau</h3>
                 <p class="text-center">
-                    Biaya sekolah yang terjangkau di SMA Ma'arif Pacet Cianjur memberikan akses pendidikan berkualitas
+                    Biaya sekolah yang terjangkau di Sekolah memberikan akses pendidikan berkualitas
                     tanpa memberatkan. Kami berkomitmen untuk menyediakan lingkungan belajar yang terjangkau, memastikan
                     setiap siswa dapat mengejar impian akademisnya tanpa beban finansial yang berlebihan.
                 </p>
             </div>
             <div class="flex flex-col justify-center gap-3 p-5">
-                <img src="{{ asset('icons/boarding school.svg') }}" alt="" class="w-[100px] mx-auto">
+                <img src="{{ asset('images/svgs/toga.svg') }}" alt="" class="w-[100px] h-[100px] mx-auto">
                 <h3 class="font-bold text-xl text-center">Beasiswa Siswa Berprestasi</h3>
                 <p class="text-center">
-                    Siswa Berprestasi di SMA Ma'arif Pacet Cianjur diberi dukungan khusus berupa beasiswa.
+                    Siswa Berprestasi di Sekolah diberi dukungan khusus berupa beasiswa.
                     Program ini dirancang untuk mendukung siswa yang telah menunjukkan keunggulan akademis dan non-akademis.
-                    Dengan pemberian beasiswa ini, kami bertujuan memberikan insentif dan peluang bagi pengembangan bakat
-                    dan prestasi lebih.
+                    Dengan pemberian beasiswa ini, kami bertujuan memberikan peluang bagi pengembangan bakat
+                    dan prestasi.
                 </p>
             </div>
             <div class="flex flex-col justify-center gap-3 p-5">
-                <img src="{{ asset('icons/boarding school.svg') }}" alt="" class="w-[100px] mx-auto">
+                <img src="{{ asset('images/svgs/care.svg') }}" alt="" class="w-[100px] h-[100px] mx-auto">
                 <h3 class="font-bold text-xl text-center">Beasiswa Yatim Piatu</h3>
                 <p class="text-center">
-                    Beasiswa 3 tahun untuk yatim piatu di SMA Ma'arif Pacet Cianjur memberikan dukungan penuh, akses
+                    Beasiswa 3 tahun untuk yatim piatu di SMA Ma'arif Pacet akan diberikan dukungan penuh, dengan akses
                     pendidikan tanpa hambatan. Program ini menawarkan dukungan finansial dan bimbingan pribadi, mendukung
-                    pertumbuhan holistik dengan komitmen penuh dari SMA Ma'arif Pacet Cianjur.
+                    pertumbuhan holistik dengan komitmen penuh dari Sekolah sehingga siswa dapat terus menuntut ilmu.
                 </p>
             </div>
             <div class="flex flex-col justify-center gap-3 p-5">
-                <img src="{{ asset('icons/boarding school.svg') }}" alt="" class="w-[100px] mx-auto">
+                <img src="{{ asset('images/svgs/facility.svg') }}" alt="" class="w-[100px] h-[100px] mx-auto">
                 <h3 class="font-bold text-xl text-center">Sarana & Prasarana Lengkap</h3>
                 <p class="text-center">
-                    Sarana & Prasarana Lengkap di SMA Ma'arif Pacet Cianjur memberikan fasilitas modern
+                    Sarana & Prasarana Lengkap di Sekolah memberikan fasilitas modern
                     untuk pengalaman belajar terbaik. Ruang kelas, perpustakaan, laboratorium, dan fasilitas olahraga
                     diciptakan untuk mendukung pertumbuhan siswa dengan kenyamanan dan teknologi terkini. Nikmati
                     pembelajaran yang inspiratif di lingkungan yang memadai.
                 </p>
             </div>
             <div class="flex flex-col justify-center gap-3 p-5">
-                <img src="{{ asset('icons/boarding school.svg') }}" alt="" class="w-[100px] mx-auto">
+                <img src="{{ asset('images/svgs/kegiatan.svg') }}" alt="" class="w-[100px] h-[100px] mx-auto">
                 <h3 class="font-bold text-xl text-center">Aktif Berkegiatan</h3>
                 <p class="text-center">
-                    Siswa di SMA Ma'arif Pacet Cianjur aktif di luar kelas, terlibat dalam ekstra dan intra sekolah.
+                    Siswa aktif di dalam dan di luar kelas, terlibat dalam ekstra dan intra sekolah.
                     Ekstrakurikuler dan intrakurikuler memperkaya pembelajaran dengan mengeksplorasi minat, memperkuat
                     keterlibatan, dan menciptakan lingkungan belajar dinamis yang memupuk keterampilan sosial, kepemimpinan,
                     dan kolaborasi.
@@ -321,41 +321,48 @@
             <div class="splide mt-5" id="splide2" aria-label="Splide Basic HTML Example">
                 <div class="splide__track">
                     <ul class="splide__list">
-                        {{-- <li class="splide__slide">
-                        <iframe class="w-full aspect-video"
-                            src="https://www.youtube.com/embed/sTTiTTr12a8?si=5NSxvqRjwOtu_Ueg" title="YouTube video player"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen></iframe>
-                    </li>
-                    <li class="splide__slide">
-                        <iframe class="w-full aspect-video"
-                            src="https://www.youtube.com/embed/sTTiTTr12a8?si=5NSxvqRjwOtu_Ueg" title="YouTube video player"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen></iframe>
-                    </li>
-                    <li class="splide__slide">
-                        <iframe class="w-full aspect-video"
-                            src="https://www.youtube.com/embed/sTTiTTr12a8?si=5NSxvqRjwOtu_Ueg" title="YouTube video player"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen></iframe>
-                    </li>
-                    <li class="splide__slide">
-                        <iframe class="w-full aspect-video"
-                            src="https://www.youtube.com/embed/sTTiTTr12a8?si=5NSxvqRjwOtu_Ueg" title="YouTube video player"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen></iframe>
-                    </li>
-                    <li class="splide__slide">
-                        <iframe class="w-full aspect-video"
-                            src="https://www.youtube.com/embed/sTTiTTr12a8?si=5NSxvqRjwOtu_Ueg" title="YouTube video player"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen></iframe>
-                    </li> --}}
+                        <li class="splide__slide">
+                            <iframe class="w-full aspect-video" src="https://www.youtube.com/embed/GX0LtijQzgE"
+                                title="NATAWASSAL BILHUBABAH II Cover - KIKI NURHAYATI"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen></iframe>
+                        </li>
+                        <li class="splide__slide">
+                            <iframe class="w-full aspect-video" src="https://www.youtube.com/embed/K0daIMP8vyc"
+                                title="DURIAT PEGAT - Detty Kurnia || Cover Kiki Nurhayati - Smarters Edutainment"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen></iframe>
+                        </li>
+                        <li class="splide__slide">
+                            <iframe class="w-full aspect-video" src="https://www.youtube.com/embed/I5OxC5o8ei8"
+                                title="TIPS SUKSES KULIAH DENGAN PREDIKAT CUMLAUDE !! | DESPodcast part 3"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen></iframe>
+                        </li>
+                        <li class="splide__slide">
+                            <iframe class="w-full aspect-video" src="https://www.youtube.com/embed/EcTU7U__8Jg"
+                                title="SERU!!! ADA YANG BARU!! SMARTERS EDUTAINMENT AKHIR NYA LAUNCHING!!"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen></iframe>
+                        </li>
+                        <li class="splide__slide">
+                            <iframe class="w-full aspect-video" src="https://www.youtube.com/embed/mtBzuvQLRLI"
+                                title="SEMALAM DI CIANJUR - Alfian || Cover Smart Voice - Smarters Edutainment"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen></iframe>
+                        </li>
+                        <li class="splide__slide">
+                            <iframe class="w-full aspect-video" src="https://www.youtube.com/embed/bi7e_v5Vn_0"
+                                title="Puisi &quot;Aku Melihat Indonesia&quot; - Soekarno | Oleh Sina Cahya | SMARTERS EDUTAINMENT"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen></iframe>
+                        </li>
                     </ul>
                 </div>
             </div>
