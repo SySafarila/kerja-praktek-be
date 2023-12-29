@@ -18,7 +18,7 @@ class PpdbAdminController extends Controller
     public function __construct()
     {
         $this->middleware('can:ppdb-create')->only(['create', 'store']);
-        $this->middleware('can:ppdb-read')->only(['index', 'download_private_file']);
+        $this->middleware('can:ppdb-read')->only(['index', 'download_private_file', 'archive']);
         $this->middleware('can:ppdb-update')->only(['edit', 'update', 'confirm_offline_payment']);
         $this->middleware('can:ppdb-delete')->only(['destroy', 'massDestroy']);
     }
@@ -678,5 +678,10 @@ class PpdbAdminController extends Controller
             return $path;
         }
         return abort(404);
+    }
+
+    public function archive($student_id) {
+        $student = Student::with(['parent', 'transaction', 'files'])->findOrFail($student_id);
+        return view('ppdb.archive', compact('student'));
     }
 }
