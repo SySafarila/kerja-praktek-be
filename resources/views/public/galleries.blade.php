@@ -61,8 +61,6 @@
                         <span class="text-white">
                             {{-- Display user's local date and time in Indonesian format --}}
                             <p class="text-accent-4" id="user-local-date-time"></p>
-                            {{-- Add a space if both date/time and location are displayed --}}
-                            <p class="text-accent-4" id="user-location"></p>
                         </span>
 
                     </div>
@@ -171,10 +169,6 @@
             };
             const userLocalDateTime = new Date().toLocaleDateString('id-ID', options);
             userLocalDateTimeElement.textContent = userLocalDateTime;
-
-            const userLocationElement = document.getElementById('user-location');
-            const userLocation = 'Your Location';
-            userLocationElement.textContent = userLocation ? ` ${userLocation}` : '';
         });
     </script>
 @endsection
