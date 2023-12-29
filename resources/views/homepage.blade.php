@@ -109,7 +109,7 @@
         <div class="grid lg:grid-cols-3 text-accent-3 gap-5">
             <div class="flex flex-col justify-center gap-3 p-5">
                 <img src="{{ asset('icons/boarding school.svg') }}" alt="" class="w-[100px] mx-auto">
-                <h3 class="font-bold text-xl text-center">Lorem ipsum</h3>
+                <h3 class="font-bold text-xl text-center">Tahfidz Qur'an</h3>
                 <p class="text-center">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos quisquam ut possimus
                     nulla, cupiditate odio illum. Quam voluptatibus unde, praesentium quisquam cupiditate doloremque.
                     Impedit reiciendis suscipit facere. Distinctio, aspernatur suscipit.</p>
@@ -117,7 +117,7 @@
             </div>
             <div class="flex flex-col justify-center gap-3 p-5">
                 <img src="{{ asset('icons/boarding school.svg') }}" alt="" class="w-[100px] mx-auto">
-                <h3 class="font-bold text-xl text-center">Lorem ipsum</h3>
+                <h3 class="font-bold text-xl text-center">Multimedia</h3>
                 <p class="text-center">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos quisquam ut possimus
                     nulla, cupiditate odio illum. Quam voluptatibus unde, praesentium quisquam cupiditate doloremque.
                     Impedit reiciendis suscipit facere. Distinctio, aspernatur suscipit.</p>
@@ -134,7 +134,7 @@
             </div> --}}
             <div class="flex flex-col justify-center gap-3 p-5">
                 <img src="{{ asset('icons/boarding school.svg') }}" alt="" class="w-[100px] mx-auto">
-                <h3 class="font-bold text-xl text-center">Lorem ipsum</h3>
+                <h3 class="font-bold text-xl text-center">English Community</h3>
                 <p class="text-center">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos quisquam ut possimus
                     nulla, cupiditate odio illum. Quam voluptatibus unde, praesentium quisquam cupiditate doloremque.
                     Impedit reiciendis suscipit facere. Distinctio, aspernatur suscipit.</p>
@@ -192,45 +192,61 @@
         <div class="grid lg:grid-cols-3 text-accent-3 mt-5 lg:mt-10">
             <div class="flex flex-col justify-center gap-3 p-5">
                 <img src="{{ asset('icons/boarding school.svg') }}" alt="" class="w-[100px] mx-auto">
-                <h3 class="font-bold text-xl text-center">Lorem ipsum</h3>
-                <p class="text-center">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos quisquam ut possimus
-                    nulla, cupiditate odio illum. Quam voluptatibus unde, praesentium quisquam cupiditate doloremque.
-                    Impedit reiciendis suscipit facere. Distinctio, aspernatur suscipit.</p>
+                <h3 class="font-bold text-xl text-center">Lokasi Strategis</h3>
+                <p class="text-center">
+                    Lokasi strategis SMA Ma'arif Pacet Cianjur memberikan akses mudah dan nyaman. Terletak di tempat yang
+                    strategis, sekolah ini memberikan kemudahan bagi siswa dan orang tua dalam mencapai pendidikan
+                    berkualitas. Aksesibilitas yang baik menjadi nilai tambah, menciptakan lingkungan belajar yang optimal
+                    bagi pertumbuhan siswa.
+                </p>
             </div>
             <div class="flex flex-col justify-center gap-3 p-5">
                 <img src="{{ asset('icons/boarding school.svg') }}" alt="" class="w-[100px] mx-auto">
-                <h3 class="font-bold text-xl text-center">Lorem ipsum</h3>
-                <p class="text-center">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos quisquam ut possimus
-                    nulla, cupiditate odio illum. Quam voluptatibus unde, praesentium quisquam cupiditate doloremque.
-                    Impedit reiciendis suscipit facere. Distinctio, aspernatur suscipit.</p>
+                <h3 class="font-bold text-xl text-center">Biaya Sekolah Terjangkau</h3>
+                <p class="text-center">
+                    Biaya sekolah yang terjangkau di SMA Ma'arif Pacet Cianjur memberikan akses pendidikan berkualitas
+                    tanpa memberatkan. Kami berkomitmen untuk menyediakan lingkungan belajar yang terjangkau, memastikan
+                    setiap siswa dapat mengejar impian akademisnya tanpa beban finansial yang berlebihan.
+                </p>
             </div>
             <div class="flex flex-col justify-center gap-3 p-5">
                 <img src="{{ asset('icons/boarding school.svg') }}" alt="" class="w-[100px] mx-auto">
-                <h3 class="font-bold text-xl text-center">Lorem ipsum</h3>
-                <p class="text-center">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos quisquam ut possimus
-                    nulla, cupiditate odio illum. Quam voluptatibus unde, praesentium quisquam cupiditate doloremque.
-                    Impedit reiciendis suscipit facere. Distinctio, aspernatur suscipit.</p>
+                <h3 class="font-bold text-xl text-center">Beasiswa Siswa Berprestasi</h3>
+                <p class="text-center">
+                    Siswa Berprestasi di SMA Ma'arif Pacet Cianjur diberi dukungan khusus berupa beasiswa.
+                    Program ini dirancang untuk mendukung siswa yang telah menunjukkan keunggulan akademis dan non-akademis.
+                    Dengan pemberian beasiswa ini, kami bertujuan memberikan insentif dan peluang bagi pengembangan bakat
+                    dan prestasi lebih.
+                </p>
             </div>
             <div class="flex flex-col justify-center gap-3 p-5">
                 <img src="{{ asset('icons/boarding school.svg') }}" alt="" class="w-[100px] mx-auto">
-                <h3 class="font-bold text-xl text-center">Lorem ipsum</h3>
-                <p class="text-center">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos quisquam ut possimus
-                    nulla, cupiditate odio illum. Quam voluptatibus unde, praesentium quisquam cupiditate doloremque.
-                    Impedit reiciendis suscipit facere. Distinctio, aspernatur suscipit.</p>
+                <h3 class="font-bold text-xl text-center">Beasiswa Yatim Piatu</h3>
+                <p class="text-center">
+                    Beasiswa 3 tahun untuk yatim piatu di SMA Ma'arif Pacet Cianjur memberikan dukungan penuh, akses
+                    pendidikan tanpa hambatan. Program ini menawarkan dukungan finansial dan bimbingan pribadi, mendukung
+                    pertumbuhan holistik dengan komitmen penuh dari SMA Ma'arif Pacet Cianjur.
+                </p>
             </div>
             <div class="flex flex-col justify-center gap-3 p-5">
                 <img src="{{ asset('icons/boarding school.svg') }}" alt="" class="w-[100px] mx-auto">
-                <h3 class="font-bold text-xl text-center">Lorem ipsum</h3>
-                <p class="text-center">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos quisquam ut possimus
-                    nulla, cupiditate odio illum. Quam voluptatibus unde, praesentium quisquam cupiditate doloremque.
-                    Impedit reiciendis suscipit facere. Distinctio, aspernatur suscipit.</p>
+                <h3 class="font-bold text-xl text-center">Sarana & Prasarana Lengkap</h3>
+                <p class="text-center">
+                    Sarana & Prasarana Lengkap di SMA Ma'arif Pacet Cianjur memberikan fasilitas modern
+                    untuk pengalaman belajar terbaik. Ruang kelas, perpustakaan, laboratorium, dan fasilitas olahraga
+                    diciptakan untuk mendukung pertumbuhan siswa dengan kenyamanan dan teknologi terkini. Nikmati
+                    pembelajaran yang inspiratif di lingkungan yang memadai.
+                </p>
             </div>
             <div class="flex flex-col justify-center gap-3 p-5">
                 <img src="{{ asset('icons/boarding school.svg') }}" alt="" class="w-[100px] mx-auto">
-                <h3 class="font-bold text-xl text-center">Lorem ipsum</h3>
-                <p class="text-center">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos quisquam ut possimus
-                    nulla, cupiditate odio illum. Quam voluptatibus unde, praesentium quisquam cupiditate doloremque.
-                    Impedit reiciendis suscipit facere. Distinctio, aspernatur suscipit.</p>
+                <h3 class="font-bold text-xl text-center">Aktif Berkegiatan</h3>
+                <p class="text-center">
+                    Siswa di SMA Ma'arif Pacet Cianjur aktif di luar kelas, terlibat dalam ekstra dan intra sekolah.
+                    Ekstrakurikuler dan intrakurikuler memperkaya pembelajaran dengan mengeksplorasi minat, memperkuat
+                    keterlibatan, dan menciptakan lingkungan belajar dinamis yang memupuk keterampilan sosial, kepemimpinan,
+                    dan kolaborasi.
+                </p>
             </div>
         </div>
     </div>
@@ -254,8 +270,9 @@
 
     {{-- news --}}
     <div class="max-w-screen-lg mx-auto p-5 lg:py-10">
-        <h1 class="text-3xl text-center uppercase font-bold text-accent-3"><span class="text-accent-1">Berita <span> & </span> Artikel</span>
-            </h1>
+        <h1 class="text-3xl text-center uppercase font-bold text-accent-3"><span class="text-accent-1">Berita <span> &
+                </span> Artikel</span>
+        </h1>
 
         @if ($news->isEmpty())
             <p class="text-center my-32 text-xl text-accent-3/50">There's no news published yet</p>
