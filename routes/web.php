@@ -53,6 +53,8 @@ Route::get('/teachers-staffs', [PublicController::class, 'teachersStaffs'])->nam
 
 Route::view('/contact-us', 'public.contact-us')->name('contact-us');
 Route::view('/about-us', 'public.about-us')->name('about-us');
+Route::view('/privacy-policy', 'public.privacy-policy')->name('privacy-policy');
+Route::view('/terms-conditions', 'public.terms-conditions')->name('terms-conditions');
 
 //elibrary
 Route::get('/elibrary', [ElibraryController::class, 'index'])->name('elibrary'); //halaman utama

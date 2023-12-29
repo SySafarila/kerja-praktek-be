@@ -50,7 +50,7 @@
 @endsection
 
 @section('content')
-    <div style="background-image: url({{ asset('images/photos/photo2.png') }})" class="w-full">
+    <div style="background-image: url({{ asset('images/photos/photo3.png') }})" class="w-full bg-center">
         <div class="bg-[#356F11]/70 backdrop-blur-[1px]">
             <div class="max-w-screen-lg mx-auto lg:px-5 relative h-40 lg:h-60">
                 <div
@@ -61,8 +61,6 @@
                         <span class="text-white">
                             {{-- Display user's local date and time in Indonesian format --}}
                             <p class="text-accent-4" id="user-local-date-time"></p>
-                            {{-- Add a space if both date/time and location are displayed --}}
-                            <p class="text-accent-4" id="user-location"></p>
                         </span>
 
                     </div>
@@ -75,17 +73,22 @@
         <div class="splide" id="splide1" aria-label="Splide Basic HTML Example">
             <div class="splide__track">
                 <ul class="splide__list">
+
                     <li class="splide__slide">
-                        <img src="{{ asset('images/banners/Welcome 1.png') }}" alt=""
-                            class="aspect-video w-full h-[400px] object-cover">
+                        <img src="{{ asset('images/photos/Pasmart.jpg') }}" alt=""
+                            class="aspect-video w-full h-[400px] object-cover bg-center">
                     </li>
                     <li class="splide__slide">
-                        <img src="{{ asset('images/banners/Welcome 2.png') }}" alt=""
-                            class="aspect-video w-full h-[400px] object-cover">
+                        <img src="{{ asset('images/photos/Pramuka.jpg') }}" alt=""
+                            class="aspect-video w-full h-[400px] object-cover bg-center" >
                     </li>
                     <li class="splide__slide">
-                        <img src="{{ asset('images/banners/Welcome 3.png') }}" alt=""
-                            class="aspect-video w-full h-[400px] object-cover">
+                        <img src="{{ asset('images/photos/Teater.jpg') }}" alt=""
+                            class="aspect-video w-full h-[400px] object-cover bg-center">
+                    </li>
+                    <li class="splide__slide">
+                        <img src="{{ asset('images/photos/Voli.jpg') }}" alt=""
+                            class="aspect-video w-full h-[400px] object-cover bg-center">
                     </li>
                 </ul>
             </div>
@@ -171,10 +174,6 @@
             };
             const userLocalDateTime = new Date().toLocaleDateString('id-ID', options);
             userLocalDateTimeElement.textContent = userLocalDateTime;
-
-            const userLocationElement = document.getElementById('user-location');
-            const userLocation = 'Your Location';
-            userLocationElement.textContent = userLocation ? ` ${userLocation}` : '';
         });
     </script>
 @endsection

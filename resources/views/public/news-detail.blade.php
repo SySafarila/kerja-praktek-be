@@ -10,7 +10,7 @@
 @endsection
 
 @section('content')
-    <div style="background-image: url({{ asset('images/photos/photo2.png') }})" class="w-full">
+    <div style="background-image: url({{ asset('images/photos/photo1-cropped.png') }})" class="w-full">
         <div class="bg-[#356F11]/70 backdrop-blur-[1px]">
             <div class="max-w-screen-lg mx-auto lg:px-5 relative h-40 lg:h-60">>
                 <div
@@ -21,8 +21,6 @@
                         <span class="text-white">
                             {{-- Display user's local date and time in Indonesian format --}}
                             <p class="text-accent-4" id="user-local-date-time"></p>
-                            {{-- Add a space if both date/time and location are displayed --}}
-                            <p class="text-accent-4" id="user-location"></p>
                         </span>
 
                     </div>
@@ -91,11 +89,6 @@
             };
             const userLocalDateTime = new Date().toLocaleDateString('id-ID', options);
             userLocalDateTimeElement.textContent = userLocalDateTime;
-
-            // Add a space if both date/time and location are displayed
-            const userLocationElement = document.getElementById('user-location');
-            const userLocation = 'Your Location'; // Replace with actual user location if available
-            userLocationElement.textContent = userLocation ? ` ${userLocation}` : '';
         });
     </script>
 @endsection

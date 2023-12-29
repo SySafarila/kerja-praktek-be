@@ -100,6 +100,20 @@
                     illum. Quam voluptatibus unde, praesentium quisquam cupiditate doloremque. Impedit reiciendis suscipit
                     facere. Distinctio, aspernatur suscipit.
                 </p>
+                <h2 class="font-bold text-accent-1 text-xl mt-3">SARANA DAN PRASARANA</h2>
+                <div class="border-b-4 border-accent-1 mb-2"></div>
+                <p class="text-justify">
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos quisquam ut possimus nulla, cupiditate
+                    odio
+                    illum. Quam voluptatibus unde, praesentium quisquam cupiditate doloremque. Impedit reiciendis suscipit
+                    facere. Distinctio, aspernatur suscipit.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos
+                    quisquam ut possimus nulla, cupiditate odio
+                    illum. Quam voluptatibus unde, praesentium quisquam cupiditate doloremque. Impedit reiciendis suscipit
+                    facere. Distinctio, aspernatur suscipit.Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos
+                    quisquam ut possimus nulla, cupiditate odio
+                    illum. Quam voluptatibus unde, praesentium quisquam cupiditate doloremque. Impedit reiciendis suscipit
+                    facere. Distinctio, aspernatur suscipit.
+                </p>
             </div>
             <div class="flex flex-col px-4">
                 <img src="{{ asset('images/photos/Kepala Sekolah.png') }}" class="h-90 w-90 object-cover mx-auto border rounded-lg mb-4">

@@ -49,8 +49,8 @@
     <div class="max-w-screen-lg mx-auto p-5 flex flex-col lg:flex-row justify-between text-sm border-t gap-2 lg:gap-0">
         <p class="text-accent-2">&copy; 2023 The President and Fellows of Ma'arif High School</p>
         <div class="flex gap-5 justify-center lg:justify-end">
-            <a href="#" class="text-accent-2">Privacy Policy</a>
-            <a href="#" class="text-accent-2">Terms & Condition</a>
+            <a href="{{route('privacy-policy')}}" class="text-accent-2">Privacy Policy</a>
+            <a href="{{route('terms-conditions')}}" class="text-accent-2">Terms & Conditions</a>
         </div>
     </div>
 </footer>
