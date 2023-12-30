@@ -69,7 +69,7 @@ class PpdbAdminController extends Controller
                             break;
                     }
                 })
-                ->editColumn('religion', function($model) {
+                ->editColumn('religion', function ($model) {
                     return Str::headline($model->religion);
                 })
                 ->editColumn('birth', function ($model) {
@@ -628,7 +628,15 @@ class PpdbAdminController extends Controller
      */
     public function destroy($id)
     {
-        Student::destroy($id);
+        $student = Student::with('files')->findOrFail($id);
+
+        foreach ($student->files as $file) {
+            if (Storage::exists($file->file_name)) {
+                Storage::delete($file->file_name);
+            }
+        }
+
+        $student->delete();
 
         if (request()->ajax()) {
             return response()->json(true);
@@ -641,11 +649,17 @@ class PpdbAdminController extends Controller
     {
         $arr = explode(',', $request->ids);
 
-        // foreach ($arr as $data) {
-        // Student::destroy($data);
-        // }
-
-        Student::destroy($arr);
+        foreach ($arr as $data) {
+            $student = Student::with('files')->find($data);
+            if ($student) {
+                foreach ($student->files as $file) {
+                    if (Storage::exists($file->file_name)) {
+                        Storage::delete($file->file_name);
+                    }
+                }
+                $student->delete();
+            }
+        }
 
         if (request()->ajax()) {
             return response()->json(true);
@@ -680,7 +694,8 @@ class PpdbAdminController extends Controller
         return abort(404);
     }
 
-    public function archive($student_id) {
+    public function archive($student_id)
+    {
         $student = Student::with(['parent', 'transaction', 'files'])->findOrFail($student_id);
         return view('ppdb.archive', compact('student'));
     }
