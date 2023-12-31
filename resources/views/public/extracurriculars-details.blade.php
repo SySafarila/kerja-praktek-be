@@ -32,7 +32,7 @@
     <div class="max-w-screen-lg mx-auto p-5 grid lg:grid-cols-12 gap-5">
         <div class="bg-white lg:col-span-8">
 
-            <img src="{{ asset('storage/extracurricularImages/' . $extracurriculars->image) }}" class="w-full"
+            <img src="{{ asset('storage/extracurricularImages/' . $extracurriculars->image) }}" class="aspect-video object-cover"
                 alt="">
             <div class="mt-2 flex flex-col p-5">
                 <p class="-my-2 text-sm"><i class="fa fa-calendar text-sm text-accent-1"></i>

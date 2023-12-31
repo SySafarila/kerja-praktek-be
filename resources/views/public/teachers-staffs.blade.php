@@ -105,7 +105,7 @@
     @if ($staffs->isEmpty())
         <p class="text-center my-28 text-xl text-accent-3/50">There's no information published yet</p>
     @else
-        <div class="max-w-screen-lg mx-auto">
+        <div class="max-w-screen-lg mx-auto mb-12">
             <div
                 class="grid grid-cols-1 mx-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4 mt-4 mb-2 justify-center">
                 @foreach ($staffs as $staff)
