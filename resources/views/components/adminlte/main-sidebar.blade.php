@@ -2,7 +2,7 @@
     <a href="{{ route('admin.index') }}" class="brand-link">
         <img src="{{ asset('adminlte-3.2.0/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
             class="brand-image img-circle" style="opacity: .8">
-        <span class="brand-text font-weight-light">Admin Dashboard</span>
+        <span class="brand-text font-weight-light">Dashboard</span>
     </a>
 
     <div class="sidebar">
@@ -19,17 +19,19 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false" style="overflow-x: hidden;">
-                <li class="nav-item">
-                    <a href="{{ route('admin.index') }}"
-                        class="nav-link {{ request()->routeIs('admin.index') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-home"></i>
-                        <p>
-                            Home
-                            {{-- <span class="right badge badge-danger">New</span> --}}
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-header text-uppercase">Content Control</li>
+                @can('admin-access')
+                    <li class="nav-item">
+                        <a href="{{ route('admin.index') }}"
+                            class="nav-link {{ request()->routeIs('admin.index') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-home"></i>
+                            <p>
+                                Home
+                                {{-- <span class="right badge badge-danger">New</span> --}}
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-header text-uppercase">Content Control</li>
+                @endcan
 
                 @canany(['staffs-read'])
                     @if (Route::has('admin.staffs.index'))

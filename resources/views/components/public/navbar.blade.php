@@ -46,6 +46,8 @@
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-accent-6 hover:text-accent-2">Dashboard</a>
                         @endrole
 
+                        <a href="{{ route('account.index') }}" style="text-decoration: none;"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-accent-6 hover:text-accent-2">Account</a>
                         <a href="{{ route('ppdb.index') }}" style="text-decoration: none;"
                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-accent-6 hover:text-accent-2">PPDB</a>
 

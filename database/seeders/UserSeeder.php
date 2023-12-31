@@ -30,5 +30,12 @@ class UserSeeder extends Seeder
             'email_verified_at' => now()
         ]);
         $admin->syncRoles(['admin']);
+        $admin = User::create([
+            'name' => 'Syahrul Safarila',
+            'email' => 'sysafarila.official@gmail.com',
+            'password' => Hash::make('password'),
+            'email_verified_at' => now()
+        ]);
+        $admin->syncRoles(['user']);
     }
 }
