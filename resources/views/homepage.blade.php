@@ -177,10 +177,18 @@
                         dolorem?</p>
                 </div>
                 <div>
-                    <iframe class="w-full aspect-video" src=""
+                    <div class="pb-20">
+
+                        <img src="{{ asset('images/photos/Kepala Sekolah.png') }}" class="aspect-video w-full object-cover"
+                            alt="">
+                        <img src="{{ asset('images/youtube.png') }}" class="w-32 h-32 -mt-[200px] mx-auto"
+                            alt="">
+                    </div>
+
+                    {{-- <iframe class="w-full aspect-video" src=""
                         title="YouTube video player" frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen></iframe>
+                        allowfullscreen></iframe> --}}
                 </div>
             </div>
         </div>
@@ -277,7 +285,7 @@
         @if ($news->isEmpty())
             <p class="text-center my-32 text-xl text-accent-3/50">There's no news published yet</p>
         @else
-            <div class="grid lg:grid-cols-3 lg:grid-rows-2 mt-5 gap-5">
+            <div class="grid lg:grid-cols-3 mt-5 gap-5">
                 @foreach ($news as $item)
                     <a href="{{ route('news.show', ['id' => $item->id]) }}" class="border rounded-t-xl overflow-hidden">
                         <div class="relative">
@@ -323,8 +331,7 @@
                     <ul class="splide__list">
                         <li class="splide__slide">
                             <iframe class="w-full aspect-video" src="https://www.youtube.com/embed/GX0LtijQzgE"
-                                title="NATAWASSAL BILHUBABAH II Cover - KIKI NURHAYATI"
-                                frameborder="0"
+                                title="NATAWASSAL BILHUBABAH II Cover - KIKI NURHAYATI" frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen></iframe>
                         </li>
@@ -337,15 +344,13 @@
                         </li>
                         <li class="splide__slide">
                             <iframe class="w-full aspect-video" src="https://www.youtube.com/embed/I5OxC5o8ei8"
-                                title="TIPS SUKSES KULIAH DENGAN PREDIKAT CUMLAUDE !! | DESPodcast part 3"
-                                frameborder="0"
+                                title="TIPS SUKSES KULIAH DENGAN PREDIKAT CUMLAUDE !! | DESPodcast part 3" frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen></iframe>
                         </li>
                         <li class="splide__slide">
                             <iframe class="w-full aspect-video" src="https://www.youtube.com/embed/EcTU7U__8Jg"
-                                title="SERU!!! ADA YANG BARU!! SMARTERS EDUTAINMENT AKHIR NYA LAUNCHING!!"
-                                frameborder="0"
+                                title="SERU!!! ADA YANG BARU!! SMARTERS EDUTAINMENT AKHIR NYA LAUNCHING!!" frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen></iframe>
                         </li>
