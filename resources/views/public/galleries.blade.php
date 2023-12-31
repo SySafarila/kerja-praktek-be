@@ -104,7 +104,7 @@
                     <a href="{{ route('galleries.show', ['id' => $item->id]) }}"
                         class="block transition-transform transform hover:scale-105 ">
                         <div class="relative">
-                            <img class="w-full h-58 object-cover z-0"
+                            <img class="aspect-square object-cover z-0"
                                 src="{{ asset('storage/galleryThumbnails/' . $item->thumbnail) }}" alt="">
                             <div
                                 class="absolute bottom-0 left-0 right-0 bg-accent-1/50 z-10 text-accent-2 text-center py-1 ">

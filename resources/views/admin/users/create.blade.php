@@ -35,7 +35,7 @@
                         @csrf
                         <div class="form-group">
                             <label for="name" class="text-capitalize">name</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Syahrul Safarila"
+                            <input type="text" class="form-control" id="name" name="name" placeholder=""
                                 value="{{ old('name') }}" required>
                             @error('name')
                                 <div class="text-sm text-danger">{{ $message ?? 'Something error' }}</div>
